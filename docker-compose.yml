@@ -89,6 +89,7 @@ services:
       ADMIN_PASSWORD: admin
     volumes:
       - semantic_data_catalog_fuseki_data:/fuseki
+    expose: ["3030"]
     networks:
       solid-dataspace:
         aliases:
