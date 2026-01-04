@@ -1,0 +1,33 @@
+repos:
+  semantic-data-catalog:
+    path: ..\semantic-data-catalog
+    repo: https://github.com/hoelk-f/semantic-data-catalog
+    scope:
+      - backend
+      - frontend
+      - fuseki
+      - database
+      - oidc
+
+  smart-city-urban-heat-monitoring:
+    path: ..\smart-city-urban-heat-monitoring
+    repo: https://github.com/hoelk-f/smart-city-urban-heat-monitoring
+    scope:
+      - angular
+      - ui
+      - smart-city
+      - heat
+
+  solid-dataspace-manager:
+    path: ..\solid-dataspace-manager
+    repo: https://github.com/hoelk-f/solid-dataspace-manager
+    scope:
+      - api
+      - provisioning
+      - solid
+
+routing:
+  docker:
+    owner: solid-dataspace-dev
+  caddy:
+    owner: solid-dataspace-dev

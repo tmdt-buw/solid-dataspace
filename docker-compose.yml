@@ -76,6 +76,8 @@ services:
       MYSQL_PASSWORD: mNXZqSq4oK53Q7
     volumes:
       - semantic_data_catalog_db_data:/var/lib/mysql
+    ports:
+     - "3306"
     networks:
       solid-dataspace:
         aliases:
@@ -105,7 +107,9 @@ services:
     volumes:
       - ./settings.js:/data/settings.js
       - nodered-data:/data
-    expose: ["1880"]
+    expose: ["1880", "1883", "1884"]
+    ports:
+     - "1883"
     networks:
       solid-dataspace:
         aliases:

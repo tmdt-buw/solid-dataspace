@@ -1,0 +1,8 @@
+..\semantic-data-catalog\
+..\smart-city-urban-heat-monitoring\
+..\solid-dataspace-manager\
+
+**/node_modules/
+**/dist/
+**/build/
+**/.env
