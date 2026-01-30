@@ -26,6 +26,12 @@ repos:
       - provisioning
       - solid
 
+  solid-data-manager:
+    path: ..\solid-data-manager
+    repo: https://github.com/hoelk-f/solid-data-manager
+    scope:
+      - data-manager
+
 routing:
   docker:
     owner: solid-dataspace-dev

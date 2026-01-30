@@ -2,13 +2,22 @@ version: '3.8'
 
 services:
   solid-dataspace-manager:
-    image: son1i/solid-dataspace-manager:latest
+    image: son1i/solid-dataspace-manager:with-data-manager
     restart: unless-stopped
     expose: ["3001"]
     networks:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-dataspace-manager
+
+  solid-data-manager:
+    image: son1i/solid-data-manager:latest
+    restart: unless-stopped
+    expose: ["3002"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-data-manager
 
   smart-city-urban-heat-monitoring:
     image: son1i/smart-city-urban-heat-monitoring:latest
@@ -88,6 +97,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
     depends_on:
       - solid-dataspace-manager
+      - solid-data-manager
       - smart-city-urban-heat-monitoring
       - semantic-data-catalog-frontend
       - semantic-data-catalog-backend

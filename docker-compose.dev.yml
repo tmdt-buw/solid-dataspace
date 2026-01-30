@@ -13,14 +13,37 @@ services:
       - PORT=3001
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
+    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ]; do sleep 1; done; cd /app && npm install && npm start"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
+      - solid_data_manager_dist:/solid-data-manager/dist
       - /app/node_modules
     expose: ["3001"]
     networks:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-dataspace-manager
+
+  solid-data-manager:
+    image: node:18-alpine
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      - REACT_APP_OIDC_ISSUER=https://solidcommunity.net
+      - REACT_APP_REDIRECT_URL=http://localhost/solid-data-manager/
+      - REACT_APP_FOOTER_LOGOS=/Logo_TMDT.png
+      - REACT_APP_VERSION=0.1.0
+      - PORT=3002
+    command: sh -c "npm install && npm run build:lib && (npm run build:lib:watch & npm start)"
+    volumes:
+      - ../solid-data-manager:/app:delegated
+      - solid_data_manager_dist:/app/dist
+      - /app/node_modules
+    expose: ["3002"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-data-manager
 
   smart-city-urban-heat-monitoring:
     build:
@@ -116,6 +139,7 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
     depends_on:
       - solid-dataspace-manager
+      - solid-data-manager
       - smart-city-urban-heat-monitoring
       - semantic-data-catalog-frontend
       - semantic-data-catalog-backend
@@ -124,6 +148,7 @@ services:
 volumes:
   semantic_data_catalog_fuseki_data:
   nodered-data:
+  solid_data_manager_dist:
 
 networks:
   solid-dataspace:
