@@ -34,7 +34,7 @@ services:
     environment:
       REACT_APP_OIDC_ISSUER: https://solidcommunity.net
       REACT_APP_REDIRECT_URL: http://localhost/semantic-data-catalog/
-      REACT_APP_FOOTER_LOGOS: /assets/images/Logo_GesundesTal.png,/assets/images/Icon_GesundesTal.png
+      REACT_APP_FOOTER_LOGOS: /assets/images/Logo_GesundesTal.png,/assets/images/Icon_GesundesTal.png,/assets/images/Logo_KIT.svg
       REACT_APP_VERSION: "0.7.4"
     expose: ["5000"]
     networks:
