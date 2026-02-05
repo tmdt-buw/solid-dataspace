@@ -4,6 +4,8 @@ services:
   solid-dataspace-manager:
     build:
       context: ../solid-dataspace-manager
+      args:
+        NPM_TOKEN: ${NPM_TOKEN}
     restart: unless-stopped
     environment:
       - REACT_APP_OIDC_ISSUER=https://solidcommunity.net
