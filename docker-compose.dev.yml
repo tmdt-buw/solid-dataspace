@@ -8,6 +8,8 @@ services:
         NPM_TOKEN: ${NPM_TOKEN}
     restart: unless-stopped
     environment:
+      - NPM_TOKEN=${NPM_TOKEN}
+      - NPM_CONFIG_USERCONFIG=/tmp/.npmrc
       - REACT_APP_OIDC_ISSUER=https://solidcommunity.net
       - REACT_APP_REDIRECT_URL=http://localhost
       - REACT_APP_FOOTER_LOGOS=/Logo_TMDT.png
@@ -15,7 +17,7 @@ services:
       - PORT=3001
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
-    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ]; do sleep 1; done; cd /app && npm install && npm start"
+    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ]; do sleep 1; done; cd /app && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm start"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
