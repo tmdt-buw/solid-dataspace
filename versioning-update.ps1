@@ -93,6 +93,11 @@ for pkg_path, start in targets:
             packages[""]["version"] = new_version
         lock_path.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
 
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-data-manager":
+        version_js = pkg_path.parent / "src" / "version.js"
+        if version_js.exists():
+            version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+
 version_file = root / "VERSION"
 version_file.write_text(bump("0.3.0") + "\n", encoding="utf-8")
 '@
