@@ -48,7 +48,7 @@ function Bump-Version([string]$version) {
   return "$major.$minor.$patch"
 }
 
-function Update-PackageVersions([string]$root) {
+function Update-PackageVersions([string]$root, [string[]]$dirtyRepos) {
   $script = @'
 import json
 import pathlib
@@ -68,6 +68,8 @@ def bump(version: str) -> str:
     return f"{major}.{minor}.{patch}"
 
 root = pathlib.Path(r"__ROOT__")
+dirty_list = [p.strip().lower() for p in """__DIRTY__""".split(";;") if p.strip()]
+dirty_set = set(dirty_list)
 targets = [
     (root / ".." / "solid-dataspace-manager" / "package.json", "0.3.0"),
     (root / ".." / "solid-data-manager" / "package.json", "0.4.0"),
@@ -77,6 +79,13 @@ targets = [
 
 for pkg_path, start in targets:
     if not pkg_path.exists():
+        continue
+    repo_root = pkg_path.parent if pkg_path.name == "package.json" else pkg_path
+    # map to actual repo root for frontend
+    if pkg_path.parent.name == "frontend":
+        repo_root = pkg_path.parent.parent
+    repo_key = str(repo_root.resolve()).lower()
+    if repo_key not in dirty_set:
         continue
     new_version = bump(start)
     data = json.loads(pkg_path.read_text(encoding="utf-8"))
@@ -99,10 +108,12 @@ for pkg_path, start in targets:
             version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
 
 version_file = root / "VERSION"
-version_file.write_text(bump("0.3.0") + "\n", encoding="utf-8")
+if str(root.resolve()).lower() in dirty_set:
+    version_file.write_text(bump("0.3.0") + "\n", encoding="utf-8")
 '@
   $escapedRoot = $root.Replace("\\", "\\\\")
   $script = $script.Replace("__ROOT__", $escapedRoot)
+  $script = $script.Replace("__DIRTY__", ($dirtyRepos -join ';;'))
   $script | python -
 }
 
@@ -132,9 +143,21 @@ function Invoke-GitCommitAndPush([string]$repoPath, [string]$message) {
 $root = $PSScriptRoot
 if (-not $root) { $root = (Get-Location).Path }
 
-Update-PackageVersions -root $root
-
 $repos = Get-RepoPaths | Select-Object -Unique
+$dirty = New-Object System.Collections.Generic.List[string]
+foreach ($repo in $repos) {
+  if (-not (Test-Path (Join-Path $repo ".git"))) { continue }
+  Push-Location $repo
+  try {
+    $status = git status --porcelain
+    if ($status) { $dirty.Add($repo) }
+  } finally {
+    Pop-Location
+  }
+}
+
+Update-PackageVersions -root $root -dirtyRepos $dirty
+
 foreach ($repo in $repos) {
   Invoke-GitCommitAndPush -repoPath $repo -message $CommitMessage
 }
