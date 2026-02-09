@@ -52,6 +52,7 @@ function Update-PackageVersions([string]$root, [string[]]$dirtyRepos) {
   $script = @'
 import json
 import pathlib
+import os
 
 def bump(version: str) -> str:
     parts = version.strip().split(".")
@@ -68,7 +69,8 @@ def bump(version: str) -> str:
     return f"{major}.{minor}.{patch}"
 
 root = pathlib.Path(r"__ROOT__")
-dirty_list = [p.strip().lower() for p in json.loads(r"""__DIRTY_JSON__""") if p.strip()]
+dirty_raw = os.environ.get("DIRTY_JSON", "[]")
+dirty_list = [p.strip().lower() for p in json.loads(dirty_raw) if p.strip()]
 dirty_set = set(dirty_list)
 targets = [
     (root / ".." / "solid-dataspace-manager" / "package.json", "0.3.0"),
@@ -113,8 +115,7 @@ if str(root.resolve()).lower() in dirty_set:
 '@
   $escapedRoot = $root.Replace("\\", "\\\\")
   $script = $script.Replace("__ROOT__", $escapedRoot)
-  $dirtyJson = $dirtyRepos | ConvertTo-Json -Compress
-  $script = $script.Replace("__DIRTY_JSON__", $dirtyJson)
+  $env:DIRTY_JSON = ($dirtyRepos | ConvertTo-Json -Compress)
   $script | python -
 }
 
