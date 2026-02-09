@@ -68,7 +68,7 @@ def bump(version: str) -> str:
     return f"{major}.{minor}.{patch}"
 
 root = pathlib.Path(r"__ROOT__")
-dirty_list = [p.strip().lower() for p in """__DIRTY__""".split(";;") if p.strip()]
+dirty_list = [p.strip().lower() for p in json.loads(r"""__DIRTY_JSON__""") if p.strip()]
 dirty_set = set(dirty_list)
 targets = [
     (root / ".." / "solid-dataspace-manager" / "package.json", "0.3.0"),
@@ -113,7 +113,8 @@ if str(root.resolve()).lower() in dirty_set:
 '@
   $escapedRoot = $root.Replace("\\", "\\\\")
   $script = $script.Replace("__ROOT__", $escapedRoot)
-  $script = $script.Replace("__DIRTY__", ($dirtyRepos -join ';;'))
+  $dirtyJson = $dirtyRepos | ConvertTo-Json -Compress
+  $script = $script.Replace("__DIRTY_JSON__", $dirtyJson)
   $script | python -
 }
 
