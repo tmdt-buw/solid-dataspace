@@ -158,8 +158,8 @@ if versions:
     app_version = versions.get("appVersion", "0.0.0")
     data_manager_version = versions.get("dataManagerVersion", "0.0.0")
     versions_path.write_text(
-        f'export const appVersion = \"{app_version}\";\\n'
-        f'export const dataManagerVersion = \"{data_manager_version}\";\\n',
+        f'export const appVersion = \"{app_version}\";\n'
+        f'export const dataManagerVersion = \"{data_manager_version}\";\n',
         encoding="utf-8"
     )
 
