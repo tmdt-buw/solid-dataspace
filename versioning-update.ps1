@@ -68,6 +68,26 @@ def bump(version: str) -> str:
             major += 1
     return f"{major}.{minor}.{patch}"
 
+def parse(version: str):
+    parts = version.strip().split(".")
+    nums = []
+    for i in range(3):
+        if i < len(parts) and parts[i].isdigit():
+            nums.append(int(parts[i]))
+        else:
+            nums.append(0)
+    return nums
+
+def cmp(a: str, b: str) -> int:
+    pa = parse(a)
+    pb = parse(b)
+    for i in range(3):
+        if pa[i] > pb[i]:
+            return 1
+        if pa[i] < pb[i]:
+            return -1
+    return 0
+
 root = pathlib.Path(r"__ROOT__")
 dirty_raw = os.environ.get("DIRTY_JSON", "[]")
 dirty_list = [p.strip().lower() for p in json.loads(dirty_raw) if p.strip()]
@@ -89,8 +109,10 @@ for pkg_path, start in targets:
     repo_key = str(repo_root.resolve()).lower()
     if repo_key not in dirty_set:
         continue
-    new_version = bump(start)
     data = json.loads(pkg_path.read_text(encoding="utf-8"))
+    current = data.get("version", "0.0.0")
+    base = start if cmp(current, start) < 0 else current
+    new_version = bump(base)
     data["version"] = new_version
     pkg_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 
@@ -106,8 +128,16 @@ for pkg_path, start in targets:
 
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-data-manager":
         version_js = pkg_path.parent / "src" / "version.js"
-        if version_js.exists():
-            version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+        version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-dataspace-manager":
+        version_js = pkg_path.parent / "src" / "version.js"
+        version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "frontend":
+        version_js = pkg_path.parent / "src" / "version.js"
+        version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "smart-city-urban-heat-monitoring":
+        version_ts = pkg_path.parent / "src" / "app" / "version.ts"
+        version_ts.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
 
 version_file = root / "VERSION"
 if str(root.resolve()).lower() in dirty_set:
