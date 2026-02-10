@@ -53,6 +53,7 @@ function Update-PackageVersions([string]$root, [string[]]$dirtyRepos) {
 import json
 import pathlib
 import os
+import re
 
 def bump(version: str) -> str:
     parts = version.strip().split(".")
@@ -99,6 +100,8 @@ targets = [
     (root / ".." / "semantic-data-catalog" / "frontend" / "package.json", "0.8.0"),
 ]
 
+versions = {}
+
 for pkg_path, start in targets:
     if not pkg_path.exists():
         continue
@@ -129,15 +132,36 @@ for pkg_path, start in targets:
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-data-manager":
         version_js = pkg_path.parent / "src" / "version.js"
         version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+        versions["dataManagerVersion"] = new_version
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-dataspace-manager":
-        version_js = pkg_path.parent / "src" / "version.js"
-        version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+        versions["appVersion"] = new_version
     if pkg_path.name == "package.json" and pkg_path.parent.name == "frontend":
         version_js = pkg_path.parent / "src" / "version.js"
         version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
     if pkg_path.name == "package.json" and pkg_path.parent.name == "smart-city-urban-heat-monitoring":
         version_ts = pkg_path.parent / "src" / "app" / "version.ts"
         version_ts.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+
+versions_path = root / ".." / "solid-dataspace-manager" / "src" / "versions.js"
+if versions_path.exists():
+    existing = versions_path.read_text(encoding="utf-8")
+    if "appVersion" not in versions:
+        match = re.search(r'export const appVersion = \"([^\"]+)\";', existing)
+        if match:
+            versions["appVersion"] = match.group(1)
+    if "dataManagerVersion" not in versions:
+        match = re.search(r'export const dataManagerVersion = \"([^\"]+)\";', existing)
+        if match:
+            versions["dataManagerVersion"] = match.group(1)
+
+if versions:
+    app_version = versions.get("appVersion", "0.0.0")
+    data_manager_version = versions.get("dataManagerVersion", "0.0.0")
+    versions_path.write_text(
+        f'export const appVersion = \"{app_version}\";\\n'
+        f'export const dataManagerVersion = \"{data_manager_version}\";\\n',
+        encoding="utf-8"
+    )
 
 version_file = root / "VERSION"
 if str(root.resolve()).lower() in dirty_set:
