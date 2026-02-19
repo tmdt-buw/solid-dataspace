@@ -13,10 +13,11 @@ services:
       - PORT=3001
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
-    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ]; do sleep 1; done; cd /app && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm start"
+    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ]; do sleep 1; done; cd /app && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm start"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
+      - semantic_data_catalog_dist:/semantic-data-catalog/dist
       - /app/node_modules
     expose: ["3001"]
     networks:
@@ -67,8 +68,10 @@ services:
       PORT: 5000
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
+    command: sh -c "npm install && npm run build:lib && (npm run build:lib:watch & npm run start-watch)"
     volumes:
       - ../semantic-data-catalog/frontend:/app/frontend:delegated
+      - semantic_data_catalog_dist:/app/frontend/dist
       - /app/frontend/node_modules
     expose: ["5000"]
     networks:
@@ -144,6 +147,7 @@ volumes:
   semantic_data_catalog_fuseki_data:
   nodered-data:
   solid_data_manager_dist:
+  semantic_data_catalog_dist:
 
 networks:
   solid-dataspace:
