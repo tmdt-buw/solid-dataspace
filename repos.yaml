@@ -32,6 +32,14 @@ repos:
     scope:
       - data-manager
 
+  solid-chatbot:
+    path: ..\solid-chatbot
+    repo: https://github.com/hoelk-f/solid-chatbot
+    scope:
+      - chatbot
+      - rag
+      - solid
+
 routing:
   docker:
     owner: solid-dataspace-dev

@@ -98,6 +98,7 @@ targets = [
     (root / ".." / "solid-data-manager" / "package.json", "0.4.0"),
     (root / ".." / "smart-city-urban-heat-monitoring" / "package.json", "0.3.0"),
     (root / ".." / "semantic-data-catalog" / "frontend" / "package.json", "0.8.0"),
+    (root / ".." / "solid-chatbot" / "package.json", "0.1.0"),
 ]
 
 versions = {}
