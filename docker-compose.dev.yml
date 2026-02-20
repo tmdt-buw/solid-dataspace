@@ -13,7 +13,7 @@ services:
       - PORT=3001
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
-    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ]; do sleep 1; done; cd /app && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm start"
+    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ]; do sleep 1; done; cd /app && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm install --no-save /solid-data-manager/dist /semantic-data-catalog/dist && npm start"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
