@@ -142,6 +142,9 @@ for pkg_path, start in targets:
     if pkg_path.name == "package.json" and pkg_path.parent.name == "smart-city-urban-heat-monitoring":
         version_ts = pkg_path.parent / "src" / "app" / "version.ts"
         version_ts.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-chatbot":
+        version_js = pkg_path.parent / "frontend" / "src" / "version.js"
+        version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
 
 versions_path = root / ".." / "solid-dataspace-manager" / "src" / "versions.js"
 if versions_path.exists():
