@@ -93,6 +93,14 @@ root = pathlib.Path(r"__ROOT__")
 dirty_raw = os.environ.get("DIRTY_JSON", "[]")
 dirty_list = [p.strip().lower() for p in json.loads(dirty_raw) if p.strip()]
 dirty_set = set(dirty_list)
+manager_repo = str((root / ".." / "solid-dataspace-manager").resolve()).lower()
+semantic_catalog_repo = str((root / ".." / "semantic-data-catalog").resolve()).lower()
+affected_set = set(dirty_set)
+
+# Rebuild the manager on catalog releases by forcing a real manager version bump.
+if semantic_catalog_repo in dirty_set:
+    affected_set.add(manager_repo)
+
 targets = [
     (root / ".." / "solid-dataspace-manager" / "package.json", "0.3.0"),
     (root / ".." / "solid-data-manager" / "package.json", "0.4.0"),
@@ -111,7 +119,7 @@ for pkg_path, start in targets:
     if pkg_path.parent.name == "frontend":
         repo_root = pkg_path.parent.parent
     repo_key = str(repo_root.resolve()).lower()
-    if repo_key not in dirty_set:
+    if repo_key not in affected_set:
         continue
     data = json.loads(pkg_path.read_text(encoding="utf-8"))
     current = data.get("version", "0.0.0")
