@@ -71,6 +71,7 @@ services:
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
+      - semantic_data_catalog_dist:/semantic-data-catalog/dist
       - /app/node_modules
     expose: ["3001"]
     networks:
@@ -83,10 +84,6 @@ services:
     restart: unless-stopped
     working_dir: /app
     environment:
-      - REACT_APP_OIDC_ISSUER=https://solidcommunity.net
-      - REACT_APP_REDIRECT_URL=http://localhost/solid-data-manager/
-      - REACT_APP_FOOTER_LOGOS=/Logo_TMDT.png
-      - REACT_APP_VERSION=0.1.0
       - PORT=3002
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
@@ -138,14 +135,13 @@ services:
     restart: unless-stopped
     environment:
       REACT_APP_OIDC_ISSUER: https://solidcommunity.net
-      REACT_APP_REDIRECT_URL: http://localhost/semantic-data-catalog/
-      REACT_APP_FOOTER_LOGOS: /assets/images/Logo_GesundesTal.png,/assets/images/Icon_GesundesTal.png,/assets/images/Logo_KIT.svg
-      REACT_APP_VERSION: "0.7.4"
       PORT: 5000
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
+    command: sh -c "npm install && npm run build:lib && (npm run build:lib:watch & npm run start-watch)"
     volumes:
       - ../semantic-data-catalog/frontend:/app/frontend:delegated
+      - semantic_data_catalog_dist:/app/frontend/dist
       - /app/frontend/node_modules
     expose: ["5000"]
     networks:
@@ -222,6 +218,7 @@ volumes:
   semantic_data_catalog_fuseki_data:
   nodered-data:
   solid_data_manager_dist:
+  semantic_data_catalog_dist:
 
 networks:
   solid-dataspace:

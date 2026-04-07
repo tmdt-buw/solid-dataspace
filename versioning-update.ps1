@@ -93,11 +93,20 @@ root = pathlib.Path(r"__ROOT__")
 dirty_raw = os.environ.get("DIRTY_JSON", "[]")
 dirty_list = [p.strip().lower() for p in json.loads(dirty_raw) if p.strip()]
 dirty_set = set(dirty_list)
+manager_repo = str((root / ".." / "solid-dataspace-manager").resolve()).lower()
+semantic_catalog_repo = str((root / ".." / "semantic-data-catalog").resolve()).lower()
+affected_set = set(dirty_set)
+
+# Rebuild the manager on catalog releases by forcing a real manager version bump.
+if semantic_catalog_repo in dirty_set:
+    affected_set.add(manager_repo)
+
 targets = [
     (root / ".." / "solid-dataspace-manager" / "package.json", "0.3.0"),
     (root / ".." / "solid-data-manager" / "package.json", "0.4.0"),
     (root / ".." / "smart-city-urban-heat-monitoring" / "package.json", "0.3.0"),
     (root / ".." / "semantic-data-catalog" / "frontend" / "package.json", "0.8.0"),
+    (root / ".." / "solid-chatbot" / "package.json", "0.1.0"),
 ]
 
 versions = {}
@@ -110,7 +119,7 @@ for pkg_path, start in targets:
     if pkg_path.parent.name == "frontend":
         repo_root = pkg_path.parent.parent
     repo_key = str(repo_root.resolve()).lower()
-    if repo_key not in dirty_set:
+    if repo_key not in affected_set:
         continue
     data = json.loads(pkg_path.read_text(encoding="utf-8"))
     current = data.get("version", "0.0.0")
@@ -141,6 +150,9 @@ for pkg_path, start in targets:
     if pkg_path.name == "package.json" and pkg_path.parent.name == "smart-city-urban-heat-monitoring":
         version_ts = pkg_path.parent / "src" / "app" / "version.ts"
         version_ts.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-chatbot":
+        version_js = pkg_path.parent / "frontend" / "src" / "version.js"
+        version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
 
 versions_path = root / ".." / "solid-dataspace-manager" / "src" / "versions.js"
 if versions_path.exists():
