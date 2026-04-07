@@ -5,9 +5,9 @@ services:
     environment:
       APP_BRANDING_JSON: >-
         {
-          "projectName": "DACE",
-          "logoUrl": "/project-logos/DACE_Logo_grün.png",
-          "logoAlt": "DACE Logo"
+          "projectName": "Gesundes Tal",
+          "logoUrl": "/project-logos/GesundesTal_Logo.png",
+          "logoAlt": "Gesundes Tal Logo"
         }
 
       APP_CONFIG_APPS_JSON: >-
@@ -49,7 +49,7 @@ services:
             "label": "Solid Community",
             "issuer": "https://solidcommunity.net",
             "note": "Public community server",
-            "enabled": false,
+            "enabled": true,
             "recommended": false
           }
         ]
