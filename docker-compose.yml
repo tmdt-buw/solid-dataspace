@@ -2,6 +2,57 @@ services:
   solid-dataspace-manager:
     image: son1i/solid-dataspace-manager:latest
     restart: unless-stopped
+    environment:
+      APP_BRANDING_JSON: >-
+        {
+          "projectName": "DACE",
+          "logoUrl": "/project-logos/DACE_Logo_grün.png",
+          "logoAlt": "DACE Logo"
+        }
+
+      APP_CONFIG_APPS_JSON: >-
+        [
+          {
+            "id": "smart-city-urban-heat-monitoring",
+            "title": "Urban Heat Monitoring",
+            "href": "/web/smart-city-urban-heat-monitoring",
+            "section": "applications",
+            "iconKey": "temperature",
+            "visible": true,
+            "order": 10,
+            "linkType": "internal"
+          },
+          {
+            "id": "solid-health-app",
+            "title": "Solid Health App",
+            "href": "/web/solid-health-app",
+            "section": "applications",
+            "iconKey": "health",
+            "visible": true,
+            "order": 20,
+            "linkType": "internal"
+          }
+        ]
+
+      APP_CONFIG_PROVIDERS_JSON: >-
+        [
+          {
+            "id": "tmdt-solid",
+            "label": "TMDT Solid",
+            "issuer": "https://tmdt-solid-community-server.de",
+            "note": "Recommended",
+            "enabled": true,
+            "recommended": true
+          },
+          {
+            "id": "solid-community",
+            "label": "Solid Community",
+            "issuer": "https://solidcommunity.net",
+            "note": "Public community server",
+            "enabled": false,
+            "recommended": false
+          }
+        ]
     expose: ["3001"]
     networks:
       solid-dataspace:
@@ -27,15 +78,8 @@ services:
           - solid-dataspace-dev-smart-city-urban-heat-monitoring
 
   solid-health-app:
-    build:
-      context: C:/solid-health-app
+    image: son1i/solid-health-app:latest
     restart: unless-stopped
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
-    volumes:
-      - C:/solid-health-app:/app:delegated
-      - /app/node_modules
     expose: ["3000"]
     networks:
       solid-dataspace:

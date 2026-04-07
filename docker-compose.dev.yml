@@ -41,7 +41,7 @@ services:
             "href": "/web/solid-health-app",
             "section": "applications",
             "iconKey": "health",
-            "visible": true,
+            "visible": false,
             "order": 20,
             "linkType": "internal"
           }
@@ -116,6 +116,7 @@ services:
   solid-health-app:
     build:
       context: ../solid-health-app
+      dockerfile: Dockerfile.dev
     restart: unless-stopped
     environment:
       - CHOKIDAR_USEPOLLING=true

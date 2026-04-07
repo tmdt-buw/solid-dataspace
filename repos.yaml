@@ -33,7 +33,7 @@ repos:
       - data-manager
 
   solid-health-app:
-    path: C:\solid-health-app
+    path: ..\solid-health-app
     repo: https://github.com/hoelk-f/solid-health-app
     scope:
       - health
