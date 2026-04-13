@@ -116,7 +116,7 @@ services:
   solid-health-app:
     build:
       context: ../solid-health-app
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     restart: unless-stopped
     environment:
       - CHOKIDAR_USEPOLLING=true
