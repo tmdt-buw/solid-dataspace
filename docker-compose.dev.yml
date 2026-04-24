@@ -26,16 +26,6 @@ services:
       APP_CONFIG_APPS_JSON: >-
         [
           {
-            "id": "smart-city-urban-heat-monitoring",
-            "title": "Urban Heat Monitoring",
-            "href": "/web/smart-city-urban-heat-monitoring",
-            "section": "applications",
-            "iconKey": "temperature",
-            "visible": true,
-            "order": 10,
-            "linkType": "internal"
-          },
-          {
             "id": "smart-city-environmental-monitoring",
             "title": "Environmental Monitoring",
             "href": "/web/smart-city-environmental-monitoring",
@@ -107,21 +97,6 @@ services:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-data-manager
-
-  smart-city-urban-heat-monitoring:
-    build:
-      context: ../smart-city-urban-heat-monitoring
-    restart: unless-stopped
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-    volumes:
-      - ../smart-city-urban-heat-monitoring:/app:delegated
-      - /app/node_modules
-    expose: ["4200"]
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-smart-city-urban-heat-monitoring
 
   smart-city-environmental-monitoring:
     image: node:20-alpine
@@ -236,7 +211,6 @@ services:
     depends_on:
       - solid-dataspace-manager
       - solid-data-manager
-      - smart-city-urban-heat-monitoring
       - smart-city-environmental-monitoring
       - solid-health-app
       - semantic-data-catalog-frontend
