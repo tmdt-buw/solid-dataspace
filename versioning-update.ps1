@@ -95,16 +95,17 @@ dirty_list = [p.strip().lower() for p in json.loads(dirty_raw) if p.strip()]
 dirty_set = set(dirty_list)
 manager_repo = str((root / ".." / "solid-dataspace-manager").resolve()).lower()
 semantic_catalog_repo = str((root / ".." / "semantic-data-catalog").resolve()).lower()
+environmental_repo = str((root / ".." / "environmental-monitoring").resolve()).lower()
 affected_set = set(dirty_set)
 
-# Rebuild the manager on catalog releases by forcing a real manager version bump.
-if semantic_catalog_repo in dirty_set:
+# Rebuild the manager when embedded/external app version badges need refreshing.
+if semantic_catalog_repo in dirty_set or environmental_repo in dirty_set:
     affected_set.add(manager_repo)
 
 targets = [
     (root / ".." / "solid-dataspace-manager" / "package.json", "0.3.0"),
     (root / ".." / "solid-data-manager" / "package.json", "0.4.0"),
-    (root / ".." / "smart-city-urban-heat-monitoring" / "package.json", "0.3.0"),
+    (root / ".." / "environmental-monitoring" / "package.json", "0.3.0"),
     (root / ".." / "semantic-data-catalog" / "frontend" / "package.json", "0.8.0"),
     (root / ".." / "solid-chatbot" / "package.json", "0.1.0"),
 ]
@@ -141,15 +142,24 @@ for pkg_path, start in targets:
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-data-manager":
         version_js = pkg_path.parent / "src" / "version.js"
         version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
-        versions["dataManagerVersion"] = new_version
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-dataspace-manager":
         versions["appVersion"] = new_version
     if pkg_path.name == "package.json" and pkg_path.parent.name == "frontend":
         version_js = pkg_path.parent / "src" / "version.js"
         version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
-    if pkg_path.name == "package.json" and pkg_path.parent.name == "smart-city-urban-heat-monitoring":
-        version_ts = pkg_path.parent / "src" / "app" / "version.ts"
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "environmental-monitoring":
+        version_ts = pkg_path.parent / "src" / "version.ts"
         version_ts.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+        external_links = root / ".." / "solid-dataspace-manager" / "src" / "externalLinks.js"
+        if external_links.exists():
+            content = external_links.read_text(encoding="utf-8")
+            content = re.sub(
+                r'(slug:\s*"environmental-monitoring",[\s\S]*?version:\s*")[^"]+(")',
+                rf'\g<1>{new_version}\2',
+                content,
+                count=1,
+            )
+            external_links.write_text(content, encoding="utf-8")
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-chatbot":
         version_js = pkg_path.parent / "frontend" / "src" / "version.js"
         version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
@@ -161,17 +171,11 @@ if versions_path.exists():
         match = re.search(r'export const appVersion = \"([^\"]+)\";', existing)
         if match:
             versions["appVersion"] = match.group(1)
-    if "dataManagerVersion" not in versions:
-        match = re.search(r'export const dataManagerVersion = \"([^\"]+)\";', existing)
-        if match:
-            versions["dataManagerVersion"] = match.group(1)
 
 if versions:
     app_version = versions.get("appVersion", "0.0.0")
-    data_manager_version = versions.get("dataManagerVersion", "0.0.0")
     versions_path.write_text(
-        f'export const appVersion = \"{app_version}\";\n'
-        f'export const dataManagerVersion = \"{data_manager_version}\";\n',
+        f'export const appVersion = \"{app_version}\";\n',
         encoding="utf-8"
     )
 

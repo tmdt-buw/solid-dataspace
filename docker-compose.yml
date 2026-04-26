@@ -10,12 +10,29 @@ services:
           "logoAlt": "Gesundes Tal Logo"
         }
 
+      APP_FUNDING_LOGOS_JSON: >-
+        [
+          {
+            "id": "bmwsb",
+            "src": "/foerder-logos/BMWSB.png",
+            "alt": "Federal Ministry for Housing, Urban Development and Building",
+            "order": 1
+          },
+          {
+            "id": "kfw",
+            "src": "/foerder-logos/KFW.svg",
+            "alt": "KfW",
+            "order": 2
+          }
+        ]
+      APP_FUNDING_GRANT_NUMBER: "19454890"
+
       APP_CONFIG_APPS_JSON: >-
         [
           {
-            "id": "smart-city-environmental-monitoring",
+            "id": "environmental-monitoring",
             "title": "Environmental Monitoring",
-            "href": "/web/smart-city-environmental-monitoring",
+            "href": "/web/environmental-monitoring",
             "section": "applications",
             "iconKey": "temperature",
             "visible": true,
@@ -53,6 +70,8 @@ services:
             "recommended": false
           }
         ]
+    volumes:
+      - ../solid-dataspace-manager/public/foerder-logos:/app/public/foerder-logos:ro
     expose: ["3001"]
     networks:
       solid-dataspace:
@@ -68,14 +87,14 @@ services:
         aliases:
           - solid-dataspace-dev-solid-data-manager
 
-  smart-city-environmental-monitoring:
-    image: son1i/smart-city-environmental-monitoring:latest
+  environmental-monitoring:
+    image: son1i/environmental-monitoring:latest
     restart: unless-stopped
     expose: ["5173"]
     networks:
       solid-dataspace:
         aliases:
-          - solid-dataspace-dev-smart-city-environmental-monitoring
+          - solid-dataspace-dev-environmental-monitoring
 
   solid-health-app:
     image: son1i/solid-health-app:latest
@@ -153,7 +172,7 @@ services:
     depends_on:
       - solid-dataspace-manager
       - solid-data-manager
-      - smart-city-environmental-monitoring
+      - environmental-monitoring
       - solid-health-app
       - semantic-data-catalog-frontend
       - semantic-data-catalog-backend

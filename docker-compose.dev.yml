@@ -23,12 +23,29 @@ services:
           "logoAlt": "Gesundes Tal Logo"
         }
 
+      APP_FUNDING_LOGOS_JSON: >-
+        [
+          {
+            "id": "bmwsb",
+            "src": "/foerder-logos/BMWSB.png",
+            "alt": "Federal Ministry for Housing, Urban Development and Building",
+            "order": 1
+          },
+          {
+            "id": "kfw",
+            "src": "/foerder-logos/KFW.svg",
+            "alt": "KfW",
+            "order": 2
+          }
+        ]
+      APP_FUNDING_GRANT_NUMBER: "19454890"
+
       APP_CONFIG_APPS_JSON: >-
         [
           {
-            "id": "smart-city-environmental-monitoring",
+            "id": "environmental-monitoring",
             "title": "Environmental Monitoring",
-            "href": "/web/smart-city-environmental-monitoring",
+            "href": "/web/environmental-monitoring",
             "section": "applications",
             "iconKey": "temperature",
             "visible": true,
@@ -67,12 +84,15 @@ services:
           }
         ]
 
-    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ]; do sleep 1; done; cd /app && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm start"
+    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ]; do sleep 1; done; cd /app && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm install --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist && npm start"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
       - semantic_data_catalog_dist:/semantic-data-catalog/dist
       - /app/node_modules
+    depends_on:
+      - solid-data-manager
+      - semantic-data-catalog-frontend
     expose: ["3001"]
     networks:
       solid-dataspace:
@@ -98,7 +118,7 @@ services:
         aliases:
           - solid-dataspace-dev-solid-data-manager
 
-  smart-city-environmental-monitoring:
+  environmental-monitoring:
     image: node:20-alpine
     restart: unless-stopped
     working_dir: /app
@@ -107,13 +127,13 @@ services:
       - WATCHPACK_POLLING=true
     command: sh -c "npm install && npm run dev"
     volumes:
-      - ../smart-city-environmental-monitoring:/app:delegated
+      - ../environmental-monitoring:/app:delegated
       - /app/node_modules
     expose: ["5173"]
     networks:
       solid-dataspace:
         aliases:
-          - solid-dataspace-dev-smart-city-environmental-monitoring
+          - solid-dataspace-dev-environmental-monitoring
 
   solid-health-app:
     build:
@@ -211,7 +231,7 @@ services:
     depends_on:
       - solid-dataspace-manager
       - solid-data-manager
-      - smart-city-environmental-monitoring
+      - environmental-monitoring
       - solid-health-app
       - semantic-data-catalog-frontend
       - semantic-data-catalog-backend
