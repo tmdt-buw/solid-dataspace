@@ -70,8 +70,6 @@ services:
             "recommended": false
           }
         ]
-    volumes:
-      - ../solid-dataspace-manager/public/foerder-logos:/app/public/foerder-logos:ro
     expose: ["3001"]
     networks:
       solid-dataspace:
