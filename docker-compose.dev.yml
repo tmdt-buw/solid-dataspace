@@ -18,27 +18,16 @@ services:
 
       APP_BRANDING_JSON: >-
         {
-          "projectName": "Gesundes Tal",
-          "logoUrl": "/project-logos/GesundesTal_Logo.png",
-          "logoAlt": "Gesundes Tal Logo"
+          "projectName": "TMDT",
+          "logoUrl": "/project-logos/Logo_TMDT.png",
+          "logoAlt": "TMDT Logo"
         }
 
       APP_FUNDING_LOGOS_JSON: >-
         [
-          {
-            "id": "bmwsb",
-            "src": "/foerder-logos/BMWSB.png",
-            "alt": "Federal Ministry for Housing, Urban Development and Building",
-            "order": 1
-          },
-          {
-            "id": "kfw",
-            "src": "/foerder-logos/KFW.svg",
-            "alt": "KfW",
-            "order": 2
-          }
+          
         ]
-      APP_FUNDING_GRANT_NUMBER: "19454890"
+      APP_FUNDING_GRANT_NUMBER: ""
 
       APP_CONFIG_APPS_JSON: >-
         [
@@ -58,8 +47,18 @@ services:
             "href": "/web/solid-health-app",
             "section": "applications",
             "iconKey": "health",
-            "visible": false,
+            "visible": true,
             "order": 20,
+            "linkType": "internal"
+          },
+          {
+            "id": "solid-chatbot",
+            "title": "Solid Chatbot",
+            "href": "/web/solid-chatbot",
+            "section": "applications",
+            "iconKey": "rocketchat",
+            "visible": ${SOLID_CHATBOT_VISIBLE:-true},
+            "order": 25,
             "linkType": "internal"
           }
         ]
@@ -84,7 +83,7 @@ services:
           }
         ]
 
-    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ]; do sleep 1; done; cd /app && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm install --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist && npm start"
+    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ]; do sleep 1; done; cd /app && find /app/node_modules -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm install --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist && npm start"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
@@ -151,6 +150,66 @@ services:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-health-app
+
+  solid-chatbot:
+    build:
+      context: ../solid-chatbot/frontend
+      args:
+        PUBLIC_URL: /solid-chatbot
+        REACT_APP_CHAINLIT_URL: /chainlit/
+        REACT_APP_OIDC_ISSUER: ${SOLID_CHATBOT_OIDC_ISSUER:-https://tmdt-solid-community-server.de}
+    restart: unless-stopped
+    expose: ["3005"]
+    depends_on:
+      - solid-chatbot-backend
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-chatbot
+
+  solid-chatbot-backend:
+    build: ../solid-chatbot/backend
+    restart: unless-stopped
+    env_file:
+      - ../solid-chatbot/.env
+    environment:
+      CHAINLIT_DISABLE_TELEMETRY: "true"
+      QDRANT_URL: http://solid-chatbot-qdrant:6333
+      OLLAMA_URL: http://solid-chatbot-ollama:11434
+    volumes:
+      - ../solid-chatbot/backend:/app:delegated
+    expose: ["8001"]
+    depends_on:
+      solid-chatbot-qdrant:
+        condition: service_started
+      solid-chatbot-ollama:
+        condition: service_started
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-chatbot-backend
+
+  solid-chatbot-ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    volumes:
+      - solid_chatbot_ollama_data:/root/.ollama
+    expose: ["11434"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-chatbot-ollama
+
+  solid-chatbot-qdrant:
+    image: qdrant/qdrant:latest
+    restart: unless-stopped
+    volumes:
+      - solid_chatbot_qdrant_data:/qdrant/storage
+    expose: ["6333"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-chatbot-qdrant
 
   semantic-data-catalog-frontend:
     build:
@@ -229,19 +288,41 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
     depends_on:
-      - solid-dataspace-manager
-      - solid-data-manager
-      - environmental-monitoring
-      - solid-health-app
-      - semantic-data-catalog-frontend
-      - semantic-data-catalog-backend
-      - node-red
+      solid-dataspace-manager:
+        condition: service_started
+        restart: true
+      solid-data-manager:
+        condition: service_started
+        restart: true
+      environmental-monitoring:
+        condition: service_started
+        restart: true
+      solid-health-app:
+        condition: service_started
+        restart: true
+      solid-chatbot:
+        condition: service_started
+        restart: true
+      semantic-data-catalog-frontend:
+        condition: service_started
+        restart: true
+      semantic-data-catalog-backend:
+        condition: service_started
+        restart: true
+      semantic-data-catalog-fuseki:
+        condition: service_started
+        restart: true
+      node-red:
+        condition: service_started
+        restart: true
 
 volumes:
   semantic_data_catalog_fuseki_data:
   nodered-data:
   solid_data_manager_dist:
   semantic_data_catalog_dist:
+  solid_chatbot_qdrant_data:
+  solid_chatbot_ollama_data:
 
 networks:
   solid-dataspace:

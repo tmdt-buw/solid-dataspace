@@ -89,6 +89,24 @@ def cmp(a: str, b: str) -> int:
             return -1
     return 0
 
+def write_package_version(pkg_path: pathlib.Path, new_version: str) -> None:
+    if not pkg_path.exists():
+        return
+
+    data = json.loads(pkg_path.read_text(encoding="utf-8"))
+    data["version"] = new_version
+    pkg_path.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+
+    lock_path = pkg_path.parent / "package-lock.json"
+    if lock_path.exists():
+        lock = json.loads(lock_path.read_text(encoding="utf-8"))
+        if "version" in lock:
+            lock["version"] = new_version
+        packages = lock.get("packages")
+        if isinstance(packages, dict) and "" in packages and isinstance(packages[""], dict):
+            packages[""]["version"] = new_version
+        lock_path.write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8")
+
 root = pathlib.Path(r"__ROOT__")
 dirty_raw = os.environ.get("DIRTY_JSON", "[]")
 dirty_list = [p.strip().lower() for p in json.loads(dirty_raw) if p.strip()]
@@ -96,16 +114,19 @@ dirty_set = set(dirty_list)
 manager_repo = str((root / ".." / "solid-dataspace-manager").resolve()).lower()
 semantic_catalog_repo = str((root / ".." / "semantic-data-catalog").resolve()).lower()
 environmental_repo = str((root / ".." / "environmental-monitoring").resolve()).lower()
+solid_health_repo = str((root / ".." / "solid-health-app").resolve()).lower()
+solid_chatbot_repo = str((root / ".." / "solid-chatbot").resolve()).lower()
 affected_set = set(dirty_set)
 
 # Rebuild the manager when embedded/external app version badges need refreshing.
-if semantic_catalog_repo in dirty_set or environmental_repo in dirty_set:
+if semantic_catalog_repo in dirty_set or environmental_repo in dirty_set or solid_health_repo in dirty_set or solid_chatbot_repo in dirty_set:
     affected_set.add(manager_repo)
 
 targets = [
     (root / ".." / "solid-dataspace-manager" / "package.json", "0.3.0"),
     (root / ".." / "solid-data-manager" / "package.json", "0.4.0"),
     (root / ".." / "environmental-monitoring" / "package.json", "0.3.0"),
+    (root / ".." / "solid-health-app" / "package.json", "0.1.0"),
     (root / ".." / "semantic-data-catalog" / "frontend" / "package.json", "0.8.0"),
     (root / ".." / "solid-chatbot" / "package.json", "0.1.0"),
 ]
@@ -160,9 +181,34 @@ for pkg_path, start in targets:
                 count=1,
             )
             external_links.write_text(content, encoding="utf-8")
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-health-app":
+        version_ts = pkg_path.parent / "src" / "version.ts"
+        version_ts.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+        external_links = root / ".." / "solid-dataspace-manager" / "src" / "externalLinks.js"
+        if external_links.exists():
+            content = external_links.read_text(encoding="utf-8")
+            content = re.sub(
+                r'(slug:\s*"solid-health-app",[\s\S]*?version:\s*")[^"]+(")',
+                rf'\g<1>{new_version}\2',
+                content,
+                count=1,
+            )
+            external_links.write_text(content, encoding="utf-8")
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-chatbot":
+        frontend_pkg = pkg_path.parent / "frontend" / "package.json"
+        write_package_version(frontend_pkg, new_version)
         version_js = pkg_path.parent / "frontend" / "src" / "version.js"
         version_js.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+        external_links = root / ".." / "solid-dataspace-manager" / "src" / "externalLinks.js"
+        if external_links.exists():
+            content = external_links.read_text(encoding="utf-8")
+            content = re.sub(
+                r'(slug:\s*"solid-chatbot",[\s\S]*?version:\s*")[^"]+(")',
+                rf'\g<1>{new_version}\2',
+                content,
+                count=1,
+            )
+            external_links.write_text(content, encoding="utf-8")
 
 versions_path = root / ".." / "solid-dataspace-manager" / "src" / "versions.js"
 if versions_path.exists():
