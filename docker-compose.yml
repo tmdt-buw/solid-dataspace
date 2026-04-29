@@ -104,12 +104,6 @@ services:
 
   solid-chatbot:
     image: son1i/solid-chatbot-frontend:latest
-    build:
-      context: ../solid-chatbot/frontend
-      args:
-        PUBLIC_URL: /solid-chatbot
-        REACT_APP_CHAINLIT_URL: /chainlit/
-        REACT_APP_OIDC_ISSUER: ${SOLID_CHATBOT_OIDC_ISSUER:-https://tmdt-solid-community-server.de}
     restart: unless-stopped
     expose: ["3005"]
     depends_on:
@@ -121,7 +115,6 @@ services:
 
   solid-chatbot-backend:
     image: son1i/solid-chatbot-backend:latest
-    build: ../solid-chatbot/backend
     restart: unless-stopped
     env_file:
       - ../solid-chatbot/.env
