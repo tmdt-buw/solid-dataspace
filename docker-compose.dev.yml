@@ -84,11 +84,12 @@ services:
           }
         ]
 
-    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ]; do sleep 1; done; cd /app && find /app/node_modules -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm install --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist && npm start"
+    command: sh -c "while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ] || [ ! -f /solid-chatbot/dist/package.json ]; do sleep 1; done; cd /app && find /app/node_modules -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && npm install --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist /solid-chatbot/dist && npm start"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
       - semantic_data_catalog_dist:/semantic-data-catalog/dist
+      - solid_chatbot_dist:/solid-chatbot/dist
       - /app/node_modules
     depends_on:
       - solid-data-manager
@@ -153,13 +154,20 @@ services:
           - solid-dataspace-dev-solid-health-app
 
   solid-chatbot:
-    build:
-      context: ../solid-chatbot/frontend
-      args:
-        PUBLIC_URL: /solid-chatbot
-        REACT_APP_CHAINLIT_URL: /chainlit/
-        REACT_APP_OIDC_ISSUER: ${SOLID_CHATBOT_OIDC_ISSUER:-https://tmdt-solid-community-server.de}
+    image: node:20-alpine
     restart: unless-stopped
+    working_dir: /app
+    environment:
+      - PUBLIC_URL=/solid-chatbot
+      - REACT_APP_CHAINLIT_URL=/chainlit/
+      - REACT_APP_OIDC_ISSUER=${SOLID_CHATBOT_OIDC_ISSUER:-https://tmdt-solid-community-server.de}
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm install && npm run build:lib && (npm run build:lib:watch & npm run start-watch)"
+    volumes:
+      - ../solid-chatbot/frontend:/app:delegated
+      - solid_chatbot_dist:/app/dist
+      - /app/node_modules
     expose: ["3005"]
     depends_on:
       - solid-chatbot-backend
@@ -322,6 +330,7 @@ volumes:
   nodered-data:
   solid_data_manager_dist:
   semantic_data_catalog_dist:
+  solid_chatbot_dist:
   solid_chatbot_qdrant_data:
   solid_chatbot_ollama_data:
 
