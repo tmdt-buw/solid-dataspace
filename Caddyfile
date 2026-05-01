@@ -21,26 +21,22 @@
         lb_try_interval 1s
     }
 
-    reverse_proxy /chainlit* solid-chatbot:3005 {
+    reverse_proxy /chainlit* solid-chatbot-backend:8001 {
         lb_try_duration 300s
         lb_try_interval 1s
     }
-    reverse_proxy /rag* solid-chatbot:3005 {
+    reverse_proxy /rag* solid-chatbot-backend:8001 {
         lb_try_duration 300s
         lb_try_interval 1s
     }
-    reverse_proxy /set-webid* solid-chatbot:3005 {
-        lb_try_duration 300s
-        lb_try_interval 1s
+    respond /set-webid* 204 {
+        close
     }
 
     redir /solid-chatbot /solid-chatbot/
-    route /solid-chatbot* {
-        uri strip_prefix /solid-chatbot
-        reverse_proxy solid-chatbot:3005 {
-            lb_try_duration 300s
-            lb_try_interval 1s
-        }
+    reverse_proxy /solid-chatbot/* solid-chatbot:3005 {
+        lb_try_duration 300s
+        lb_try_interval 1s
     }
 
     route /fuseki* {
