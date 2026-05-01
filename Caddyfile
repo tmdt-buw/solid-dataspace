@@ -1,4 +1,5 @@
 :80 {
+    redir /semantic-data-catalog /semantic-data-catalog/
     reverse_proxy /semantic-data-catalog/* semantic-data-catalog-frontend:5000 {
         lb_try_duration 300s
         lb_try_interval 1s
@@ -8,14 +9,17 @@
         lb_try_interval 1s
     }
 
+    redir /environmental-monitoring /environmental-monitoring/
     reverse_proxy /environmental-monitoring/* environmental-monitoring:5173 {
         lb_try_duration 300s
         lb_try_interval 1s
     }
+    redir /solid-data-manager /solid-data-manager/
     reverse_proxy /solid-data-manager/* solid-data-manager:3002 {
         lb_try_duration 300s
         lb_try_interval 1s
     }
+    redir /solid-health-app /solid-health-app/
     reverse_proxy /solid-health-app/* solid-health-app:3000 {
         lb_try_duration 300s
         lb_try_interval 1s
