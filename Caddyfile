@@ -38,9 +38,12 @@
     }
 
     redir /solid-chatbot /solid-chatbot/
-    reverse_proxy /solid-chatbot/* solid-chatbot:3005 {
-        lb_try_duration 300s
-        lb_try_interval 1s
+    route /solid-chatbot/* {
+        uri strip_prefix /solid-chatbot
+        reverse_proxy solid-chatbot:3005 {
+            lb_try_duration 300s
+            lb_try_interval 1s
+        }
     }
 
     route /fuseki* {
