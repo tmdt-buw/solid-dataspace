@@ -22,9 +22,12 @@ services:
         {
           "projectName": "TMDT",
           "logoUrl": "/project-logos/Logo_TMDT.png",
-          "logoAlt": "TMDT Logo"
+          "logoAlt": "TMDT Logo",
+          "logoWidth": "95px",
+          "logoHeight": "auto"
         }
 
+      # Funding logo entries can also set logoWidth, logoHeight, logoMaxWidth, and logoMaxHeight.
       APP_FUNDING_LOGOS_JSON: >-
         [
           
