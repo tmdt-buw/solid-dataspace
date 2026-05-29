@@ -25,6 +25,11 @@ $scriptRoot = Get-CurrentScriptRoot
 $projectsRoot = (Resolve-Path -LiteralPath (Join-Path $scriptRoot "..")).Path
 $projectDirs = Get-ChildItem -LiteralPath $projectsRoot -Directory | Sort-Object Name
 
+$tmdtProjects = @(
+  "semantic-data-catalog",
+  "solid-data-manager"
+)
+
 $pushedCount = 0
 $skippedCount = 0
 $failures = New-Object System.Collections.Generic.List[object]
@@ -52,11 +57,37 @@ foreach ($project in $projectDirs) {
       if ($exitCode -ne 0) {
         $failures.Add([pscustomobject]@{
           Repository = $project.Name
+          Remote = $Remote
+          Branch = $Branch
           ExitCode = $exitCode
         })
         Write-Warning "Failed: $($project.Name) (exit $exitCode)"
       } else {
         $pushedCount += 1
+      }
+    }
+
+    if ($tmdtProjects -contains $project.Name) {
+      $tmdtRemote = "tmdt"
+      $tmdtBranch = "main"
+      $command = "git push $tmdtRemote $tmdtBranch"
+
+      if ($PSCmdlet.ShouldProcess($repoPath, $command)) {
+        Write-Host "Push: $($project.Name) -> $tmdtRemote/$tmdtBranch"
+        git push $tmdtRemote $tmdtBranch
+        $exitCode = $LASTEXITCODE
+
+        if ($exitCode -ne 0) {
+          $failures.Add([pscustomobject]@{
+            Repository = $project.Name
+            Remote = $tmdtRemote
+            Branch = $tmdtBranch
+            ExitCode = $exitCode
+          })
+          Write-Warning "Failed: $($project.Name) -> $tmdtRemote/$tmdtBranch (exit $exitCode)"
+        } else {
+          $pushedCount += 1
+        }
       }
     }
   } finally {
@@ -70,7 +101,7 @@ Write-Host "Summary: pushed=$pushedCount skipped=$skippedCount failed=$($failure
 if ($failures.Count -gt 0) {
   Write-Host "Failures:"
   foreach ($failure in $failures) {
-    Write-Host " - $($failure.Repository) (exit $($failure.ExitCode))"
+    Write-Host " - $($failure.Repository) -> $($failure.Remote)/$($failure.Branch) (exit $($failure.ExitCode))"
   }
   exit 1
 }
