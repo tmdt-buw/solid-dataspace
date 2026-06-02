@@ -17,6 +17,10 @@ services:
       WATCHPACK_POLLING: "true"
       WDS_SOCKET_PORT: "80"
       DATASPACE_MANAGER_PACKAGE_SOURCE: ${DATASPACE_MANAGER_PACKAGE_SOURCE:-local}
+      APP_SYNC_WORKER_ENABLED: "true"
+      APP_SYNC_WORKER_API_URL: /sync-worker
+      APP_SYNC_WORKER_SERVICE_WEBID: ${SOLID_SYNC_WORKER_WEBID:-}
+      APP_SYNC_WORKER_INTERVAL_MINUTES: "5"
 
       APP_BRANDING_JSON: >-
         {
@@ -106,6 +110,30 @@ services:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-dataspace-manager
+
+  solid-data-connection-sync-worker:
+    build:
+      context: ../solid-data-connection-sync-worker
+    image: solid-data-connection-sync-worker:local
+    restart: unless-stopped
+    environment:
+      PORT: 8080
+      WORKER_DB_PATH: /data/participants.sqlite
+      WORKER_DB_SECRET: ${SOLID_SYNC_WORKER_DB_SECRET:-solid-dataspace-dev}
+      WORKER_SYNC_TICK_SECONDS: 300
+      WORKER_AUTH_MODE: auto
+      WORKER_WEBID: ${SOLID_SYNC_WORKER_WEBID:-}
+      WORKER_OIDC_ISSUER: ${SOLID_SYNC_WORKER_OIDC_ISSUER:-}
+      WORKER_CLIENT_ID: ${SOLID_SYNC_WORKER_CLIENT_ID:-}
+      WORKER_CLIENT_SECRET: ${SOLID_SYNC_WORKER_CLIENT_SECRET:-}
+      WORKER_ALLOWED_ORIGINS: ${SOLID_SYNC_WORKER_ALLOWED_ORIGINS:-http://localhost,http://127.0.0.1}
+    volumes:
+      - solid_data_connection_sync_worker_data:/data
+    expose: ["8080"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-data-connection-sync-worker
 
   solid-data-manager:
     image: node:18-alpine
@@ -289,8 +317,6 @@ services:
       - ./settings.js:/data/settings.js
       - nodered-data:/data
     expose: ["1880", "1883", "1884"]
-    ports:
-      - "1883"
     networks:
       solid-dataspace:
         aliases:
@@ -336,6 +362,9 @@ services:
       node-red:
         condition: service_started
         restart: true
+      solid-data-connection-sync-worker:
+        condition: service_started
+        restart: true
 
 volumes:
   semantic_data_catalog_fuseki_data:
@@ -346,8 +375,13 @@ volumes:
   solid_chatbot_dist:
   solid_chatbot_qdrant_data:
   solid_chatbot_ollama_data:
+  solid_data_connection_sync_worker_data:
 
 networks:
   solid-dataspace:
-    external: true
     name: solid-dataspace
+    enable_ipv6: true
+    ipam:
+      config:
+        - subnet: 172.23.0.0/16
+        - subnet: fd00:1234:5678:23::/64

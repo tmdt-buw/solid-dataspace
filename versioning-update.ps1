@@ -125,6 +125,7 @@ if semantic_catalog_repo in dirty_set or environmental_repo in dirty_set or soli
 targets = [
     (root / ".." / "solid-dataspace-manager" / "package.json", "0.3.0"),
     (root / ".." / "solid-data-manager" / "package.json", "0.4.0"),
+    (root / ".." / "solid-data-connection-sync-worker" / "package.json", "0.1.0"),
     (root / ".." / "environmental-monitoring" / "package.json", "0.3.0"),
     (root / ".." / "solid-health-app" / "package.json", "0.1.0"),
     (root / ".." / "semantic-data-catalog" / "frontend" / "package.json", "0.8.0"),

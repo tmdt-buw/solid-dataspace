@@ -59,6 +59,14 @@
         lb_try_interval 1s
     }
 
+    route /sync-worker/* {
+        uri strip_prefix /sync-worker
+        reverse_proxy solid-data-connection-sync-worker:8080 {
+            lb_try_duration 300s
+            lb_try_interval 1s
+        }
+    }
+
     reverse_proxy solid-dataspace-manager:3001 {
         lb_try_duration 300s
         lb_try_interval 1s

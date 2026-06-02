@@ -21,9 +21,28 @@ function Test-GitRepository([string]$Path) {
   return Test-Path -LiteralPath (Join-Path $Path ".git")
 }
 
+function Get-ProjectPaths([string]$ScriptRoot) {
+  $paths = New-Object System.Collections.Generic.List[string]
+  $paths.Add((Resolve-Path -LiteralPath $ScriptRoot).Path)
+
+  $reposFile = Join-Path $ScriptRoot "repos.yaml"
+  if (Test-Path -LiteralPath $reposFile) {
+    Get-Content -LiteralPath $reposFile | ForEach-Object {
+      if ($_ -match "^\s*path:\s*(.+)\s*$") {
+        $relativePath = $Matches[1].Trim()
+        $resolved = Resolve-Path -LiteralPath (Join-Path $ScriptRoot $relativePath) -ErrorAction SilentlyContinue
+        if ($resolved) {
+          $paths.Add($resolved.Path)
+        }
+      }
+    }
+  }
+
+  return $paths | Select-Object -Unique | Sort-Object
+}
+
 $scriptRoot = Get-CurrentScriptRoot
-$projectsRoot = (Resolve-Path -LiteralPath (Join-Path $scriptRoot "..")).Path
-$projectDirs = Get-ChildItem -LiteralPath $projectsRoot -Directory | Sort-Object Name
+$projectPaths = Get-ProjectPaths -ScriptRoot $scriptRoot
 
 $tmdtProjects = @(
   "semantic-data-catalog",
@@ -34,13 +53,13 @@ $pushedCount = 0
 $skippedCount = 0
 $failures = New-Object System.Collections.Generic.List[object]
 
-Write-Host "Projects root: $projectsRoot"
+Write-Host "Projects root: $((Resolve-Path -LiteralPath (Join-Path $scriptRoot '..')).Path)"
 
-foreach ($project in $projectDirs) {
-  $repoPath = $project.FullName
+foreach ($repoPath in $projectPaths) {
+  $projectName = Split-Path -Leaf $repoPath
 
   if (-not (Test-GitRepository -Path $repoPath)) {
-    Write-Host "Skip (no .git): $($project.Name)"
+    Write-Host "Skip (no .git): $projectName"
     $skippedCount += 1
     continue
   }
@@ -50,41 +69,41 @@ foreach ($project in $projectDirs) {
     $command = "git push $Remote $Branch"
 
     if ($PSCmdlet.ShouldProcess($repoPath, $command)) {
-      Write-Host "Push: $($project.Name)"
+      Write-Host "Push: $projectName"
       git push $Remote $Branch
       $exitCode = $LASTEXITCODE
 
       if ($exitCode -ne 0) {
         $failures.Add([pscustomobject]@{
-          Repository = $project.Name
+          Repository = $projectName
           Remote = $Remote
           Branch = $Branch
           ExitCode = $exitCode
         })
-        Write-Warning "Failed: $($project.Name) (exit $exitCode)"
+        Write-Warning "Failed: $projectName (exit $exitCode)"
       } else {
         $pushedCount += 1
       }
     }
 
-    if ($tmdtProjects -contains $project.Name) {
+    if ($tmdtProjects -contains $projectName) {
       $tmdtRemote = "tmdt"
       $tmdtBranch = "main"
       $command = "git push $tmdtRemote $tmdtBranch"
 
       if ($PSCmdlet.ShouldProcess($repoPath, $command)) {
-        Write-Host "Push: $($project.Name) -> $tmdtRemote/$tmdtBranch"
+        Write-Host "Push: $projectName -> $tmdtRemote/$tmdtBranch"
         git push $tmdtRemote $tmdtBranch
         $exitCode = $LASTEXITCODE
 
         if ($exitCode -ne 0) {
           $failures.Add([pscustomobject]@{
-            Repository = $project.Name
+            Repository = $projectName
             Remote = $tmdtRemote
             Branch = $tmdtBranch
             ExitCode = $exitCode
           })
-          Write-Warning "Failed: $($project.Name) -> $tmdtRemote/$tmdtBranch (exit $exitCode)"
+          Write-Warning "Failed: $projectName -> $tmdtRemote/$tmdtBranch (exit $exitCode)"
         } else {
           $pushedCount += 1
         }

@@ -49,6 +49,15 @@ repos:
       - app
       - solid
 
+  solid-data-connection-sync-worker:
+    path: ..\solid-data-connection-sync-worker
+    repo: https://github.com/hoelk-f/solid-data-connection-sync-worker
+    scope:
+      - worker
+      - sync
+      - solid
+      - home-assistant
+
 routing:
   docker:
     owner: solid-dataspace-dev
