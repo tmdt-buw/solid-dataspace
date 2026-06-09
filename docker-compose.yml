@@ -58,7 +58,7 @@ services:
           {
             "id": "tmdt-solid",
             "label": "TMDT Solid Server",
-            "issuer": "https://tmdt-solid-community-server.de",
+            "issuer": "https://solid-community-server.tmdt.info",
             "note": "Recommended",
             "enabled": true,
             "recommended": true
@@ -72,39 +72,15 @@ services:
             "recommended": false
           }
         ]
-      APP_SYNC_WORKER_ENABLED: "true"
-      APP_SYNC_WORKER_API_URL: /sync-worker
+      APP_SYNC_WORKER_ENABLED: ${SOLID_SYNC_WORKER_ENABLED:-true}
+      APP_SYNC_WORKER_API_URL: ${SOLID_SYNC_WORKER_API_URL:-/sync-worker}
       APP_SYNC_WORKER_SERVICE_WEBID: ${SOLID_SYNC_WORKER_WEBID:-}
-      APP_SYNC_WORKER_INTERVAL_MINUTES: "5"
+      APP_SYNC_WORKER_INTERVAL_MINUTES: "10"
     expose: ["3001"]
     networks:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-dataspace-manager
-
-  solid-data-connection-sync-worker:
-    build:
-      context: ../solid-data-connection-sync-worker
-    image: solid-data-connection-sync-worker:local
-    restart: unless-stopped
-    environment:
-      PORT: 8080
-      WORKER_DB_PATH: /data/participants.sqlite
-      WORKER_DB_SECRET: ${SOLID_SYNC_WORKER_DB_SECRET:-solid-dataspace-dev}
-      WORKER_SYNC_TICK_SECONDS: 300
-      WORKER_AUTH_MODE: auto
-      WORKER_WEBID: ${SOLID_SYNC_WORKER_WEBID:-}
-      WORKER_OIDC_ISSUER: ${SOLID_SYNC_WORKER_OIDC_ISSUER:-}
-      WORKER_CLIENT_ID: ${SOLID_SYNC_WORKER_CLIENT_ID:-}
-      WORKER_CLIENT_SECRET: ${SOLID_SYNC_WORKER_CLIENT_SECRET:-}
-      WORKER_ALLOWED_ORIGINS: ${SOLID_SYNC_WORKER_ALLOWED_ORIGINS:-http://localhost,http://127.0.0.1}
-    volumes:
-      - data_connection_sync_worker_data:/data
-    expose: ["8080"]
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-solid-data-connection-sync-worker
 
   solid-data-manager:
     image: son1i/solid-data-manager:latest
@@ -252,9 +228,6 @@ services:
       solid-dataspace-manager:
         condition: service_started
         restart: true
-      solid-data-connection-sync-worker:
-        condition: service_started
-        restart: true
       solid-data-manager:
         condition: service_started
         restart: true
@@ -285,8 +258,6 @@ volumes:
   nodered-data:
   solid_chatbot_qdrant_data:
   solid_chatbot_ollama_data:
-  data_connection_sync_worker_data:
-
 networks:
   solid-dataspace:
     name: solid-dataspace
