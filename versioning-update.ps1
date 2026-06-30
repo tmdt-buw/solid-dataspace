@@ -236,6 +236,38 @@ if str(root.resolve()).lower() in dirty_set:
   $script | python -
 }
 
+function Invoke-RequiredBuilds([string]$root, [string[]]$dirtyRepos) {
+  $semanticCatalogPath = Resolve-Path (Join-Path $root "..\semantic-data-catalog") -ErrorAction SilentlyContinue
+  if (-not $semanticCatalogPath) {
+    return
+  }
+
+  $semanticCatalogRepo = $semanticCatalogPath.Path.ToLowerInvariant()
+  $dirtyNormalized = @(
+    $dirtyRepos | ForEach-Object {
+      $resolved = Resolve-Path $_ -ErrorAction SilentlyContinue
+      if ($resolved) { $resolved.Path.ToLowerInvariant() }
+    }
+  )
+
+  if ($dirtyNormalized -notcontains $semanticCatalogRepo) {
+    return
+  }
+
+  $frontendPath = Join-Path $semanticCatalogPath.Path "frontend"
+  if (-not (Test-Path (Join-Path $frontendPath "package.json"))) {
+    return
+  }
+
+  Write-Host "Building semantic-data-catalog embed dist"
+  Push-Location $frontendPath
+  try {
+    npm run build:lib
+  } finally {
+    Pop-Location
+  }
+}
+
 function Invoke-GitCommitAndPush([string]$repoPath, [string]$message) {
   if (-not (Test-Path (Join-Path $repoPath ".git"))) {
     Write-Host "Skip (no .git): $repoPath"
@@ -276,6 +308,7 @@ foreach ($repo in $repos) {
 }
 
 Update-PackageVersions -root $root -dirtyRepos $dirty
+Invoke-RequiredBuilds -root $root -dirtyRepos $dirty
 
 foreach ($repo in $repos) {
   Invoke-GitCommitAndPush -repoPath $repo -message $CommitMessage

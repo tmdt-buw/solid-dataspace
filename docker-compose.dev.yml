@@ -1,9 +1,7 @@
 services:
   solid-dataspace-manager:
-    build:
-      context: ../solid-dataspace-manager
-      args:
-        NPM_TOKEN: ${NPM_TOKEN}
+    image: node:20-alpine
+    working_dir: /app
     restart: unless-stopped
     environment:
       NPM_TOKEN: ${NPM_TOKEN}
@@ -92,7 +90,7 @@ services:
           }
         ]
 
-    command: sh -c "cd /app && find /app/node_modules -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && if [ \"$${DATASPACE_MANAGER_PACKAGE_SOURCE}\" = \"local\" ]; then while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ] || [ ! -f /solid-health-app/dist/package.json ] || [ ! -f /solid-chatbot/dist/package.json ]; do sleep 1; done; npm install --install-links=true --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist /solid-health-app/dist /solid-chatbot/dist; else npm install --no-save --package-lock=false @hoelk-f/solid-data-manager@latest @hoelk-f/semantic-data-catalog@latest @hoelk-f/solid-health-app@latest @hoelk-f/solid-chatbot@latest; fi && npm start"
+    command: sh -c "cd /app && find /app/node_modules -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && npm install && if [ \"$${DATASPACE_MANAGER_PACKAGE_SOURCE}\" = \"local\" ]; then while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /semantic-data-catalog/dist/package.json ] || [ ! -f /solid-health-app/dist/package.json ] || [ ! -f /solid-chatbot/dist/package.json ]; do sleep 1; done; npm install --install-links=true --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist /solid-health-app/dist /solid-chatbot/dist && npm run start:local-packages; else npm install --no-save --package-lock=false @hoelk-f/solid-data-manager@latest @hoelk-f/semantic-data-catalog@latest @hoelk-f/solid-health-app@latest @hoelk-f/solid-chatbot@latest && npm start; fi"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
@@ -237,11 +235,11 @@ services:
           - solid-dataspace-dev-solid-chatbot-qdrant
 
   semantic-data-catalog-frontend:
-    build:
-      context: ../semantic-data-catalog/frontend
+    image: node:20-alpine
+    working_dir: /app/frontend
     restart: unless-stopped
     environment:
-      REACT_APP_OIDC_ISSUER: https://solidcommunity.net
+      REACT_APP_OIDC_ISSUER: https://solid-community-server.tmdt.info
       PORT: 5000
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
