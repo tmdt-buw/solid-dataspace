@@ -176,25 +176,17 @@ services:
   semantic-data-catalog-backend:
     image: son1i/semantic-data-catalog-backend:latest
     restart: unless-stopped
+    environment:
+      CATALOG_SERVICE_WEBID: ${CATALOG_SERVICE_WEBID:-https://solid-community-server.tmdt.info/solidservice/profile/card#me}
+      CATALOG_SERVICE_OIDC_ISSUER: ${CATALOG_SERVICE_OIDC_ISSUER:-https://solid-community-server.tmdt.info}
+      CATALOG_SERVICE_CLIENT_ID: ${CATALOG_SERVICE_CLIENT_ID:-}
+      CATALOG_SERVICE_CLIENT_SECRET: ${CATALOG_SERVICE_CLIENT_SECRET:-}
+      CATALOG_SERVICE_TOKEN_URL: ${CATALOG_SERVICE_TOKEN_URL:-}
     expose: ["8000"]
     networks:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-semantic-data-catalog-backend
-
-  semantic-data-catalog-fuseki:
-    image: stain/jena-fuseki
-    hostname: fuseki
-    restart: unless-stopped
-    environment:
-      ADMIN_PASSWORD: admin
-    volumes:
-      - semantic_data_catalog_fuseki_data:/fuseki
-    expose: ["3030"]
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-fuseki
 
   node-red:
     image: nodered/node-red:latest
@@ -246,15 +238,11 @@ services:
       semantic-data-catalog-backend:
         condition: service_started
         restart: true
-      semantic-data-catalog-fuseki:
-        condition: service_started
-        restart: true
       node-red:
         condition: service_started
         restart: true
 
 volumes:
-  semantic_data_catalog_fuseki_data:
   nodered-data:
   solid_chatbot_qdrant_data:
   solid_chatbot_ollama_data:

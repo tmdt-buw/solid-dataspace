@@ -54,14 +54,6 @@
         }
     }
 
-    route /fuseki* {
-        uri strip_prefix /fuseki
-        reverse_proxy semantic-data-catalog-fuseki:3030 {
-            lb_try_duration 300s
-            lb_try_interval 1s
-        }
-    }
-
     reverse_proxy /node-red/* node-red:1880 {
         lb_try_duration 300s
         lb_try_interval 1s

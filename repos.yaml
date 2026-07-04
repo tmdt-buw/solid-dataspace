@@ -5,8 +5,6 @@ repos:
     scope:
       - backend
       - frontend
-      - fuseki
-      - database
       - oidc
 
   environmental-monitoring:
