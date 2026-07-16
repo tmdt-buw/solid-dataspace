@@ -76,6 +76,14 @@ services:
       APP_SYNC_WORKER_API_URL: ${SOLID_SYNC_WORKER_API_URL:-/sync-worker}
       APP_SYNC_WORKER_SERVICE_WEBID: ${SOLID_SYNC_WORKER_WEBID:-}
       APP_SYNC_WORKER_INTERVAL_MINUTES: "10"
+      APP_STATISTICS_ENABLED: ${STATISTICS_ENABLED:-false}
+      APP_STATISTICS_ADMIN_WEBIDS_JSON: >-
+        ${STATISTICS_ADMIN_WEBIDS_JSON:-["https://solid-community-server.tmdt.info/solidtestpod/profile/card#me"]}
+      APP_STATISTICS_WORKER_WEBID: ${SOLID_SYNC_WORKER_WEBID:-https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me}
+      APP_STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
+      APP_STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/}
+      APP_STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-private/solid-dataspace/statistics/activity.ttl}
+      APP_STATISTICS_TIMEZONE: ${STATISTICS_TIMEZONE:-Europe/Berlin}
     expose: ["3001"]
     networks:
       solid-dataspace:
@@ -167,6 +175,10 @@ services:
     restart: unless-stopped
     environment:
       REACT_APP_OIDC_ISSUER: https://solidcommunity.net
+      STATISTICS_ENABLED: ${STATISTICS_ENABLED:-false}
+      STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
+      STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/}
+      STATISTICS_REGISTRY_CONTEXT: ${STATISTICS_REGISTRY_CONTEXT:-}
     expose: ["5000"]
     networks:
       solid-dataspace:
@@ -187,6 +199,46 @@ services:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-semantic-data-catalog-backend
+
+  solid-data-connection-sync-worker:
+    image: son1i/solid-data-connection-sync-worker:latest
+    restart: unless-stopped
+    environment:
+      PORT: "8080"
+      WORKER_DB_PATH: /data/participants.sqlite
+      WORKER_DB_SECRET: ${SOLID_SYNC_WORKER_DB_SECRET:-}
+      WORKER_SYNC_TICK_SECONDS: ${SOLID_SYNC_WORKER_TICK_SECONDS:-600}
+      WORKER_REQUEST_TIMEOUT_MS: ${SOLID_SYNC_WORKER_REQUEST_TIMEOUT_MS:-20000}
+      WORKER_AUTH_MODE: service
+      WORKER_WEBID: ${SOLID_SYNC_WORKER_WEBID:-}
+      WORKER_OIDC_ISSUER: ${SOLID_SYNC_WORKER_OIDC_ISSUER:-}
+      WORKER_CLIENT_ID: ${SOLID_SYNC_WORKER_CLIENT_ID:-}
+      WORKER_CLIENT_SECRET: ${SOLID_SYNC_WORKER_CLIENT_SECRET:-}
+      WORKER_ALLOWED_ORIGINS: ${SOLID_SYNC_WORKER_ALLOWED_ORIGINS:-}
+      STATISTICS_ENABLED: ${STATISTICS_ENABLED:-false}
+      STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
+      STATISTICS_EVENT_SOURCES_JSON: >-
+        ${STATISTICS_EVENT_SOURCES_JSON:-[{"id":"test","label":"Test","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/"},{"id":"dace","label":"DACE","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/dace/downloads/"},{"id":"stadt-wuppertal","label":"Stadt Wuppertal","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/stadt-wuppertal/downloads/"},{"id":"timberconnect","label":"TimberConnect","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/timberconnect/downloads/"}]}
+      STATISTICS_INCLUDE_LEGACY_EVENT_SOURCE: ${STATISTICS_INCLUDE_LEGACY_EVENT_SOURCE:-true}
+      STATISTICS_ADMIN_WEBIDS_JSON: >-
+        ${STATISTICS_ADMIN_WEBIDS_JSON:-["https://solid-community-server.tmdt.info/solidtestpod/profile/card#me"]}
+      STATISTICS_HMAC_SECRET: ${STATISTICS_HMAC_SECRET:-}
+      STATISTICS_HMAC_VERSION: ${STATISTICS_HMAC_VERSION:-v1}
+      STATISTICS_REGISTRIES_JSON: >-
+        ${STATISTICS_REGISTRIES_JSON:-[{"id":"stadt-wuppertal","label":"Gesundes Tal","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/stadt-wuppertal"},{"id":"dace","label":"DACE","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace"},{"id":"timberconnect","label":"TimberConnect","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/timberconnect"},{"id":"test","label":"Test","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/test"}]}
+      STATISTICS_REFRESH_INTERVAL_MINUTES: ${STATISTICS_REFRESH_INTERVAL_MINUTES:-15}
+      STATISTICS_TIMEZONE: ${STATISTICS_TIMEZONE:-Europe/Berlin}
+      STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-private/solid-dataspace/statistics/activity.ttl}
+      STATISTICS_RETENTION_MONTHS: ${STATISTICS_RETENTION_MONTHS:-24}
+      STATISTICS_RAW_EVENT_RETENTION_DAYS: ${STATISTICS_RAW_EVENT_RETENTION_DAYS:-90}
+      STATISTICS_REQUEST_TIMEOUT_MS: ${STATISTICS_REQUEST_TIMEOUT_MS:-20000}
+    volumes:
+      - solid_data_connection_sync_worker_data:/data
+    expose: ["8080"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-data-connection-sync-worker
 
   node-red:
     image: nodered/node-red:latest
@@ -238,12 +290,16 @@ services:
       semantic-data-catalog-backend:
         condition: service_started
         restart: true
+      solid-data-connection-sync-worker:
+        condition: service_started
+        restart: true
       node-red:
         condition: service_started
         restart: true
 
 volumes:
   nodered-data:
+  solid_data_connection_sync_worker_data:
   solid_chatbot_qdrant_data:
   solid_chatbot_ollama_data:
 networks:
