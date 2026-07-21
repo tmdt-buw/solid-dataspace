@@ -82,7 +82,7 @@ services:
       APP_STATISTICS_WORKER_WEBID: ${SOLID_SYNC_WORKER_WEBID:-https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me}
       APP_STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
       APP_STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/}
-      APP_STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-private/solid-dataspace/statistics/activity.ttl}
+      APP_STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-statistics/activity/activity.ttl}
       APP_STATISTICS_TIMEZONE: ${STATISTICS_TIMEZONE:-Europe/Berlin}
     expose: ["3001"]
     networks:
@@ -228,7 +228,7 @@ services:
         ${STATISTICS_REGISTRIES_JSON:-[{"id":"stadt-wuppertal","label":"Gesundes Tal","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/stadt-wuppertal"},{"id":"dace","label":"DACE","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace"},{"id":"timberconnect","label":"TimberConnect","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/timberconnect"},{"id":"test","label":"Test","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/test"}]}
       STATISTICS_REFRESH_INTERVAL_MINUTES: ${STATISTICS_REFRESH_INTERVAL_MINUTES:-15}
       STATISTICS_TIMEZONE: ${STATISTICS_TIMEZONE:-Europe/Berlin}
-      STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-private/solid-dataspace/statistics/activity.ttl}
+      STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-statistics/activity/activity.ttl}
       STATISTICS_RETENTION_MONTHS: ${STATISTICS_RETENTION_MONTHS:-24}
       STATISTICS_RAW_EVENT_RETENTION_DAYS: ${STATISTICS_RAW_EVENT_RETENTION_DAYS:-90}
       STATISTICS_REQUEST_TIMEOUT_MS: ${STATISTICS_REQUEST_TIMEOUT_MS:-20000}
