@@ -31,8 +31,8 @@ not the hidden navigation item, enforce access to snapshots. User WebIDs are HMA
 the worker before a snapshot is written.
 
 Catalog tracking is enabled both for the Manager embed and the standalone catalog. It records only
-catalog-mediated dataset downloads, access-link clicks, and semantic-model downloads. Direct Pod
-requests and automatic previews are intentionally not counted.
+successful dataset downloads and semantic-model downloads. Dataset access-link clicks, direct Pod
+requests, and automatic previews are intentionally not counted.
 
 These download figures are operational usage indicators, not audit or billing records: anonymous
 events are accepted from any authenticated Solid agent and therefore cannot prove that an action
