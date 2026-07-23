@@ -14,6 +14,7 @@ services:
       CHOKIDAR_USEPOLLING: "true"
       WATCHPACK_POLLING: "true"
       WDS_SOCKET_PORT: "80"
+      APP_PLASMA_URL: ${PLASMA_PUBLIC_URL:-/plasma/modelings}
       DATASPACE_MANAGER_PACKAGE_SOURCE: ${DATASPACE_MANAGER_PACKAGE_SOURCE:-local}
       APP_SYNC_WORKER_ENABLED: ${SOLID_SYNC_WORKER_ENABLED:-true}
       APP_SYNC_WORKER_API_URL: ${SOLID_SYNC_WORKER_API_URL:-/sync-worker}
@@ -327,6 +328,102 @@ services:
         aliases:
           - solid-dataspace-dev-solid-data-connection-sync-worker
 
+  plasma-fuseki:
+    image: saiye/fuseki:4.7.0
+    restart: unless-stopped
+    environment:
+      - FUSEKI_DATASET_1=sm
+      - FUSEKI_DATASET_2=ontologies
+      - ADMIN_PASSWORD=plasma
+    volumes:
+      - plasma_fuseki_data:/fuseki
+    expose: ["3030"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-plasma-fuseki
+
+  plasma-mariadb-sms:
+    image: mariadb:latest
+    restart: unless-stopped
+    command: mariadbd --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      - MYSQL_DATABASE=plasma-sms
+      - MYSQL_ROOT_PASSWORD=plasma
+    volumes:
+      - plasma_mariadb_sms:/var/lib/mysql
+    healthcheck:
+      test: bash -c "mariadb -h 127.0.0.1 -p$$MYSQL_ROOT_PASSWORD -e \"show databases;\""
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    expose: ["3306"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-plasma-mariadb-sms
+
+  plasma-sms:
+    image: plasma/sms:${PLASMA_VERSION:-1.8.1}
+    pull_policy: never
+    restart: unless-stopped
+    volumes:
+      - ../plasma/deploy/configs:/var/plasma/configs
+      - ../plasma/deploy/ontologies:/var/ontologies
+    depends_on:
+      plasma-mariadb-sms:
+        condition: service_healthy
+      plasma-fuseki:
+        condition: service_started
+    environment:
+      - plasma.sms.feature.recommendations.enabled=false
+      - plasma.sms.feature.finalizemodels.enabled=true
+      - plasma.kgs.ontologies.folder=/var/ontologies
+      - plasma.maria.url=jdbc:mysql://plasma-mariadb-sms:3306/plasma-sms
+      - plasma.kgs.semanticmodels.store.url=http://plasma-fuseki:3030/sm
+      - plasma.kgs.ontologies.store.url=http://plasma-fuseki:3030/ontologies
+    expose: ["8181"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-plasma-sms
+
+  plasma-dps:
+    image: plasma/dps:${PLASMA_VERSION:-1.8.1}
+    pull_policy: never
+    user: root
+    restart: unless-stopped
+    environment:
+      - plasma.dps.storage.directory=/var/plasma/localstorage
+    volumes:
+      - ../plasma/deploy/dps_storage:/var/plasma/localstorage
+    expose: ["8182"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-plasma-dps
+
+  plasma-frontend:
+    build:
+      context: ../plasma/frontend
+      args:
+        PLASMA_VERSION: ${PLASMA_VERSION:-1.8.1}
+        PLASMA_BASE_HREF: /plasma/
+        PLASMA_API_BASE_URL: /plasma
+    image: plasma/ui:${PLASMA_VERSION:-1.8.1}
+    restart: unless-stopped
+    depends_on:
+      plasma-sms:
+        condition: service_started
+      plasma-dps:
+        condition: service_started
+    expose: ["80"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-plasma-frontend
+
   node-red:
     image: nodered/node-red:latest
     restart: unless-stopped
@@ -380,6 +477,9 @@ services:
       solid-data-connection-sync-worker:
         condition: service_started
         restart: true
+      plasma-frontend:
+        condition: service_started
+        restart: true
       node-red:
         condition: service_started
         restart: true
@@ -393,6 +493,10 @@ volumes:
   solid_chatbot_dist:
   solid_chatbot_qdrant_data:
   solid_chatbot_ollama_data:
+  plasma_fuseki_data:
+    name: plasma_fuseki_data
+  plasma_mariadb_sms:
+    name: plasma_mariadb_sms
 networks:
   solid-dataspace:
     name: solid-dataspace

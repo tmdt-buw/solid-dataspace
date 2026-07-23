@@ -1,4 +1,26 @@
 :80 {
+    redir /plasma /plasma/ 308
+    route /plasma/* {
+        uri strip_prefix /plasma
+
+        @plasmaSms path /api/sms /api/sms/*
+        reverse_proxy @plasmaSms plasma-sms:8181 {
+            lb_try_duration 300s
+            lb_try_interval 1s
+        }
+
+        @plasmaDps path /api/dps /api/dps/*
+        reverse_proxy @plasmaDps plasma-dps:8182 {
+            lb_try_duration 300s
+            lb_try_interval 1s
+        }
+
+        reverse_proxy plasma-frontend:80 {
+            lb_try_duration 300s
+            lb_try_interval 1s
+        }
+    }
+
     redir /semantic-data-catalog /semantic-data-catalog/
     reverse_proxy /semantic-data-catalog/* semantic-data-catalog-frontend:5000 {
         lb_try_duration 300s

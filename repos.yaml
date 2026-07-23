@@ -56,6 +56,15 @@ repos:
       - solid
       - home-assistant
 
+  plasma:
+    path: ..\plasma
+    repo: https://git.uni-wuppertal.de/tmdt/projects/dataspaces/plasma.git
+    scope:
+      - semantic-modeling
+      - ontology
+      - angular
+      - docker
+
 routing:
   docker:
     owner: solid-dataspace-dev

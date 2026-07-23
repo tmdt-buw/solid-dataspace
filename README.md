@@ -64,6 +64,70 @@ the only worker required and needs read/write access to all four containers.
 container during migration; set it to `false` after every catalog writes to its dedicated container
 and all legacy events have passed the desired reporting window.
 
+## Local PLASMA integration
+
+The development stack includes the sibling repository at `../plasma`. PLASMA is embedded through the existing
+**PLASMA** navigation entry and is also available directly at
+[http://localhost/plasma/modelings](http://localhost/plasma/modelings).
+
+Build the two Java service images once from this repository:
+
+```shell
+mvn -f ../plasma/pom.xml -U -pl components/semantic-modeling-service/service,components/data-processing-service/service -am package jib:dockerBuild -DskipTests
+```
+
+If the standalone PLASMA stack is running, stop it without deleting its volumes. The integrated stack reuses the same
+MariaDB and Fuseki volumes.
+
+```shell
+docker compose -f ../plasma/docker-compose.local.yml --profile staging down
+docker compose -f docker-compose.dev.yml up -d --build
+```
+
+Caddy remains the only public reverse proxy. PLASMA is mounted below `/plasma`; its frontend calls
+`/plasma/api/sms` and `/plasma/api/dps`, while Caddy removes the prefix before forwarding requests to the services.
+The optional PLASMA recommendation service is not required for manual semantic modeling and is not started.
+
+### Test server deployment below `/plasma`
+
+`docker-compose.solid-dataspace-test.yml` is the complete Test-instance stack, including PLASMA. Deploy its content
+as `/srv/solid-dataspace-test/docker-compose.yml`; no Compose overlay, `COMPOSE_FILE`, or `.env` is required. The
+project name, PLASMA image tag, public manager URL, service aliases, and service configuration are fixed in the file.
+
+Before its first start, replace the three `REPLACE_BEFORE_FIRST_START_*` password values near the top with different,
+long random values. Because this intentionally keeps the credentials in the single Compose file, do not commit the
+server copy and restrict it to the server administrator:
+
+```shell
+chmod 600 /srv/solid-dataspace-test/docker-compose.yml
+cd /srv/solid-dataspace-test
+docker compose config --quiet
+docker compose pull
+docker compose up -d
+```
+
+The central Caddy instance must add this route inside the existing Test-instance host block, before the manager
+fallback:
+
+```caddyfile
+redir /plasma /plasma/ 308
+route /plasma/* {
+    uri strip_prefix /plasma
+
+    @plasmaSms path /api/sms /api/sms/*
+    reverse_proxy @plasmaSms solid-dataspace-test-plasma-sms:8181
+
+    @plasmaDps path /api/dps /api/dps/*
+    reverse_proxy @plasmaDps solid-dataspace-test-plasma-dps:8182
+
+    reverse_proxy solid-dataspace-test-plasma-frontend:80
+}
+```
+
+The manager image must include runtime support for `APP_PLASMA_URL`; setting a `REACT_APP_*` variable on an already
+built React image does not change its bundle. Do not expose MariaDB, Fuseki, SMS, or DPS through host ports, and never
+use `docker compose down -v` for an instance containing persistent PLASMA data.
+
 ## License
 
 This repository is licensed under the Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
