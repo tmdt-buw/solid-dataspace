@@ -46,6 +46,11 @@
         lb_try_duration 300s
         lb_try_interval 1s
     }
+    redir /solid-tours /solid-tours/
+    reverse_proxy /solid-tours/* solid-tours:3006 {
+        lb_try_duration 300s
+        lb_try_interval 1s
+    }
 
     reverse_proxy /chainlit* solid-chatbot-backend:8001 {
         lb_try_duration 300s
@@ -79,6 +84,16 @@
     reverse_proxy /node-red/* node-red:1880 {
         lb_try_duration 300s
         lb_try_interval 1s
+    }
+
+    # BrowserRouter deep links belong to the Dataspace Manager SPA. Keep the
+    # public URL while asking the CRA server for its entry document.
+    route /web/* {
+        rewrite * /
+        reverse_proxy solid-dataspace-manager:3001 {
+            lb_try_duration 300s
+            lb_try_interval 1s
+        }
     }
 
     reverse_proxy solid-dataspace-manager:3001 {

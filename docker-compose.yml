@@ -42,6 +42,16 @@ services:
             "linkType": "internal"
           },
           {
+            "id": "solid-tours",
+            "title": "Solid Tours",
+            "href": "/web/solid-tours",
+            "section": "applications",
+            "iconKey": "tour",
+            "visible": ${SOLID_TOURS_VISIBLE:-true},
+            "order": 22,
+            "linkType": "internal"
+          },
+          {
             "id": "solid-chatbot",
             "title": "Solid Chatbot",
             "href": "/web/solid-chatbot",
@@ -116,6 +126,15 @@ services:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-health-app
+
+  solid-tours:
+    image: son1i/solid-tours:latest
+    restart: unless-stopped
+    expose: ["3006"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-tours
 
   solid-chatbot:
     image: son1i/solid-chatbot-frontend:latest
@@ -215,6 +234,12 @@ services:
       WORKER_CLIENT_ID: ${SOLID_SYNC_WORKER_CLIENT_ID:-}
       WORKER_CLIENT_SECRET: ${SOLID_SYNC_WORKER_CLIENT_SECRET:-}
       WORKER_ALLOWED_ORIGINS: ${SOLID_SYNC_WORKER_ALLOWED_ORIGINS:-}
+      ENVIRONMENTAL_SCENARIO_ENABLED: ${ENVIRONMENTAL_SCENARIO_ENABLED:-true}
+      ENVIRONMENTAL_SCENARIO_POLL_SECONDS: ${ENVIRONMENTAL_SCENARIO_POLL_SECONDS:-30}
+      ENVIRONMENTAL_SCENARIO_OWNER_WEBID: ${ENVIRONMENTAL_SCENARIO_OWNER_WEBID:-https://solid-community-server.tmdt.info/sscon/profile/card#me}
+      ENVIRONMENTAL_SCENARIO_MARKER_URL: ${ENVIRONMENTAL_SCENARIO_MARKER_URL:-https://solid-community-server.tmdt.info/sscon/solid-tours/public/current-run.json}
+      ENVIRONMENTAL_SCENARIO_DATA_URL_PREFIX: ${ENVIRONMENTAL_SCENARIO_DATA_URL_PREFIX:-https://solid-community-server.tmdt.info/sscon/solid-tours/runs/}
+      ENVIRONMENTAL_SCENARIO_MAX_BYTES: ${ENVIRONMENTAL_SCENARIO_MAX_BYTES:-2097152}
       STATISTICS_ENABLED: ${STATISTICS_ENABLED:-false}
       STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
       STATISTICS_EVENT_SOURCES_JSON: >-
@@ -279,6 +304,9 @@ services:
         condition: service_started
         restart: true
       solid-health-app:
+        condition: service_started
+        restart: true
+      solid-tours:
         condition: service_started
         restart: true
       solid-chatbot:

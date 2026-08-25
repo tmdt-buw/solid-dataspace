@@ -38,6 +38,15 @@ repos:
       - app
       - solid
 
+  solid-tours:
+    path: ..\solid-tours
+    repo: https://github.com/hoelk-f/solid-tours
+    scope:
+      - tours
+      - app
+      - solid
+      - mobility
+
   solid-chatbot:
     path: ..\solid-chatbot
     repo: https://github.com/hoelk-f/solid-chatbot
