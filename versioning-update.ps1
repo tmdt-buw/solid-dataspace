@@ -115,11 +115,12 @@ manager_repo = str((root / ".." / "solid-dataspace-manager").resolve()).lower()
 semantic_catalog_repo = str((root / ".." / "semantic-data-catalog").resolve()).lower()
 environmental_repo = str((root / ".." / "environmental-monitoring").resolve()).lower()
 solid_health_repo = str((root / ".." / "solid-health-app").resolve()).lower()
+solid_tours_repo = str((root / ".." / "solid-tours").resolve()).lower()
 solid_chatbot_repo = str((root / ".." / "solid-chatbot").resolve()).lower()
 affected_set = set(dirty_set)
 
 # Rebuild the manager when embedded/external app version badges need refreshing.
-if semantic_catalog_repo in dirty_set or environmental_repo in dirty_set or solid_health_repo in dirty_set or solid_chatbot_repo in dirty_set:
+if semantic_catalog_repo in dirty_set or environmental_repo in dirty_set or solid_health_repo in dirty_set or solid_tours_repo in dirty_set or solid_chatbot_repo in dirty_set:
     affected_set.add(manager_repo)
 
 targets = [
@@ -128,6 +129,7 @@ targets = [
     (root / ".." / "solid-data-connection-sync-worker" / "package.json", "0.1.0"),
     (root / ".." / "environmental-monitoring" / "package.json", "0.3.0"),
     (root / ".." / "solid-health-app" / "package.json", "0.1.0"),
+    (root / ".." / "solid-tours" / "package.json", "0.1.0"),
     (root / ".." / "semantic-data-catalog" / "frontend" / "package.json", "0.8.0"),
     (root / ".." / "solid-chatbot" / "package.json", "0.1.0"),
 ]
@@ -195,6 +197,30 @@ for pkg_path, start in targets:
                 count=1,
             )
             external_links.write_text(content, encoding="utf-8")
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-tours":
+        version_ts = pkg_path.parent / "src" / "version.ts"
+        version_ts.write_text(f'export const appVersion = "{new_version}";\n', encoding="utf-8")
+
+        manager_dockerfile = root / ".." / "solid-dataspace-manager" / "Dockerfile"
+        if manager_dockerfile.exists():
+            content = manager_dockerfile.read_text(encoding="utf-8")
+            content = re.sub(
+                r'(?m)^(ARG SOLID_TOURS_PACKAGE_VERSION=)[^\s]+$',
+                rf'\g<1>{new_version}',
+                content,
+                count=1,
+            )
+            manager_dockerfile.write_text(content, encoding="utf-8")
+
+        dev_compose = root / "docker-compose.dev.yml"
+        if dev_compose.exists():
+            content = dev_compose.read_text(encoding="utf-8")
+            content = re.sub(
+                r"(p\.name !== '@hoelk-f/solid-tours' \|\| p\.version !== ')[^']+(')",
+                rf'\g<1>{new_version}\2',
+                content,
+            )
+            dev_compose.write_text(content, encoding="utf-8")
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-chatbot":
         frontend_pkg = pkg_path.parent / "frontend" / "package.json"
         write_package_version(frontend_pkg, new_version)

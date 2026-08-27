@@ -202,7 +202,7 @@ services:
       - NPM_CONFIG_USERCONFIG=/tmp/.npmrc
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true
-    command: sh -c "rm -f /tmp/solid-tours-dist.ready && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && (node -e \"const p=require('/app/node_modules/@hoelk-f/semantic-data-catalog/package.json'); if (p.version !== '0.8.63' || !p.exports || !p.exports['./catalog-api']) process.exit(1); require.resolve('@hoelk-f/semantic-data-catalog/catalog-api');\" || npm install --install-links=true --no-save --package-lock=false /semantic-data-catalog/dist) && node -e \"const p=require('/app/node_modules/@hoelk-f/semantic-data-catalog/package.json'); if (p.version !== '0.8.63' || !p.exports || !p.exports['./catalog-api']) process.exit(1); require.resolve('@hoelk-f/semantic-data-catalog/catalog-api');\" && npm run build:lib && node -e \"const p=require('/app/dist/package.json'); if (p.name !== '@hoelk-f/solid-tours' || p.version !== '0.1.0' || !p.exports || !p.exports['./embed'] || !p.exports['./embed.css']) process.exit(1);\" && test -s /app/dist/index.js && test -s /app/dist/index.cjs && test -s /app/dist/embed.css && touch /tmp/solid-tours-dist.ready && (npm run build:lib:watch & npm start)"
+    command: sh -c "rm -f /tmp/solid-tours-dist.ready && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && (node -e \"const p=require('/app/node_modules/@hoelk-f/semantic-data-catalog/package.json'); if (p.version !== '0.8.63' || !p.exports || !p.exports['./catalog-api']) process.exit(1); require.resolve('@hoelk-f/semantic-data-catalog/catalog-api');\" || npm install --install-links=true --no-save --package-lock=false /semantic-data-catalog/dist) && node -e \"const p=require('/app/node_modules/@hoelk-f/semantic-data-catalog/package.json'); if (p.version !== '0.8.63' || !p.exports || !p.exports['./catalog-api']) process.exit(1); require.resolve('@hoelk-f/semantic-data-catalog/catalog-api');\" && npm run build:lib && node -e \"const p=require('/app/dist/package.json'); if (p.name !== '@hoelk-f/solid-tours' || p.version !== '0.1.2' || !p.exports || !p.exports['./embed'] || !p.exports['./embed.css']) process.exit(1);\" && test -s /app/dist/index.js && test -s /app/dist/index.cjs && test -s /app/dist/embed.css && touch /tmp/solid-tours-dist.ready && (npm run build:lib:watch & npm start)"
     volumes:
       - ../solid-tours:/app:delegated
       - semantic_data_catalog_dist:/semantic-data-catalog/dist
@@ -216,7 +216,7 @@ services:
         - CMD-SHELL
         - >-
           test -f /tmp/solid-tours-dist.ready &&
-          node -e "const p=require('/app/dist/package.json'); if (p.name !== '@hoelk-f/solid-tours' || p.version !== '0.1.0' || !p.exports || !p.exports['./embed'] || !p.exports['./embed.css']) process.exit(1);" &&
+          node -e "const p=require('/app/dist/package.json'); if (p.name !== '@hoelk-f/solid-tours' || p.version !== '0.1.2' || !p.exports || !p.exports['./embed'] || !p.exports['./embed.css']) process.exit(1);" &&
           test -s /app/dist/index.js &&
           test -s /app/dist/index.cjs &&
           test -s /app/dist/embed.css
