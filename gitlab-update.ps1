@@ -49,6 +49,12 @@ $tmdtProjects = @(
   "solid-data-manager"
 )
 
+# These repositories are intentionally published only through GitHub and must
+# not be considered by the GitLab mirror/update pass.
+$githubOnlyProjects = @(
+  "plasma"
+)
+
 $pushedCount = 0
 $skippedCount = 0
 $failures = New-Object System.Collections.Generic.List[object]
@@ -57,6 +63,12 @@ Write-Host "Projects root: $((Resolve-Path -LiteralPath (Join-Path $scriptRoot '
 
 foreach ($repoPath in $projectPaths) {
   $projectName = Split-Path -Leaf $repoPath
+
+  if ($githubOnlyProjects -contains $projectName) {
+    Write-Host "Skip (GitHub only): $projectName"
+    $skippedCount += 1
+    continue
+  }
 
   if (-not (Test-GitRepository -Path $repoPath)) {
     Write-Host "Skip (no .git): $projectName"

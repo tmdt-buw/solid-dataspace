@@ -212,15 +212,6 @@ for pkg_path, start in targets:
             )
             manager_dockerfile.write_text(content, encoding="utf-8")
 
-        dev_compose = root / "docker-compose.dev.yml"
-        if dev_compose.exists():
-            content = dev_compose.read_text(encoding="utf-8")
-            content = re.sub(
-                r"(p\.name !== '@hoelk-f/solid-tours' \|\| p\.version !== ')[^']+(')",
-                rf'\g<1>{new_version}\2',
-                content,
-            )
-            dev_compose.write_text(content, encoding="utf-8")
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-chatbot":
         frontend_pkg = pkg_path.parent / "frontend" / "package.json"
         write_package_version(frontend_pkg, new_version)
@@ -253,8 +244,26 @@ if versions:
     )
 
 version_file = root / "VERSION"
-if str(root.resolve()).lower() in dirty_set:
-    version_file.write_text(bump("0.3.0") + "\n", encoding="utf-8")
+root_key = str(root.resolve()).lower()
+if root_key in dirty_set:
+    current_root_version = (
+        version_file.read_text(encoding="utf-8").strip()
+        if version_file.exists()
+        else "0.3.0"
+    )
+    new_root_version = bump(current_root_version)
+    version_file.write_text(new_root_version + "\n", encoding="utf-8")
+
+    citation_file = root / "CITATION.cff"
+    if citation_file.exists():
+        citation = citation_file.read_text(encoding="utf-8")
+        citation = re.sub(
+            r'(?m)^version:\s*.*$',
+            f'version: "{new_root_version}"',
+            citation,
+            count=1,
+        )
+        citation_file.write_text(citation, encoding="utf-8")
 '@
   $escapedRoot = $root.Replace("\\", "\\\\")
   $script = $script.Replace("__ROOT__", $escapedRoot)
@@ -264,11 +273,12 @@ if str(root.resolve()).lower() in dirty_set:
 
 function Invoke-RequiredBuilds([string]$root, [string[]]$dirtyRepos) {
   $semanticCatalogPath = Resolve-Path (Join-Path $root "..\semantic-data-catalog") -ErrorAction SilentlyContinue
-  if (-not $semanticCatalogPath) {
-    return
-  }
+  $solidToursPath = Resolve-Path (Join-Path $root "..\solid-tours") -ErrorAction SilentlyContinue
 
-  $semanticCatalogRepo = $semanticCatalogPath.Path.ToLowerInvariant()
+  $semanticCatalogRepo = $null
+  if ($semanticCatalogPath) {
+    $semanticCatalogRepo = $semanticCatalogPath.Path.ToLowerInvariant()
+  }
   $dirtyNormalized = @(
     $dirtyRepos | ForEach-Object {
       $resolved = Resolve-Path $_ -ErrorAction SilentlyContinue
@@ -276,21 +286,30 @@ function Invoke-RequiredBuilds([string]$root, [string[]]$dirtyRepos) {
     }
   )
 
-  if ($dirtyNormalized -notcontains $semanticCatalogRepo) {
-    return
+  if ($semanticCatalogPath -and $dirtyNormalized -contains $semanticCatalogRepo) {
+    $frontendPath = Join-Path $semanticCatalogPath.Path "frontend"
+    if (Test-Path (Join-Path $frontendPath "package.json")) {
+      Write-Host "Building semantic-data-catalog embed dist"
+      Push-Location $frontendPath
+      try {
+        npm run build:lib
+      } finally {
+        Pop-Location
+      }
+    }
   }
 
-  $frontendPath = Join-Path $semanticCatalogPath.Path "frontend"
-  if (-not (Test-Path (Join-Path $frontendPath "package.json"))) {
-    return
-  }
-
-  Write-Host "Building semantic-data-catalog embed dist"
-  Push-Location $frontendPath
-  try {
-    npm run build:lib
-  } finally {
-    Pop-Location
+  if ($solidToursPath) {
+    $solidToursRepo = $solidToursPath.Path.ToLowerInvariant()
+    if ($dirtyNormalized -contains $solidToursRepo -and (Test-Path (Join-Path $solidToursPath.Path "package.json"))) {
+      Write-Host "Building solid-tours embed dist"
+      Push-Location $solidToursPath.Path
+      try {
+        npm run build:lib
+      } finally {
+        Pop-Location
+      }
+    }
   }
 }
 
