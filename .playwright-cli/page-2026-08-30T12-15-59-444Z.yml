@@ -1,0 +1,325 @@
+- generic [ref=f7e4]:
+  - generic [ref=f7e5]:
+    - generic [ref=f7e6]:
+      - img [ref=f7e7]: 
+      - generic [ref=f7e9]: Informationen
+    - generic "Version 0.3.60" [ref=f7e10]: 0.3.60
+  - main [ref=f7e11]:
+    - region [ref=f7e12]:
+      - generic [ref=f7e13]:
+        - generic [ref=f7e14]: Aktueller Projektstand
+        - heading "Dein Solid Dataspace auf einen Blick." [level=1] [ref=f7e15]
+        - paragraph [ref=f7e16]: Ein Arbeitsbereich verbindet persönlichen Pod-Speicher, semantische Suche, kontrollierte Datenfreigaben und Fachanwendungen. Deine WebID identifiziert dich; über den Zugriff wird weiterhin an der einzelnen Ressource entschieden.
+        - generic "Grundprinzipien" [ref=f7e17]:
+          - generic [ref=f7e18]:
+            - img [ref=f7e19]: 
+            - text: Pod als primärer Speicher
+          - generic [ref=f7e21]: Explizite Zugriffsentscheidungen
+          - generic [ref=f7e24]:
+            - img [ref=f7e25]: 
+            - text: Eine Solid-Identität
+      - figure "Solid-Architektur Kontrolle bleibt bei den Daten" [ref=f7e27]:
+        - generic [ref=f7e28]:
+          - generic [ref=f7e29]: Solid-Architektur
+          - strong [ref=f7e30]: Kontrolle bleibt bei den Daten
+        - list [ref=f7e31]:
+          - listitem [ref=f7e32]:
+            - generic [ref=f7e33]: "01"
+            - img [ref=f7e35]: 
+            - generic [ref=f7e37]:
+              - strong [ref=f7e38]: WebID
+              - generic [ref=f7e39]: Eine Identität im gesamten Dataspace
+          - listitem [ref=f7e40]:
+            - generic [ref=f7e41]: "02"
+            - img [ref=f7e43]: 
+            - generic [ref=f7e45]:
+              - strong [ref=f7e46]: Persönlicher Pod
+              - generic [ref=f7e47]: Dein primärer Speicherort
+          - listitem [ref=f7e48]:
+            - generic [ref=f7e49]: "03"
+            - generic [ref=f7e53]:
+              - strong [ref=f7e54]: Zugriffskontrolle
+              - generic [ref=f7e55]: Explizite Berechtigungen mit WAC
+          - listitem [ref=f7e56]:
+            - generic [ref=f7e57]: "04"
+            - img [ref=f7e59]: 
+            - generic [ref=f7e61]:
+              - strong [ref=f7e62]: Katalog und Anwendungen
+              - generic [ref=f7e63]: Freigegebene Daten finden und nutzen
+        - paragraph [ref=f7e64]: Der Pod bleibt der primäre Speicher. Kataloge machen ausgewählte Metadaten sichtbar; Berechtigungen bleiben an geschützte Ressourcen gebunden.
+      - generic "Aktueller Laufzeitstatus" [ref=f7e65]:
+        - generic [ref=f7e66]:
+          - term [ref=f7e67]: Manager-Version
+          - definition [ref=f7e68]: 0.3.60
+        - generic [ref=f7e69]:
+          - term [ref=f7e70]: Aktueller Dataspace
+          - definition [ref=f7e71]: stadt-wuppertal
+        - generic [ref=f7e72]:
+          - term [ref=f7e73]: Integrierte Anwendungen
+          - definition [ref=f7e74]: 5 aktiv
+        - generic [ref=f7e75]:
+          - term [ref=f7e76]: Hintergrund-Synchronisierung
+          - definition [ref=f7e77]: 10 Minuten-Takt
+    - navigation "Auf dieser Seite" [ref=f7e78]:
+      - link "Arbeitsbereich" [ref=f7e80] [cursor=pointer]:
+        - /url: "#info-workspace"
+      - link "Anwendungen" [ref=f7e81] [cursor=pointer]:
+        - /url: "#info-applications"
+      - link "Datenfluss" [ref=f7e82] [cursor=pointer]:
+        - /url: "#info-flow"
+      - link "Daten und Datenschutz" [ref=f7e83] [cursor=pointer]:
+        - /url: "#info-privacy"
+      - link "Wichtige Begriffe" [ref=f7e84] [cursor=pointer]:
+        - /url: "#info-terms"
+    - region [ref=f7e85]:
+      - generic [ref=f7e86]:
+        - generic [ref=f7e87]: Plattform
+        - heading "Heute in diesem Dataspace verfügbar" [level=2] [ref=f7e88]
+        - paragraph [ref=f7e89]: Der Manager bündelt die täglichen Solid-Abläufe in einem einheitlichen Arbeitsbereich. Jeder Eintrag öffnet das zugehörige Werkzeug.
+      - generic [ref=f7e90]:
+        - article [ref=f7e91]:
+          - generic [ref=f7e92]:
+            - img [ref=f7e94]: 
+            - generic [ref=f7e96]:
+              - heading "Persönlichen Arbeitsbereich verwalten" [level=3] [ref=f7e97]
+              - paragraph [ref=f7e98]: Organisiere Pod-Daten, pflege deine Identität und behalte Zugriffsaktivitäten im Blick.
+          - list [ref=f7e99]:
+            - listitem [ref=f7e100]:
+              - link "Öffnen Solid Datenmanager" [ref=f7e101] [cursor=pointer]:
+                - /url: /
+                - img [ref=f7e103]: 
+                - generic [ref=f7e105]:
+                  - strong [ref=f7e106]: Solid Datenmanager
+                  - generic [ref=f7e107]: Verwalte Dateien, Ordner und Ressourcenberechtigungen in deinem Pod.
+                - img [ref=f7e108]: 
+            - listitem [ref=f7e110]:
+              - link "Öffnen Profilmanager" [ref=f7e111] [cursor=pointer]:
+                - /url: /profile
+                - img [ref=f7e113]: 
+                - generic [ref=f7e115]:
+                  - strong [ref=f7e116]: Profilmanager
+                  - generic [ref=f7e117]: Pflege deine WebID, Inbox, deinen Katalog, Registries und die Sprache.
+                - img [ref=f7e118]: 
+            - listitem [ref=f7e120]:
+              - link "Öffnen Transaktionsverlauf" [ref=f7e121] [cursor=pointer]:
+                - /url: /transactions
+                - img [ref=f7e123]: 
+                - generic [ref=f7e125]:
+                  - strong [ref=f7e126]: Transaktionsverlauf
+                  - generic [ref=f7e127]: Prüfe Zugriffsaktivitäten und aktive Dataspace-Verbindungen.
+                - img [ref=f7e128]: 
+            - listitem [ref=f7e130]:
+              - link "Öffnen Solid-Pod-Anbieter" [ref=f7e131] [cursor=pointer]:
+                - /url: /pod-provider
+                - img [ref=f7e133]: 
+                - generic [ref=f7e135]:
+                  - strong [ref=f7e136]: Solid-Pod-Anbieter
+                  - generic [ref=f7e137]: Verwalte dein Solid-Konto und die Konfiguration des Pod-Anbieters.
+                - img [ref=f7e138]: 
+        - article [ref=f7e140]:
+          - generic [ref=f7e145]:
+            - heading "Daten verbinden, beschreiben und steuern" [level=3] [ref=f7e146]
+            - paragraph [ref=f7e147]: Mache aus Pod-Ressourcen auffindbare, wiederverwendbare und berechtigungsgesteuerte Datenflüsse.
+          - list [ref=f7e148]:
+            - listitem [ref=f7e149]:
+              - link "Öffnen Semantischer Datenkatalog" [ref=f7e150] [cursor=pointer]:
+                - /url: /catalog
+                - img [ref=f7e152]: 
+                - generic [ref=f7e154]:
+                  - strong [ref=f7e155]: Semantischer Datenkatalog
+                  - generic [ref=f7e156]: Veröffentliche und finde Datensätze, Datenreihen und ihre Metadaten.
+                - img [ref=f7e157]: 
+            - listitem [ref=f7e159]:
+              - link "Öffnen PLASMA" [ref=f7e160] [cursor=pointer]:
+                - /url: /web/plasma
+                - generic [ref=f7e164]:
+                  - strong [ref=f7e165]: PLASMA
+                  - generic [ref=f7e166]: Erstelle semantische Modelle, damit Datensätze leichter wiederverwendbar werden.
+                - img [ref=f7e167]: 
+            - listitem [ref=f7e169]:
+              - link "Öffnen Node-RED" [ref=f7e170] [cursor=pointer]:
+                - /url: /web/node-red
+                - img [ref=f7e172]: 
+                - generic [ref=f7e174]:
+                  - strong [ref=f7e175]: Node-RED
+                  - generic [ref=f7e176]: Erstelle visuelle Abläufe für Live-Daten und Automatisierung.
+                - img [ref=f7e177]: 
+            - listitem [ref=f7e179]:
+              - link "Öffnen Datenverbindung" [ref=f7e180] [cursor=pointer]:
+                - /url: /data-connection
+                - img [ref=f7e182]: 
+                - generic [ref=f7e184]:
+                  - strong [ref=f7e185]: Datenverbindung
+                  - generic [ref=f7e186]: Synchronisiere ausgewählte Home-Assistant-Entitäten oder eigene APIs in deinen Pod.
+                - img [ref=f7e187]: 
+            - listitem [ref=f7e189]:
+              - link "Öffnen Zugriffsanfragen" [ref=f7e190] [cursor=pointer]:
+                - /url: /notifications
+                - img [ref=f7e192]: 
+                - generic [ref=f7e194]:
+                  - strong [ref=f7e195]: Zugriffsanfragen
+                  - generic [ref=f7e196]: Genehmige, verweigere, befriste oder widerrufe Anfragen für geschützte Ressourcen.
+                - img [ref=f7e197]: 
+            - listitem [ref=f7e199]:
+              - link "Öffnen Zugriffsentscheidungen" [ref=f7e200] [cursor=pointer]:
+                - /url: /decisions
+                - img [ref=f7e202]: 
+                - generic [ref=f7e204]:
+                  - strong [ref=f7e205]: Zugriffsentscheidungen
+                  - generic [ref=f7e206]: Verfolge Antworten auf Zugriffsanfragen, die du gesendet hast.
+                - img [ref=f7e207]: 
+    - region [ref=f7e209]:
+      - generic [ref=f7e210]:
+        - generic [ref=f7e211]: Fachanwendungen
+        - heading "In dieser Instanz verfügbare Anwendungen" [level=2] [ref=f7e212]
+        - paragraph [ref=f7e213]: Die Liste folgt der aktiven Laufzeitkonfiguration. Dadurch zeigen diese Seite und die Sidebar immer dieselben Anwendungen.
+      - generic [ref=f7e214]:
+        - link "Öffnen Umweltmonitoring" [ref=f7e215] [cursor=pointer]:
+          - /url: /web/environmental-monitoring
+          - generic [ref=f7e216]:
+            - img [ref=f7e217]: 
+            - generic [ref=f7e219]: Umwelt und Bewegung
+          - generic [ref=f7e220]:
+            - generic [ref=f7e221]:
+              - strong [ref=f7e222]: Umweltmonitoring
+              - img [ref=f7e223]: 
+            - generic [ref=f7e225]: Erkunde Wetter-, Boden- und Bewegungsdaten auf einer Karte. Gespendete Tour-Aktivitäten erscheinen erst nach Erreichen der Datenschutzschwelle als Aggregat.
+            - generic [ref=f7e226]: Katalogdaten und durch Datenschutzschwellen geschützte Aggregate
+        - link "Öffnen Solid Gesundheits-App" [ref=f7e229] [cursor=pointer]:
+          - /url: /web/solid-health-app
+          - generic [ref=f7e230]:
+            - img [ref=f7e231]: 
+            - generic [ref=f7e233]: Persönliche Gesundheitsdaten
+          - generic [ref=f7e234]:
+            - generic [ref=f7e235]:
+              - strong [ref=f7e236]: Solid Gesundheits-App
+              - img [ref=f7e237]: 
+            - generic [ref=f7e239]: Synchronisiere ausgewählte Google-Fit-Werte wie Schritte, Kalorien, Schlaf, Herzfrequenz und Gewicht in deinen persönlichen Pod.
+            - generic [ref=f7e240]: Ausgewählte Messwerte werden in deinem Pod gespeichert
+        - link "Öffnen Solid Tours" [ref=f7e243] [cursor=pointer]:
+          - /url: /web/solid-tours
+          - generic [ref=f7e244]:
+            - img [ref=f7e245]: 
+            - generic [ref=f7e247]: Routen und Aktivitäten
+          - generic [ref=f7e248]:
+            - generic [ref=f7e249]:
+              - strong [ref=f7e250]: Solid Tours
+              - img [ref=f7e251]: 
+            - generic [ref=f7e253]: Zeichne oder importiere Routen, erfasse Geh- und Radaktivitäten, tausche Katalogrouten aus und spende Daten abgeschlossener Touren ausdrücklich.
+            - generic [ref=f7e254]: Private Entwürfe mit ausdrücklicher Veröffentlichung und Spende
+        - link "Öffnen Solid Health Questionnaire" [ref=f7e257] [cursor=pointer]:
+          - /url: /web/solid-health-questionnaire
+          - generic [ref=f7e258]:
+            - img [ref=f7e259]: 
+            - generic [ref=f7e261]: Privater Selbstcheck
+          - generic [ref=f7e262]:
+            - generic [ref=f7e263]:
+              - strong [ref=f7e264]: Solid Health Questionnaire
+              - img [ref=f7e265]: 
+            - generic [ref=f7e267]: Beantworte 18 Fragen aus fünf Gesundheitsbereichen und speichere die abgeschlossene Auswertung privat in deinem Pod. Sie ist keine medizinische Diagnose.
+            - generic [ref=f7e268]: Nur für dich zugängliche Auswertungen in deinem Pod
+        - link "Öffnen Solid Chatbot" [ref=f7e271] [cursor=pointer]:
+          - /url: /web/solid-chatbot
+          - generic [ref=f7e272]:
+            - img [ref=f7e273]: 
+            - generic [ref=f7e275]: Quellenbasierter Assistent
+          - generic [ref=f7e276]:
+            - generic [ref=f7e277]:
+              - strong [ref=f7e278]: Solid Chatbot
+              - img [ref=f7e279]: 
+            - generic [ref=f7e281]: Wähle kompatible Dateien aus deinem eigenen oder verbundenen Pods und nutze sie als Quellen für einen nutzergetrennten RAG-Arbeitsbereich.
+            - generic [ref=f7e282]: Quellenauswahl im Pod; getrennter Vektorindex pro Nutzer
+    - region [ref=f7e285]:
+      - generic [ref=f7e286]:
+        - generic [ref=f7e287]: Durchgängig
+        - heading "So bewegen sich Daten durch den Dataspace" [level=2] [ref=f7e288]
+        - paragraph [ref=f7e289]: Speicherung, Auffindbarkeit und Nutzung sind getrennte Entscheidungen. Das Veröffentlichen von Metadaten macht eine geschützte Quelle nicht automatisch lesbar.
+      - list [ref=f7e290]:
+        - listitem [ref=f7e291]:
+          - generic [ref=f7e292]: "01"
+          - generic [ref=f7e293]:
+            - heading "Identifizieren und einrichten" [level=3] [ref=f7e294]
+            - paragraph [ref=f7e295]: Melde dich mit Solid-OIDC an. Deine WebID verbindet die Sitzung mit deinem Pod, deiner Inbox, deinem Katalog und deinen Registries.
+        - listitem [ref=f7e296]:
+          - generic [ref=f7e297]: "02"
+          - generic [ref=f7e298]:
+            - heading "Speichern oder verbinden" [level=3] [ref=f7e299]
+            - paragraph [ref=f7e300]: Lade Ressourcen direkt hoch oder verbinde ausgewählte externe Quellen wie Home Assistant und eigene APIs.
+        - listitem [ref=f7e301]:
+          - generic [ref=f7e302]: "03"
+          - generic [ref=f7e303]:
+            - heading "Beschreiben und veröffentlichen" [level=3] [ref=f7e304]
+            - paragraph [ref=f7e305]: Ergänze Metadaten oder semantische Modelle und indexiere anschließend ausdrücklich die Ressourcen, die auffindbar werden sollen.
+        - listitem [ref=f7e306]:
+          - generic [ref=f7e307]: "04"
+          - generic [ref=f7e308]:
+            - heading "Anfragen und entscheiden" [level=3] [ref=f7e309]
+            - paragraph [ref=f7e310]: Geschützte Daten bleiben geschützt, bis ihr Eigentümer eine zweckgebundene Zugriffsanfrage genehmigt.
+        - listitem [ref=f7e311]:
+          - generic [ref=f7e312]: "05"
+          - generic [ref=f7e313]:
+            - heading "Nutzen und nachvollziehen" [level=3] [ref=f7e314]
+            - paragraph [ref=f7e315]: Anwendungen nutzen freigegebene Daten, während Anfragen, Entscheidungen und aktive Verbindungen im Manager sichtbar bleiben.
+    - region [ref=f7e316]:
+      - generic [ref=f7e317]:
+        - generic [ref=f7e318]: Datengrenzen
+        - heading "Was wo gespeichert und verarbeitet wird" [level=2] [ref=f7e319]
+        - paragraph [ref=f7e320]: Das Projekt setzt den Pod an erste Stelle. Dennoch wäre es nicht korrekt zu behaupten, dass jeder abgeleitete Wert ausschließlich in einem Pod existiert. Dies sind die aktuellen Verarbeitungsgrenzen.
+      - generic [ref=f7e321]:
+        - article [ref=f7e322]:
+          - img [ref=f7e324]: 
+          - generic [ref=f7e326]: Primärer Speicher
+          - heading "Persönlicher Pod" [level=3] [ref=f7e327]
+          - paragraph [ref=f7e328]: Profile, Anwendungszustände, Fragebogenergebnisse, Routen und Verbindungseinstellungen werden gemäß der Zugriffsrichtlinie der jeweiligen App im Solid-Pod des Nutzers gespeichert.
+        - article [ref=f7e329]:
+          - img [ref=f7e331]: 
+          - generic [ref=f7e333]: Ausdrücklich auffindbar
+          - heading "Katalog und Registry" [level=3] [ref=f7e334]
+          - paragraph [ref=f7e335]: Nur Metadaten und Distributionen, die ein Nutzer ausdrücklich indexiert, werden auffindbar. Geschützte Quellressourcen benötigen weiterhin eine Berechtigung.
+        - article [ref=f7e336]:
+          - img [ref=f7e338]: 
+          - generic [ref=f7e340]: Integrationszustand
+          - heading "Browser und Quellanbieter" [level=3] [ref=f7e341]
+          - paragraph [ref=f7e342]: Einige Integrationen speichern Token oder Oberflächenauswahlen im Browser und kontaktieren konfigurierte Quellen wie Google Fit, Home Assistant, eigene APIs oder Open-Meteo.
+        - article [ref=f7e343]:
+          - img [ref=f7e345]: 
+          - generic [ref=f7e347]: Transparente Verarbeitung
+          - heading "Zweckgebundene Dienste" [level=3] [ref=f7e348]
+          - paragraph [ref=f7e349]: Der Sync-Worker verwaltet Betriebszustände, PLASMA und Node-RED nutzen eigenen Dienstspeicher, Bewegungsspenden werden aggregiert und Chatbot-Embeddings liegen in nach WebID getrennten Qdrant-Indizes.
+      - complementary [ref=f7e350]:
+        - generic [ref=f7e353]:
+          - strong [ref=f7e354]: Zugriff gilt kontextbezogen, nicht global
+          - paragraph [ref=f7e355]: Solid-OIDC authentifiziert die Sitzung. WAC-Berechtigungen bestimmen, ob dieser authentifizierte Akteur auf eine bestimmte Pod-Ressource zugreifen darf.
+      - generic [ref=f7e356]:
+        - generic [ref=f7e357]:
+          - generic [ref=f7e358]: Aktueller Umfang
+          - heading "Heute umgesetzt – mit klaren Grenzen" [level=3] [ref=f7e359]
+        - list [ref=f7e360]:
+          - listitem [ref=f7e361]: Eingebettete Anwendungen verwenden die authentifizierte Solid-Sitzung des Managers. Mehrere Anwendungen bieten zusätzlich eine Standalone-Variante mit eigener Anmeldung.
+          - listitem [ref=f7e362]: Solid Tours zeichnet und importiert Routen, erfasst jedoch keine Live-GPS-Spuren und ruft keinen Routingdienst auf.
+          - listitem [ref=f7e363]: Der Health Questionnaire dient zur Orientierung. Seine Bewertungsgrenzen sind Produktannahmen und keine klinisch validierten Grenzwerte.
+          - listitem [ref=f7e364]: Die Chatbot-Verarbeitung nutzt Ollama, Qdrant und einen konfigurierten Qwen-/vLLM-Endpunkt. Die serverseitige Indexierung funktioniert derzeit zuverlässig für anonym lesbare Quellen.
+    - region [ref=f7e365]:
+      - generic [ref=f7e366]:
+        - generic [ref=f7e367]: Solid einfach erklärt
+        - heading "Wichtige Begriffe" [level=2] [ref=f7e368]
+        - paragraph [ref=f7e369]: Die in diesem Arbeitsbereich verwendeten Begriffe – ohne Protokolljargon.
+      - generic [ref=f7e370]:
+        - generic [ref=f7e371]:
+          - term [ref=f7e372]: Pod
+          - definition [ref=f7e373]: Ein persönlicher Web-Datenspeicher aus adressierbaren Ressourcen und Containern. Der Eigentümer steuert den Zugriff.
+        - generic [ref=f7e374]:
+          - term [ref=f7e375]: WebID
+          - definition [ref=f7e376]: Eine auflösbare Webadresse, die eine Person oder einen Dienst über Solid-Anwendungen hinweg identifiziert.
+        - generic [ref=f7e377]:
+          - term [ref=f7e378]: Solid-OIDC
+          - definition [ref=f7e379]: Das Anmeldeprotokoll, das eine Solid-Sitzung authentifiziert und mit einer WebID verknüpft.
+        - generic [ref=f7e380]:
+          - term [ref=f7e381]: WAC
+          - definition [ref=f7e382]: Web-Access-Control-Regeln legen fest, welche Akteure eine Pod-Ressource lesen, ergänzen, schreiben oder kontrollieren dürfen.
+        - generic [ref=f7e383]:
+          - term [ref=f7e384]: Eingang
+          - definition [ref=f7e385]: Der Pod-Speicherort für Zugriffsanfragen, Entscheidungen und andere Linked-Data-Benachrichtigungen.
+        - generic [ref=f7e386]:
+          - term [ref=f7e387]: Katalog und Registry
+          - definition [ref=f7e388]: Der Katalog beschreibt veröffentlichte Datensätze; Registries machen teilnehmende Pods und Kataloge auffindbar.

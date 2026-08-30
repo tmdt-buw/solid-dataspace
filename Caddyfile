@@ -46,6 +46,11 @@
         lb_try_duration 300s
         lb_try_interval 1s
     }
+    redir /solid-health-questionnaire /solid-health-questionnaire/
+    reverse_proxy /solid-health-questionnaire/* solid-health-questionnaire:3007 {
+        lb_try_duration 300s
+        lb_try_interval 1s
+    }
     redir /solid-tours /solid-tours/
     reverse_proxy /solid-tours/* solid-tours:3006 {
         lb_try_duration 300s

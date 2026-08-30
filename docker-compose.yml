@@ -52,6 +52,16 @@ services:
             "linkType": "internal"
           },
           {
+            "id": "solid-health-questionnaire",
+            "title": "Solid Health Questionnaire",
+            "href": "/web/solid-health-questionnaire",
+            "section": "applications",
+            "iconKey": "questionnaire",
+            "visible": ${SOLID_HEALTH_QUESTIONNAIRE_VISIBLE:-true},
+            "order": 24,
+            "linkType": "internal"
+          },
+          {
             "id": "solid-chatbot",
             "title": "Solid Chatbot",
             "href": "/web/solid-chatbot",
@@ -128,6 +138,15 @@ services:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-health-app
+
+  solid-health-questionnaire:
+    image: son1i/solid-health-questionnaire:latest
+    restart: unless-stopped
+    expose: ["3007"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-health-questionnaire
 
   solid-tours:
     image: son1i/solid-tours:latest
@@ -240,7 +259,11 @@ services:
       ENVIRONMENTAL_SCENARIO_POLL_SECONDS: ${ENVIRONMENTAL_SCENARIO_POLL_SECONDS:-30}
       ENVIRONMENTAL_SCENARIO_REGISTRIES_JSON: >-
         ${ENVIRONMENTAL_SCENARIO_REGISTRIES_JSON:-[]}
-      ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE: ${ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE:-3}
+      ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE: ${ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE:-2}
+      ENVIRONMENTAL_SCENARIO_MAX_REGISTRIES_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRIES_PER_POLL:-8}
+      ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_ENTRIES_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_ENTRIES_PER_POLL:-64}
+      ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_MEMBERS_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_MEMBERS_PER_POLL:-32}
+      ENVIRONMENTAL_SCENARIO_DISCOVERY_TIMEOUT_MS: ${ENVIRONMENTAL_SCENARIO_DISCOVERY_TIMEOUT_MS:-25000}
       ENVIRONMENTAL_SCENARIO_OWNER_WEBID: ${ENVIRONMENTAL_SCENARIO_OWNER_WEBID:-https://solid-community-server.tmdt.info/sscon/profile/card#me}
       ENVIRONMENTAL_SCENARIO_MARKER_URL: ${ENVIRONMENTAL_SCENARIO_MARKER_URL:-https://solid-community-server.tmdt.info/sscon/solid-tours/public/current-run.json}
       ENVIRONMENTAL_SCENARIO_DATA_URL_PREFIX: ${ENVIRONMENTAL_SCENARIO_DATA_URL_PREFIX:-https://solid-community-server.tmdt.info/sscon/solid-tours/runs/}
@@ -309,6 +332,9 @@ services:
         condition: service_started
         restart: true
       solid-health-app:
+        condition: service_started
+        restart: true
+      solid-health-questionnaire:
         condition: service_started
         restart: true
       solid-tours:

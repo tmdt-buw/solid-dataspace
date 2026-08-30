@@ -38,6 +38,15 @@ repos:
       - app
       - solid
 
+  solid-health-questionnaire:
+    path: ..\solid-health-questionnaire
+    repo: https://github.com/hoelk-f/solid-health-questionnaire
+    scope:
+      - health
+      - questionnaire
+      - app
+      - solid
+
   solid-tours:
     path: ..\solid-tours
     repo: https://github.com/hoelk-f/solid-tours

@@ -4,6 +4,12 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+function Assert-LastExitCode([string]$Operation) {
+  if ($LASTEXITCODE -ne 0) {
+    throw "$Operation failed with exit code $LASTEXITCODE."
+  }
+}
+
 function Get-RepoPaths {
   $root = $PSScriptRoot
   if (-not $root) { $root = (Get-Location).Path }
@@ -54,6 +60,7 @@ import json
 import pathlib
 import os
 import re
+import datetime
 
 def bump(version: str) -> str:
     parts = version.strip().split(".")
@@ -115,12 +122,13 @@ manager_repo = str((root / ".." / "solid-dataspace-manager").resolve()).lower()
 semantic_catalog_repo = str((root / ".." / "semantic-data-catalog").resolve()).lower()
 environmental_repo = str((root / ".." / "environmental-monitoring").resolve()).lower()
 solid_health_repo = str((root / ".." / "solid-health-app").resolve()).lower()
+solid_health_questionnaire_repo = str((root / ".." / "solid-health-questionnaire").resolve()).lower()
 solid_tours_repo = str((root / ".." / "solid-tours").resolve()).lower()
 solid_chatbot_repo = str((root / ".." / "solid-chatbot").resolve()).lower()
 affected_set = set(dirty_set)
 
 # Rebuild the manager when embedded/external app version badges need refreshing.
-if semantic_catalog_repo in dirty_set or environmental_repo in dirty_set or solid_health_repo in dirty_set or solid_tours_repo in dirty_set or solid_chatbot_repo in dirty_set:
+if semantic_catalog_repo in dirty_set or environmental_repo in dirty_set or solid_health_repo in dirty_set or solid_health_questionnaire_repo in dirty_set or solid_tours_repo in dirty_set or solid_chatbot_repo in dirty_set:
     affected_set.add(manager_repo)
 
 targets = [
@@ -129,6 +137,7 @@ targets = [
     (root / ".." / "solid-data-connection-sync-worker" / "package.json", "0.1.0"),
     (root / ".." / "environmental-monitoring" / "package.json", "0.3.0"),
     (root / ".." / "solid-health-app" / "package.json", "0.1.0"),
+    (root / ".." / "solid-health-questionnaire" / "package.json", "0.1.0"),
     (root / ".." / "solid-tours" / "package.json", "0.1.0"),
     (root / ".." / "semantic-data-catalog" / "frontend" / "package.json", "0.8.0"),
     (root / ".." / "solid-chatbot" / "package.json", "0.1.0"),
@@ -212,6 +221,38 @@ for pkg_path, start in targets:
             )
             manager_dockerfile.write_text(content, encoding="utf-8")
 
+    if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-health-questionnaire":
+        version_ts = pkg_path.parent / "src" / "version.ts"
+        version_ts.write_text(f'export const healthQuestionnaireVersion = "{new_version}";\n', encoding="utf-8")
+
+        citation_file = pkg_path.parent / "CITATION.cff"
+        if citation_file.exists():
+            citation = citation_file.read_text(encoding="utf-8")
+            citation = re.sub(
+                r'(?m)^version:\s*.*$',
+                f'version: {new_version}',
+                citation,
+                count=1,
+            )
+            citation = re.sub(
+                r'(?m)^date-released:\s*.*$',
+                f'date-released: {datetime.date.today().isoformat()}',
+                citation,
+                count=1,
+            )
+            citation_file.write_text(citation, encoding="utf-8")
+
+        manager_dockerfile = root / ".." / "solid-dataspace-manager" / "Dockerfile"
+        if manager_dockerfile.exists():
+            content = manager_dockerfile.read_text(encoding="utf-8")
+            content = re.sub(
+                r'(?m)^(ARG SOLID_HEALTH_QUESTIONNAIRE_PACKAGE_VERSION=)[^\s]+$',
+                rf'\g<1>{new_version}',
+                content,
+                count=1,
+            )
+            manager_dockerfile.write_text(content, encoding="utf-8")
+
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-chatbot":
         frontend_pkg = pkg_path.parent / "frontend" / "package.json"
         write_package_version(frontend_pkg, new_version)
@@ -269,11 +310,13 @@ if root_key in dirty_set:
   $script = $script.Replace("__ROOT__", $escapedRoot)
   $env:DIRTY_JSON = ($dirtyRepos | ConvertTo-Json -Compress)
   $script | python -
+  Assert-LastExitCode "Updating package versions"
 }
 
 function Invoke-RequiredBuilds([string]$root, [string[]]$dirtyRepos) {
   $semanticCatalogPath = Resolve-Path (Join-Path $root "..\semantic-data-catalog") -ErrorAction SilentlyContinue
   $solidToursPath = Resolve-Path (Join-Path $root "..\solid-tours") -ErrorAction SilentlyContinue
+  $solidHealthQuestionnairePath = Resolve-Path (Join-Path $root "..\solid-health-questionnaire") -ErrorAction SilentlyContinue
 
   $semanticCatalogRepo = $null
   if ($semanticCatalogPath) {
@@ -293,6 +336,7 @@ function Invoke-RequiredBuilds([string]$root, [string[]]$dirtyRepos) {
       Push-Location $frontendPath
       try {
         npm run build:lib
+        Assert-LastExitCode "Building semantic-data-catalog embed dist"
       } finally {
         Pop-Location
       }
@@ -306,6 +350,21 @@ function Invoke-RequiredBuilds([string]$root, [string[]]$dirtyRepos) {
       Push-Location $solidToursPath.Path
       try {
         npm run build:lib
+        Assert-LastExitCode "Building solid-tours embed dist"
+      } finally {
+        Pop-Location
+      }
+    }
+  }
+
+  if ($solidHealthQuestionnairePath) {
+    $solidHealthQuestionnaireRepo = $solidHealthQuestionnairePath.Path.ToLowerInvariant()
+    if ($dirtyNormalized -contains $solidHealthQuestionnaireRepo -and (Test-Path (Join-Path $solidHealthQuestionnairePath.Path "package.json"))) {
+      Write-Host "Building solid-health-questionnaire embed dist"
+      Push-Location $solidHealthQuestionnairePath.Path
+      try {
+        npm run build:lib
+        Assert-LastExitCode "Building solid-health-questionnaire embed dist"
       } finally {
         Pop-Location
       }
@@ -321,16 +380,20 @@ function Invoke-GitCommitAndPush([string]$repoPath, [string]$message) {
 
   Push-Location $repoPath
   try {
-    $status = git status --porcelain
+    $status = git -c "safe.directory=$repoPath" status --porcelain
+    Assert-LastExitCode "Reading git status for $repoPath"
     if (-not $status) {
       Write-Host "Clean: $repoPath"
       return
     }
 
     Write-Host "Updating: $repoPath"
-    git add .
-    git commit -m $message
-    git push origin main
+    git -c "safe.directory=$repoPath" add .
+    Assert-LastExitCode "Staging changes in $repoPath"
+    git -c "safe.directory=$repoPath" commit -m $message
+    Assert-LastExitCode "Committing changes in $repoPath"
+    git -c "safe.directory=$repoPath" push origin main
+    Assert-LastExitCode "Pushing $repoPath to origin/main"
   } finally {
     Pop-Location
   }
@@ -345,7 +408,8 @@ foreach ($repo in $repos) {
   if (-not (Test-Path (Join-Path $repo ".git"))) { continue }
   Push-Location $repo
   try {
-    $status = git status --porcelain
+    $status = git -c "safe.directory=$repo" status --porcelain
+    Assert-LastExitCode "Reading git status for $repo"
     if ($status) { $dirty.Add($repo) }
   } finally {
     Pop-Location
@@ -355,6 +419,18 @@ foreach ($repo in $repos) {
 Update-PackageVersions -root $root -dirtyRepos $dirty
 Invoke-RequiredBuilds -root $root -dirtyRepos $dirty
 
-foreach ($repo in $repos) {
+$managerPath = Resolve-Path (Join-Path $root "..\solid-dataspace-manager") -ErrorAction SilentlyContinue
+$publishOrder = @(
+  $repos | Where-Object {
+    -not $managerPath -or $_ -ne $managerPath.Path
+  }
+)
+if ($managerPath -and $repos -contains $managerPath.Path) {
+  # Embedded packages are pushed first. Their release workflows can publish
+  # before the Manager build resolves the exact versions written above.
+  $publishOrder += $managerPath.Path
+}
+
+foreach ($repo in $publishOrder) {
   Invoke-GitCommitAndPush -repoPath $repo -message $CommitMessage
 }

@@ -1,0 +1,32 @@
+- generic [ref=e5]:
+  - generic [ref=e6]:
+    - generic [ref=e7]:
+      - img [ref=e9]: 
+      - generic [ref=e11]: Solid Dataspace
+    - img "Project Logo" [ref=e13]
+  - generic [ref=e14]: Solid Dataspace
+  - generic [ref=e17]:
+    - generic [ref=e18]:
+      - generic [ref=e19]: Suggested providers
+      - generic [ref=e21]:
+        - button "TMDT Solid https://solid-community-server.tmdt.info" [ref=e22] [cursor=pointer]:
+          - generic [ref=e24]:
+            - generic [ref=e25]: TMDT Solid
+            - generic [ref=e26]: https://solid-community-server.tmdt.info
+        - button "Solid Community https://solidcommunity.net" [ref=e27] [cursor=pointer]:
+          - generic [ref=e29]:
+            - generic [ref=e30]: Solid Community
+            - generic [ref=e31]: https://solidcommunity.net
+    - generic [ref=e32]:
+      - generic [ref=e33]: Custom issuer
+      - textbox "https://your-pod-provider.example" [ref=e36]
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e39]: Language
+        - combobox "Language" [ref=e40]:
+          - option "English" [selected]
+          - option "German"
+      - button "Register" [ref=e41] [cursor=pointer]:
+        - img [ref=e42]: 
+      - button "Login" [ref=e45] [cursor=pointer]:
+        - img [ref=e46]: 

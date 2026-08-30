@@ -1,0 +1,17 @@
+[    5668ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost/static/js/bundle.js:149522
+[    6106ms] TypeError: Cannot destructure property 'basename' of 'react__WEBPACK_IMPORTED_MODULE_0__.useContext(...)' as it is null.
+    at LinkWithRef (http://localhost/static/js/bundle.js:408691:5)
+    at Object.react_stack_bottom_frame (http://localhost/static/js/bundle.js:147762:18)
+    at renderWithHooks (http://localhost/static/js/bundle.js:138635:20)
+    at updateForwardRef (http://localhost/static/js/bundle.js:139853:17)
+    at beginWork (http://localhost/static/js/bundle.js:140667:16)
+    at runWithFiberInDEV (http://localhost/static/js/bundle.js:135111:68)
+    at performUnitOfWork (http://localhost/static/js/bundle.js:143020:93)
+    at workLoopSync (http://localhost/static/js/bundle.js:142915:38)
+    at renderRootSync (http://localhost/static/js/bundle.js:142900:7)
+    at performWorkOnRoot (http://localhost/static/js/bundle.js:142573:33)
+[    6105ms] [WARNING] %s
+
+%s
+ An error occurred in the <Link> component. Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries. @ http://localhost/static/js/bundle.js:139705

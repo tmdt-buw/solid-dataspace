@@ -55,6 +55,12 @@ $githubOnlyProjects = @(
   "plasma"
 )
 
+# Keep the newly added repository target explicit so a cloned workspace cannot
+# accidentally mirror the questionnaire to a similarly named GitLab project.
+$expectedGitLabRemoteUrls = @{
+  "solid-health-questionnaire" = "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/solid-health-questionnaire.git"
+}
+
 $pushedCount = 0
 $skippedCount = 0
 $failures = New-Object System.Collections.Generic.List[object]
@@ -78,11 +84,39 @@ foreach ($repoPath in $projectPaths) {
 
   Push-Location -LiteralPath $repoPath
   try {
+    if ($Remote -eq "gitlab" -and $expectedGitLabRemoteUrls.ContainsKey($projectName)) {
+      $expectedRemoteUrl = $expectedGitLabRemoteUrls[$projectName]
+      $actualRemoteUrl = git -c "safe.directory=$repoPath" remote get-url $Remote 2>$null
+      $remoteExitCode = $LASTEXITCODE
+
+      if ($remoteExitCode -ne 0 -or -not $actualRemoteUrl) {
+        $failures.Add([pscustomobject]@{
+          Repository = $projectName
+          Remote = $Remote
+          Branch = $Branch
+          ExitCode = $remoteExitCode
+        })
+        Write-Warning "Failed: $projectName has no '$Remote' remote. Expected $expectedRemoteUrl"
+        continue
+      }
+
+      if ([string]$actualRemoteUrl.Trim() -ne $expectedRemoteUrl) {
+        $failures.Add([pscustomobject]@{
+          Repository = $projectName
+          Remote = $Remote
+          Branch = $Branch
+          ExitCode = 2
+        })
+        Write-Warning "Failed: $projectName '$Remote' points to '$actualRemoteUrl'; expected '$expectedRemoteUrl'."
+        continue
+      }
+    }
+
     $command = "git push $Remote $Branch"
 
     if ($PSCmdlet.ShouldProcess($repoPath, $command)) {
       Write-Host "Push: $projectName"
-      git push $Remote $Branch
+      git -c "safe.directory=$repoPath" push $Remote $Branch
       $exitCode = $LASTEXITCODE
 
       if ($exitCode -ne 0) {
@@ -105,7 +139,7 @@ foreach ($repoPath in $projectPaths) {
 
       if ($PSCmdlet.ShouldProcess($repoPath, $command)) {
         Write-Host "Push: $projectName -> $tmdtRemote/$tmdtBranch"
-        git push $tmdtRemote $tmdtBranch
+        git -c "safe.directory=$repoPath" push $tmdtRemote $tmdtBranch
         $exitCode = $LASTEXITCODE
 
         if ($exitCode -ne 0) {

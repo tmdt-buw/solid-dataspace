@@ -1,6 +1,6 @@
 services:
   solid-dataspace-manager:
-    image: node:20-alpine
+    image: node:22-alpine
     working_dir: /app
     restart: unless-stopped
     environment:
@@ -15,7 +15,7 @@ services:
       WATCHPACK_POLLING: "true"
       WDS_SOCKET_PORT: "80"
       APP_PLASMA_URL: ${PLASMA_PUBLIC_URL:-/plasma/modelings}
-      APP_DATASPACE_ID: ${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-test}}
+      APP_DATASPACE_ID: ${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-stadt-wuppertal}}
       DATASPACE_MANAGER_PACKAGE_SOURCE: ${DATASPACE_MANAGER_PACKAGE_SOURCE:-local}
       APP_SYNC_WORKER_ENABLED: ${SOLID_SYNC_WORKER_ENABLED:-true}
       APP_SYNC_WORKER_API_URL: ${SOLID_SYNC_WORKER_API_URL:-/sync-worker}
@@ -79,6 +79,16 @@ services:
             "linkType": "internal"
           },
           {
+            "id": "solid-health-questionnaire",
+            "title": "Solid Health Questionnaire",
+            "href": "/web/solid-health-questionnaire",
+            "section": "applications",
+            "iconKey": "questionnaire",
+            "visible": ${SOLID_HEALTH_QUESTIONNAIRE_VISIBLE:-true},
+            "order": 24,
+            "linkType": "internal"
+          },
+          {
             "id": "solid-chatbot",
             "title": "Solid Chatbot",
             "href": "/web/solid-chatbot",
@@ -110,13 +120,14 @@ services:
           }
         ]
 
-    command: sh -c "cd /app && find /app/node_modules -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && if [ \"$${DATASPACE_MANAGER_PACKAGE_SOURCE}\" = \"local\" ]; then while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /solid-health-app/dist/package.json ] || [ ! -f /solid-chatbot/dist/package.json ]; do sleep 1; done; npm install --install-links=true --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist /solid-health-app/dist /solid-tours/dist /solid-chatbot/dist && npm run start:local-packages; else npm install && npm install --no-save --package-lock=false @hoelk-f/solid-data-manager@latest @hoelk-f/semantic-data-catalog@latest @hoelk-f/solid-health-app@latest @hoelk-f/solid-tours@latest @hoelk-f/solid-chatbot@latest && npm start; fi"
+    command: sh -c "cd /app && find /app/node_modules -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && if [ \"$${DATASPACE_MANAGER_PACKAGE_SOURCE}\" = \"local\" ]; then while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /solid-health-app/dist/package.json ] || [ ! -f /solid-health-questionnaire/dist/package.json ] || [ ! -f /solid-chatbot/dist/package.json ]; do sleep 1; done; npm install --install-links=true --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist /solid-health-app/dist /solid-tours/dist /solid-health-questionnaire/dist /solid-chatbot/dist && npm run start:local-packages; else npm install && npm install --no-save --package-lock=false @hoelk-f/solid-data-manager@latest @hoelk-f/semantic-data-catalog@latest @hoelk-f/solid-health-app@latest @hoelk-f/solid-tours@latest @hoelk-f/solid-health-questionnaire@latest @hoelk-f/solid-chatbot@latest && npm start; fi"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
       - semantic_data_catalog_dist:/semantic-data-catalog/dist
       - solid_health_app_dist:/solid-health-app/dist
       - solid_tours_dist:/solid-tours/dist
+      - solid_health_questionnaire_dist:/solid-health-questionnaire/dist
       - solid_chatbot_dist:/solid-chatbot/dist
       - /app/node_modules
     depends_on:
@@ -127,6 +138,8 @@ services:
       solid-health-app:
         condition: service_started
       solid-tours:
+        condition: service_healthy
+      solid-health-questionnaire:
         condition: service_healthy
       solid-chatbot:
         condition: service_started
@@ -230,6 +243,37 @@ services:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-tours
+
+  solid-health-questionnaire:
+    image: node:22-alpine
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+    command: sh -c "rm -f /tmp/solid-health-questionnaire-dist.ready && npm install && npm run build:lib && node -e \"const p=require('/app/dist/package.json'); const expected=require('/app/package.json').version; if (p.name !== '@hoelk-f/solid-health-questionnaire' || p.version !== expected || !p.exports || !p.exports['./embed'] || !p.exports['./embed.css']) process.exit(1);\" && test -s /app/dist/index.js && test -s /app/dist/index.cjs && test -s /app/dist/embed.css && touch /tmp/solid-health-questionnaire-dist.ready && (npm run build:lib:watch & npm start)"
+    volumes:
+      - ../solid-health-questionnaire:/app:delegated
+      - solid_health_questionnaire_dist:/app/dist
+      - /app/node_modules
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          test -f /tmp/solid-health-questionnaire-dist.ready &&
+          node -e "const p=require('/app/dist/package.json'); const expected=require('/app/package.json').version; if (p.name !== '@hoelk-f/solid-health-questionnaire' || p.version !== expected || !p.exports || !p.exports['./embed'] || !p.exports['./embed.css']) process.exit(1);" &&
+          test -s /app/dist/index.js &&
+          test -s /app/dist/index.cjs &&
+          test -s /app/dist/embed.css
+      interval: 3s
+      timeout: 5s
+      retries: 100
+      start_period: 5s
+    expose: ["3007"]
+    networks:
+      solid-dataspace:
+        aliases:
+          - solid-dataspace-dev-solid-health-questionnaire
 
   solid-chatbot:
     image: node:20-alpine
@@ -375,7 +419,11 @@ services:
       ENVIRONMENTAL_SCENARIO_POLL_SECONDS: ${ENVIRONMENTAL_SCENARIO_POLL_SECONDS:-30}
       ENVIRONMENTAL_SCENARIO_REGISTRIES_JSON: >-
         ${ENVIRONMENTAL_SCENARIO_REGISTRIES_JSON:-[]}
-      ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE: ${ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE:-3}
+      ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE: ${ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE:-2}
+      ENVIRONMENTAL_SCENARIO_MAX_REGISTRIES_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRIES_PER_POLL:-8}
+      ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_ENTRIES_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_ENTRIES_PER_POLL:-64}
+      ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_MEMBERS_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_MEMBERS_PER_POLL:-32}
+      ENVIRONMENTAL_SCENARIO_DISCOVERY_TIMEOUT_MS: ${ENVIRONMENTAL_SCENARIO_DISCOVERY_TIMEOUT_MS:-25000}
       ENVIRONMENTAL_SCENARIO_OWNER_WEBID: ${ENVIRONMENTAL_SCENARIO_OWNER_WEBID:-https://solid-community-server.tmdt.info/sscon/profile/card#me}
       ENVIRONMENTAL_SCENARIO_MARKER_URL: ${ENVIRONMENTAL_SCENARIO_MARKER_URL:-https://solid-community-server.tmdt.info/sscon/solid-tours/public/current-run.json}
       ENVIRONMENTAL_SCENARIO_DATA_URL_PREFIX: ${ENVIRONMENTAL_SCENARIO_DATA_URL_PREFIX:-https://solid-community-server.tmdt.info/sscon/solid-tours/runs/}
@@ -544,6 +592,9 @@ services:
       solid-health-app:
         condition: service_started
         restart: true
+      solid-health-questionnaire:
+        condition: service_started
+        restart: true
       solid-tours:
         condition: service_started
         restart: true
@@ -573,6 +624,7 @@ volumes:
   semantic_data_catalog_dist:
   solid_health_app_dist:
   solid_tours_dist:
+  solid_health_questionnaire_dist:
   solid_chatbot_dist:
   solid_chatbot_qdrant_data:
   solid_chatbot_ollama_data:
