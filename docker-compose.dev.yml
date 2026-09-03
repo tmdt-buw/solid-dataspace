@@ -15,7 +15,7 @@ services:
       WATCHPACK_POLLING: "true"
       WDS_SOCKET_PORT: "80"
       APP_PLASMA_URL: ${PLASMA_PUBLIC_URL:-/plasma/modelings}
-      APP_DATASPACE_ID: ${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-stadt-wuppertal}}
+      APP_DATASPACE_ID: ${DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-}}}
       DATASPACE_MANAGER_PACKAGE_SOURCE: ${DATASPACE_MANAGER_PACKAGE_SOURCE:-local}
       APP_SYNC_WORKER_ENABLED: ${SOLID_SYNC_WORKER_ENABLED:-true}
       APP_SYNC_WORKER_API_URL: ${SOLID_SYNC_WORKER_API_URL:-/sync-worker}
@@ -26,7 +26,7 @@ services:
         ${STATISTICS_ADMIN_WEBIDS_JSON:-["https://solid-community-server.tmdt.info/solidtestpod/profile/card#me"]}
       APP_STATISTICS_WORKER_WEBID: ${SOLID_SYNC_WORKER_WEBID:-https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me}
       APP_STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
-      APP_STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/}
+      APP_STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/${DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-__unconfigured__}}}/downloads/}
       APP_STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-statistics/activity/activity.ttl}
       APP_STATISTICS_TIMEZONE: ${STATISTICS_TIMEZONE:-Europe/Berlin}
 
@@ -353,8 +353,8 @@ services:
       WATCHPACK_POLLING: "true"
       STATISTICS_ENABLED: ${STATISTICS_ENABLED:-false}
       STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
-      STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/}
-      STATISTICS_REGISTRY_CONTEXT: ${STATISTICS_REGISTRY_CONTEXT:-}
+      STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/${DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-__unconfigured__}}}/downloads/}
+      STATISTICS_REGISTRY_CONTEXT: ${DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-}}}
     command: sh -c "rm -f /tmp/semantic-data-catalog-dist.ready && npm install && npm run build:lib && node -e \"const p=require('/app/frontend/dist/package.json'); const expected=require('/app/frontend/package.json').version; if (p.name !== '@hoelk-f/semantic-data-catalog' || p.version !== expected || !p.exports || !p.exports['./catalog-api']) process.exit(1);\" && test -s /app/frontend/dist/catalog-api/index.js && test -s /app/frontend/dist/catalog-api/index.cjs && test -s /app/frontend/dist/embed/index.js && test -s /app/frontend/dist/embed/index.cjs && test -s /app/frontend/dist/embed/embed.css && touch /tmp/semantic-data-catalog-dist.ready && (npm run build:lib:watch & npm run start-watch)"
     volumes:
       - ../semantic-data-catalog/frontend:/app/frontend:delegated
@@ -419,7 +419,7 @@ services:
       ENVIRONMENTAL_SCENARIO_POLL_SECONDS: ${ENVIRONMENTAL_SCENARIO_POLL_SECONDS:-30}
       ENVIRONMENTAL_SCENARIO_REGISTRIES_JSON: >-
         ${ENVIRONMENTAL_SCENARIO_REGISTRIES_JSON:-[]}
-      ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE: ${ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE:-2}
+      ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE: ${ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE:-1}
       ENVIRONMENTAL_SCENARIO_MAX_REGISTRIES_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRIES_PER_POLL:-8}
       ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_ENTRIES_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_ENTRIES_PER_POLL:-64}
       ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_MEMBERS_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_MEMBERS_PER_POLL:-32}
@@ -431,14 +431,14 @@ services:
       STATISTICS_ENABLED: ${STATISTICS_ENABLED:-false}
       STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
       STATISTICS_EVENT_SOURCES_JSON: >-
-        ${STATISTICS_EVENT_SOURCES_JSON:-[{"id":"test","label":"Test","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/"},{"id":"dace","label":"DACE","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/dace/downloads/"},{"id":"stadt-wuppertal","label":"Stadt Wuppertal","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/stadt-wuppertal/downloads/"},{"id":"timberconnect","label":"TimberConnect","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/timberconnect/downloads/"}]}
+        ${STATISTICS_EVENT_SOURCES_JSON:-[{"id":"test","label":"Test","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/"},{"id":"test2","label":"Test 2","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test2/downloads/"},{"id":"dace","label":"DACE","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/dace/downloads/"},{"id":"stadt-wuppertal","label":"Stadt Wuppertal","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/stadt-wuppertal/downloads/"},{"id":"timberconnect","label":"TimberConnect","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/timberconnect/downloads/"}]}
       STATISTICS_INCLUDE_LEGACY_EVENT_SOURCE: ${STATISTICS_INCLUDE_LEGACY_EVENT_SOURCE:-true}
       STATISTICS_ADMIN_WEBIDS_JSON: >-
         ${STATISTICS_ADMIN_WEBIDS_JSON:-["https://solid-community-server.tmdt.info/solidtestpod/profile/card#me"]}
       STATISTICS_HMAC_SECRET: ${STATISTICS_HMAC_SECRET:-}
       STATISTICS_HMAC_VERSION: ${STATISTICS_HMAC_VERSION:-v1}
       STATISTICS_REGISTRIES_JSON: >-
-        ${STATISTICS_REGISTRIES_JSON:-[{"id":"stadt-wuppertal","label":"Gesundes Tal","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/stadt-wuppertal"},{"id":"dace","label":"DACE","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace"},{"id":"timberconnect","label":"TimberConnect","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/timberconnect"},{"id":"test","label":"Test","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/test"}]}
+        ${STATISTICS_REGISTRIES_JSON:-[{"id":"stadt-wuppertal","label":"Gesundes Tal","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/stadt-wuppertal"},{"id":"dace","label":"DACE","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace"},{"id":"timberconnect","label":"TimberConnect","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/timberconnect"},{"id":"test","label":"Test","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/test"},{"id":"test2","label":"Test 2","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/test2"}]}
       STATISTICS_REFRESH_INTERVAL_MINUTES: ${STATISTICS_REFRESH_INTERVAL_MINUTES:-15}
       STATISTICS_TIMEZONE: ${STATISTICS_TIMEZONE:-Europe/Berlin}
       STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-statistics/activity/activity.ttl}

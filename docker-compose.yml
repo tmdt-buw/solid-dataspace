@@ -92,8 +92,9 @@ services:
             "recommended": false
           }
         ]
-      # Keep production fail-closed: an unset partition must not select test.
-      APP_DATASPACE_ID: ${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-}}
+      # Use one deployment-scoped ID for the Manager and catalog. Keep the
+      # legacy scenario variable as the final compatibility fallback only.
+      APP_DATASPACE_ID: ${DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-}}}
       APP_SYNC_WORKER_ENABLED: ${SOLID_SYNC_WORKER_ENABLED:-true}
       APP_SYNC_WORKER_API_URL: ${SOLID_SYNC_WORKER_API_URL:-/sync-worker}
       APP_SYNC_WORKER_SERVICE_WEBID: ${SOLID_SYNC_WORKER_WEBID:-}
@@ -103,7 +104,7 @@ services:
         ${STATISTICS_ADMIN_WEBIDS_JSON:-["https://solid-community-server.tmdt.info/solidtestpod/profile/card#me"]}
       APP_STATISTICS_WORKER_WEBID: ${SOLID_SYNC_WORKER_WEBID:-https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me}
       APP_STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
-      APP_STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/}
+      APP_STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/${DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-__unconfigured__}}}/downloads/}
       APP_STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-statistics/activity/activity.ttl}
       APP_STATISTICS_TIMEZONE: ${STATISTICS_TIMEZONE:-Europe/Berlin}
     expose: ["3001"]
@@ -217,8 +218,8 @@ services:
       REACT_APP_OIDC_ISSUER: https://solidcommunity.net
       STATISTICS_ENABLED: ${STATISTICS_ENABLED:-false}
       STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
-      STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/}
-      STATISTICS_REGISTRY_CONTEXT: ${STATISTICS_REGISTRY_CONTEXT:-}
+      STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/${DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-__unconfigured__}}}/downloads/}
+      STATISTICS_REGISTRY_CONTEXT: ${DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-}}}
     expose: ["5000"]
     networks:
       solid-dataspace:
@@ -259,7 +260,7 @@ services:
       ENVIRONMENTAL_SCENARIO_POLL_SECONDS: ${ENVIRONMENTAL_SCENARIO_POLL_SECONDS:-30}
       ENVIRONMENTAL_SCENARIO_REGISTRIES_JSON: >-
         ${ENVIRONMENTAL_SCENARIO_REGISTRIES_JSON:-[]}
-      ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE: ${ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE:-2}
+      ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE: ${ENVIRONMENTAL_SCENARIO_MIN_DONORS_PER_ROUTE:-1}
       ENVIRONMENTAL_SCENARIO_MAX_REGISTRIES_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRIES_PER_POLL:-8}
       ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_ENTRIES_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_ENTRIES_PER_POLL:-64}
       ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_MEMBERS_PER_POLL: ${ENVIRONMENTAL_SCENARIO_MAX_REGISTRY_MEMBERS_PER_POLL:-32}
@@ -271,14 +272,14 @@ services:
       STATISTICS_ENABLED: ${STATISTICS_ENABLED:-false}
       STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
       STATISTICS_EVENT_SOURCES_JSON: >-
-        ${STATISTICS_EVENT_SOURCES_JSON:-[{"id":"test","label":"Test","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/"},{"id":"dace","label":"DACE","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/dace/downloads/"},{"id":"stadt-wuppertal","label":"Stadt Wuppertal","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/stadt-wuppertal/downloads/"},{"id":"timberconnect","label":"TimberConnect","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/timberconnect/downloads/"}]}
+        ${STATISTICS_EVENT_SOURCES_JSON:-[{"id":"test","label":"Test","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test/downloads/"},{"id":"test2","label":"Test 2","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/test2/downloads/"},{"id":"dace","label":"DACE","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/dace/downloads/"},{"id":"stadt-wuppertal","label":"Stadt Wuppertal","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/stadt-wuppertal/downloads/"},{"id":"timberconnect","label":"TimberConnect","url":"${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/timberconnect/downloads/"}]}
       STATISTICS_INCLUDE_LEGACY_EVENT_SOURCE: ${STATISTICS_INCLUDE_LEGACY_EVENT_SOURCE:-true}
       STATISTICS_ADMIN_WEBIDS_JSON: >-
         ${STATISTICS_ADMIN_WEBIDS_JSON:-["https://solid-community-server.tmdt.info/solidtestpod/profile/card#me"]}
       STATISTICS_HMAC_SECRET: ${STATISTICS_HMAC_SECRET:-}
       STATISTICS_HMAC_VERSION: ${STATISTICS_HMAC_VERSION:-v1}
       STATISTICS_REGISTRIES_JSON: >-
-        ${STATISTICS_REGISTRIES_JSON:-[{"id":"stadt-wuppertal","label":"Gesundes Tal","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/stadt-wuppertal"},{"id":"dace","label":"DACE","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace"},{"id":"timberconnect","label":"TimberConnect","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/timberconnect"},{"id":"test","label":"Test","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/test"}]}
+        ${STATISTICS_REGISTRIES_JSON:-[{"id":"stadt-wuppertal","label":"Gesundes Tal","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/stadt-wuppertal"},{"id":"dace","label":"DACE","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace"},{"id":"timberconnect","label":"TimberConnect","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/timberconnect"},{"id":"test","label":"Test","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/test"},{"id":"test2","label":"Test 2","url":"https://solid-community-server.tmdt.info/semanticdatacatalog/public/test2"}]}
       STATISTICS_REFRESH_INTERVAL_MINUTES: ${STATISTICS_REFRESH_INTERVAL_MINUTES:-15}
       STATISTICS_TIMEZONE: ${STATISTICS_TIMEZONE:-Europe/Berlin}
       STATISTICS_ACTIVITY_RESOURCE_PATH: ${STATISTICS_ACTIVITY_RESOURCE_PATH:-statistics/activity/activity.ttl}

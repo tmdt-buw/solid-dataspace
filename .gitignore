@@ -1,7 +1,6 @@
-..\semantic-data-catalog\
-..\smart-city-urban-heat-monitoring\
-..\solid-dataspace-manager\
-
+# Instance-specific deployment copies are local server material, not repository
+# sources. Sibling repositories are outside this Git worktree already.
+server/
 **/node_modules/
 **/dist/
 **/build/

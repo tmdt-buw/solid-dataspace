@@ -76,7 +76,7 @@ repos:
 
   plasma:
     path: ..\plasma
-    repo: https://git.uni-wuppertal.de/tmdt/projects/dataspaces/plasma.git
+    repo: https://git.uni-wuppertal.de/tmdt/projects/dataspaces/gesundes-tal/miscellaneous/plasma.git
     scope:
       - semantic-modeling
       - ontology

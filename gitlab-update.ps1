@@ -26,15 +26,22 @@ function Get-ProjectPaths([string]$ScriptRoot) {
   $paths.Add((Resolve-Path -LiteralPath $ScriptRoot).Path)
 
   $reposFile = Join-Path $ScriptRoot "repos.yaml"
-  if (Test-Path -LiteralPath $reposFile) {
-    Get-Content -LiteralPath $reposFile | ForEach-Object {
-      if ($_ -match "^\s*path:\s*(.+)\s*$") {
-        $relativePath = $Matches[1].Trim()
-        $resolved = Resolve-Path -LiteralPath (Join-Path $ScriptRoot $relativePath) -ErrorAction SilentlyContinue
-        if ($resolved) {
-          $paths.Add($resolved.Path)
-        }
+  if (-not (Test-Path -LiteralPath $reposFile)) {
+    throw "Repository manifest is missing: $reposFile"
+  }
+
+  Get-Content -LiteralPath $reposFile | ForEach-Object {
+    if ($_ -match "^\s*path:\s*(.+)\s*$") {
+      $relativePath = $Matches[1].Trim()
+      $candidate = Join-Path $ScriptRoot $relativePath
+      $resolved = Resolve-Path -LiteralPath $candidate -ErrorAction SilentlyContinue
+      if (-not $resolved) {
+        throw "Configured repository path does not exist: $candidate"
       }
+      if (-not (Test-GitRepository -Path $resolved.Path)) {
+        throw "Configured repository is not a Git checkout: $($resolved.Path)"
+      }
+      $paths.Add($resolved.Path)
     }
   }
 
@@ -49,16 +56,11 @@ $tmdtProjects = @(
   "solid-data-manager"
 )
 
-# These repositories are intentionally published only through GitHub and must
-# not be considered by the GitLab mirror/update pass.
-$githubOnlyProjects = @(
-  "plasma"
-)
-
-# Keep the newly added repository target explicit so a cloned workspace cannot
-# accidentally mirror the questionnaire to a similarly named GitLab project.
+# Keep repository targets explicit so a cloned workspace cannot accidentally
+# mirror them to similarly named GitLab projects.
 $expectedGitLabRemoteUrls = @{
   "solid-health-questionnaire" = "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/solid-health-questionnaire.git"
+  "plasma" = "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/miscellaneous/plasma.git"
 }
 
 $pushedCount = 0
@@ -69,18 +71,6 @@ Write-Host "Projects root: $((Resolve-Path -LiteralPath (Join-Path $scriptRoot '
 
 foreach ($repoPath in $projectPaths) {
   $projectName = Split-Path -Leaf $repoPath
-
-  if ($githubOnlyProjects -contains $projectName) {
-    Write-Host "Skip (GitHub only): $projectName"
-    $skippedCount += 1
-    continue
-  }
-
-  if (-not (Test-GitRepository -Path $repoPath)) {
-    Write-Host "Skip (no .git): $projectName"
-    $skippedCount += 1
-    continue
-  }
 
   Push-Location -LiteralPath $repoPath
   try {
