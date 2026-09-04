@@ -59,7 +59,7 @@ $tmdtProjects = @(
 # Keep repository targets explicit so a cloned workspace cannot accidentally
 # mirror them to similarly named GitLab projects.
 $expectedGitLabRemoteUrls = @{
-  "solid-health-questionnaire" = "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/solid-health-questionnaire.git"
+  "solid-health-questionnaire" = "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/applications/solid-health-questionnaire.git"
   "plasma" = "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/miscellaneous/plasma.git"
 }
 
