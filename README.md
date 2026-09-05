@@ -65,13 +65,16 @@ the only worker required and needs read/write access to all five containers.
 container during migration; set it to `false` after every catalog writes to its dedicated container
 and all legacy events have passed the desired reporting window.
 
-### Instance-scoped Environmental Monitoring
+### Shared Environmental Monitoring and instance-scoped statistics
 
 Set `DATASPACE_ID` to the catalog registry ID represented by each deployed stack, for example
 `stadt-wuppertal`, `dace`, `timberconnect`, `test`, or `test2`. Compose passes the same resolved
 value to the Manager as `APP_DATASPACE_ID` and to the catalog as `STATISTICS_REGISTRY_CONTEXT`.
-The embedded Environmental Monitoring app therefore requests only that instance's aggregate
-partition.
+Catalog registrations and statistics remain instance-scoped. Environmental Monitoring
+loads the common `/sync-worker/environmental/scenario/shared` feed from the one central
+worker. Its new public-display requests qualify approved donations for this shared view;
+old approvals stay scoped and require resetting/re-sharing the donation and approving
+the new request. Update the Manager before approving new worker requests.
 
 The shared worker's `WORKER_ALLOWED_ORIGINS` must contain the public origin of every instance.
 For the root Compose stack, configure the equivalent `SOLID_SYNC_WORKER_ALLOWED_ORIGINS` value.
@@ -82,8 +85,11 @@ For compatibility, existing deployments may still supply `STATISTICS_REGISTRY_CO
 deprecated `ENVIRONMENTAL_SCENARIO_DATASPACE_ID`; the precedence is `DATASPACE_ID`, then
 `STATISTICS_REGISTRY_CONTEXT`, then `ENVIRONMENTAL_SCENARIO_DATASPACE_ID`. This same value also
 selects the event container. If none is configured, the derived event URL uses the isolated
-`__unconfigured__` partition and the Manager does not fall back to the worker's combined
-cross-instance aggregate.
+`__unconfigured__` partition. This does not block the new shared tour feed, which has
+no `dataspaceId` filter and never exposes old scoped approvals. Local Environmental
+Monitoring defaults to the shared worker behind `solid-dataspace-test.tmdt.info`;
+`VITE_TOUR_SCENARIO_URL` can override that target. The five existing Caddy proxy routes
+already point to the same worker and need no change.
 
 ## Local PLASMA integration
 
