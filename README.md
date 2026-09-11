@@ -2,6 +2,12 @@
 
 Orchestration and local infrastructure for the Solid dataspace development environment.
 
+## Semantic Search
+
+Each instance can index its registry's public DCAT metadata and semantic models
+in a separate Fuseki store. See [deployment instructions](SEMANTIC_SEARCH_ROLLOUT.md)
+for the new services, registry configuration and rollout order.
+
 ## Usage statistics
 
 The statistics implementation remains database-free: human activity is stored in each user's

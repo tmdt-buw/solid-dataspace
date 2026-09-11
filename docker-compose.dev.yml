@@ -385,7 +385,15 @@ services:
     build:
       context: ../semantic-data-catalog/backend
     restart: unless-stopped
+    depends_on:
+      semantic-data-catalog-fuseki:
+        condition: service_healthy
     environment:
+      CATALOG_DATASPACE_ID: ${DATASPACE_ID:-}
+      CATALOG_REGISTRY_URL: ${CATALOG_REGISTRY_URL:-https://solid-community-server.tmdt.info/semanticdatacatalog/public/${DATASPACE_ID:-__unconfigured__}/}
+      CATALOG_FUSEKI_URL: http://semantic-data-catalog-fuseki:3030/catalog
+      CATALOG_INDEX_INTERVAL_SECONDS: ${CATALOG_INDEX_INTERVAL_SECONDS:-300}
+      CATALOG_INDEX_MAX_AGE_SECONDS: ${CATALOG_INDEX_MAX_AGE_SECONDS:-900}
       CATALOG_SERVICE_WEBID: ${CATALOG_SERVICE_WEBID:-https://solid-community-server.tmdt.info/solidservice/profile/card#me}
       CATALOG_SERVICE_OIDC_ISSUER: ${CATALOG_SERVICE_OIDC_ISSUER:-https://solid-community-server.tmdt.info}
       CATALOG_SERVICE_CLIENT_ID: ${CATALOG_SERVICE_CLIENT_ID:-}
@@ -395,9 +403,38 @@ services:
       - ../semantic-data-catalog/backend:/app:delegated
     expose: ["8000"]
     networks:
+      catalog-search: {}
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-semantic-data-catalog-backend
+
+
+  semantic-data-catalog-indexer:
+    build: ../semantic-data-catalog/backend
+    command: ["python", "-m", "semantic_indexer"]
+    restart: unless-stopped
+    environment:
+      CATALOG_DATASPACE_ID: ${DATASPACE_ID:-}
+      CATALOG_REGISTRY_URL: ${CATALOG_REGISTRY_URL:-https://solid-community-server.tmdt.info/semanticdatacatalog/public/${DATASPACE_ID:-__unconfigured__}/}
+      CATALOG_FUSEKI_URL: http://semantic-data-catalog-fuseki:3030/catalog
+      CATALOG_INDEX_INTERVAL_SECONDS: ${CATALOG_INDEX_INTERVAL_SECONDS:-300}
+      CATALOG_INDEX_MAX_AGE_SECONDS: ${CATALOG_INDEX_MAX_AGE_SECONDS:-900}
+    depends_on:
+      semantic-data-catalog-fuseki:
+        condition: service_healthy
+    networks:
+      - solid-dataspace
+      - catalog-search
+
+  semantic-data-catalog-fuseki:
+    build: ../semantic-data-catalog/fuseki
+    restart: unless-stopped
+    environment:
+      JAVA_TOOL_OPTIONS: "-Xmx512m"
+    volumes:
+      - semantic_search_data:/fuseki/databases
+    networks:
+      - catalog-search
 
   solid-data-connection-sync-worker:
     build:
@@ -618,6 +655,7 @@ services:
         restart: true
 
 volumes:
+  semantic_search_data:
   nodered-data:
   solid_data_connection_sync_worker_data:
   solid_data_manager_dist:
@@ -633,6 +671,8 @@ volumes:
   plasma_mariadb_sms:
     name: plasma_mariadb_sms
 networks:
+  catalog-search:
+    internal: true
   solid-dataspace:
     name: solid-dataspace
     enable_ipv6: true
