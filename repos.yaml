@@ -49,7 +49,7 @@ repos:
 
   city-tours:
     path: ..\solid-tours
-    repo: https://github.com/hoelk-f/solid-tours
+    repo: https://github.com/hoelk-f/solid-city-tours.git
     scope:
       - tours
       - app
