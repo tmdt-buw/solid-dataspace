@@ -47,7 +47,7 @@ repos:
       - app
       - solid
 
-  solid-tours:
+  city-tours:
     path: ..\solid-tours
     repo: https://github.com/hoelk-f/solid-tours
     scope:

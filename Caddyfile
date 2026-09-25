@@ -51,8 +51,12 @@
         lb_try_duration 300s
         lb_try_interval 1s
     }
-    redir /solid-tours /solid-tours/
-    reverse_proxy /solid-tours/* solid-tours:3006 {
+    # Keep existing standalone bookmarks and authentication callbacks working.
+    redir /solid-tours /city-tours/?{query} 308
+    @legacyCityTours path_regexp legacyCityTours ^/solid-tours/(.*)$
+    redir @legacyCityTours /city-tours/{re.legacyCityTours.1}?{query} 308
+    redir /city-tours /city-tours/?{query}
+    reverse_proxy /city-tours/* city-tours:3006 {
         lb_try_duration 300s
         lb_try_interval 1s
     }

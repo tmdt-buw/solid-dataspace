@@ -321,13 +321,13 @@ function Assert-ManagerPublishGuard([string]$ManagerPath) {
     "@hoelk-f/solid-data-manager",
     "@hoelk-f/semantic-data-catalog",
     "@hoelk-f/solid-health-app",
-    "@hoelk-f/solid-tours",
+    "@hoelk-f/city-tours",
     "@hoelk-f/solid-health-questionnaire",
     "@hoelk-f/solid-chatbot",
     "SOLID_DATA_MANAGER_PACKAGE_VERSION",
     "SEMANTIC_DATA_CATALOG_PACKAGE_VERSION",
     "SOLID_HEALTH_APP_PACKAGE_VERSION",
-    "SOLID_TOURS_PACKAGE_VERSION",
+    "CITY_TOURS_PACKAGE_VERSION",
     "SOLID_HEALTH_QUESTIONNAIRE_PACKAGE_VERSION",
     "SOLID_CHATBOT_PACKAGE_VERSION"
   )
@@ -680,7 +680,7 @@ def dependency_metadata(pkg_path: pathlib.Path, version: str):
             "@inrupt/vocab-common-rdf",
             "n3",
         ),
-        "@hoelk-f/solid-tours": (
+        "@hoelk-f/city-tours": (
             "@hoelk-f/semantic-data-catalog",
             "@inrupt/oidc-client-ext",
             "@inrupt/solid-client",
@@ -975,7 +975,7 @@ semantic_catalog_path = (root / ".." / "semantic-data-catalog").resolve()
 environmental_path = (root / ".." / "environmental-monitoring").resolve()
 solid_health_path = (root / ".." / "solid-health-app").resolve()
 solid_health_questionnaire_path = (root / ".." / "solid-health-questionnaire").resolve()
-solid_tours_path = (root / ".." / "solid-tours").resolve()
+city_tours_path = (root / ".." / "solid-tours").resolve()
 solid_chatbot_path = (root / ".." / "solid-chatbot").resolve()
 
 manager_repo = repo_key(manager_path)
@@ -985,7 +985,7 @@ semantic_catalog_repo = repo_key(semantic_catalog_path)
 environmental_repo = repo_key(environmental_path)
 solid_health_repo = repo_key(solid_health_path)
 solid_health_questionnaire_repo = repo_key(solid_health_questionnaire_path)
-solid_tours_repo = repo_key(solid_tours_path)
+city_tours_repo = repo_key(city_tours_path)
 solid_chatbot_repo = repo_key(solid_chatbot_path)
 affected_set = set(dirty_set)
 
@@ -996,7 +996,7 @@ targets = [
     (environmental_path, environmental_path / "package.json", "0.3.0"),
     (solid_health_path, solid_health_path / "package.json", "0.1.0"),
     (solid_health_questionnaire_path, solid_health_questionnaire_path / "package.json", "0.1.0"),
-    (solid_tours_path, solid_tours_path / "package.json", "0.1.0"),
+    (city_tours_path, city_tours_path / "package.json", "0.1.0"),
     (semantic_catalog_path, semantic_catalog_path / "frontend" / "package.json", "0.8.0"),
     (solid_chatbot_path, solid_chatbot_path / "package.json", "0.1.0"),
 ]
@@ -1018,7 +1018,7 @@ for repo_path, pkg_path, _ in targets:
 catalog_pkg = semantic_catalog_path / "frontend" / "package.json"
 data_manager_pkg = solid_data_manager_path / "package.json"
 health_pkg = solid_health_path / "package.json"
-tours_pkg = solid_tours_path / "package.json"
+tours_pkg = city_tours_path / "package.json"
 questionnaire_pkg = solid_health_questionnaire_path / "package.json"
 chatbot_pkg = solid_chatbot_path / "package.json"
 manager_pkg = manager_path / "package.json"
@@ -1027,10 +1027,10 @@ manager_dockerfile = manager_path / "Dockerfile"
 catalog_current = current_versions.get(semantic_catalog_repo)
 data_manager_current = current_versions.get(solid_data_manager_repo)
 health_current = current_versions.get(solid_health_repo)
-tours_current = current_versions.get(solid_tours_repo)
+tours_current = current_versions.get(city_tours_repo)
 questionnaire_current = current_versions.get(solid_health_questionnaire_repo)
 chatbot_current = current_versions.get(solid_chatbot_repo)
-tours_dist_package = solid_tours_path / "dist" / "package.json"
+tours_dist_package = city_tours_path / "dist" / "package.json"
 
 # Build the dependency closure before calculating any version. This prevents a
 # consumer from being pinned to an intermediate version that never gets a
@@ -1042,14 +1042,14 @@ if catalog_current and (
         tours_pkg, "@hoelk-f/semantic-data-catalog", catalog_current
     )
     or (
-        is_tracked(solid_tours_path, tours_dist_package)
+        is_tracked(city_tours_path, tours_dist_package)
         and read_dependency(
             tours_dist_package, "@hoelk-f/semantic-data-catalog"
         )
         != catalog_current
     )
 ):
-    affected_set.add(solid_tours_repo)
+    affected_set.add(city_tours_repo)
 
 embedded_repos = {
     semantic_catalog_repo,
@@ -1057,7 +1057,7 @@ embedded_repos = {
     environmental_repo,
     solid_health_repo,
     solid_health_questionnaire_repo,
-    solid_tours_repo,
+    city_tours_repo,
     solid_chatbot_repo,
 }
 if affected_set.intersection(embedded_repos):
@@ -1087,11 +1087,11 @@ manager_dependency_sources = [
         "SOLID_HEALTH_APP_PACKAGE_VERSION",
     ),
     (
-        "@hoelk-f/solid-tours",
-        solid_tours_repo,
+        "@hoelk-f/city-tours",
+        city_tours_repo,
         tours_current,
         tours_pkg,
-        "SOLID_TOURS_PACKAGE_VERSION",
+        "CITY_TOURS_PACKAGE_VERSION",
     ),
     (
         "@hoelk-f/solid-health-questionnaire",
@@ -1224,7 +1224,7 @@ for repo_path, pkg_path, _ in targets:
         write_required_text(external_links, content, "Manager external links module")
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-tours":
         version_ts = pkg_path.parent / "src" / "version.ts"
-        set_exported_version(version_ts, "appVersion", new_version, "Solid Tours version module")
+        set_exported_version(version_ts, "appVersion", new_version, "City Tours version module")
 
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-health-questionnaire":
         version_ts = pkg_path.parent / "src" / "version.ts"
@@ -1272,11 +1272,11 @@ for repo_path, pkg_path, _ in targets:
 catalog_version = effective_versions.get(semantic_catalog_repo)
 data_manager_version = effective_versions.get(solid_data_manager_repo)
 health_version = effective_versions.get(solid_health_repo)
-tours_version = effective_versions.get(solid_tours_repo)
+tours_version = effective_versions.get(city_tours_repo)
 questionnaire_version = effective_versions.get(solid_health_questionnaire_repo)
 chatbot_version = effective_versions.get(solid_chatbot_repo)
 
-if catalog_version and tours_pkg.exists() and solid_tours_repo in affected_set:
+if catalog_version and tours_pkg.exists() and city_tours_repo in affected_set:
     sync_dependency(
         tours_pkg,
         "@hoelk-f/semantic-data-catalog",
@@ -1305,10 +1305,10 @@ if manager_pkg.exists() and manager_repo in affected_set:
             "SOLID_HEALTH_APP_PACKAGE_VERSION",
         ),
         (
-            "@hoelk-f/solid-tours",
+            "@hoelk-f/city-tours",
             tours_version,
             tours_pkg,
-            "SOLID_TOURS_PACKAGE_VERSION",
+            "CITY_TOURS_PACKAGE_VERSION",
         ),
         (
             "@hoelk-f/solid-health-questionnaire",
@@ -1613,7 +1613,7 @@ function Invoke-RequiredBuilds([string]$root, [string[]]$AffectedRepos) {
   $semanticCatalogPath = Resolve-Path (Join-Path $root "..\semantic-data-catalog") -ErrorAction Stop
   $solidDataManagerPath = Resolve-Path (Join-Path $root "..\solid-data-manager") -ErrorAction Stop
   $solidHealthPath = Resolve-Path (Join-Path $root "..\solid-health-app") -ErrorAction Stop
-  $solidToursPath = Resolve-Path (Join-Path $root "..\solid-tours") -ErrorAction Stop
+  $cityToursPath = Resolve-Path (Join-Path $root "..\solid-tours") -ErrorAction Stop
   $solidHealthQuestionnairePath = Resolve-Path (Join-Path $root "..\solid-health-questionnaire") -ErrorAction Stop
   $solidChatbotPath = Resolve-Path (Join-Path $root "..\solid-chatbot") -ErrorAction Stop
   $buildFiles = New-Object System.Collections.Generic.HashSet[string]([System.StringComparer]::OrdinalIgnoreCase)
@@ -1676,18 +1676,18 @@ function Invoke-RequiredBuilds([string]$root, [string[]]$AffectedRepos) {
     }
   }
 
-  if ($solidToursPath) {
-    $solidToursRepo = $solidToursPath.Path.ToLowerInvariant()
-    if ($affectedNormalized -contains $solidToursRepo -and (Test-Path (Join-Path $solidToursPath.Path "package.json"))) {
-      Write-Host "Building solid-tours embed dist"
-      Push-Location $solidToursPath.Path
+  if ($cityToursPath) {
+    $cityToursRepo = $cityToursPath.Path.ToLowerInvariant()
+    if ($affectedNormalized -contains $cityToursRepo -and (Test-Path (Join-Path $cityToursPath.Path "package.json"))) {
+      Write-Host "Building city-tours embed dist"
+      Push-Location $cityToursPath.Path
       try {
         npm run build:lib | Out-Host
-        Assert-LastExitCode "Building solid-tours embed dist"
+        Assert-LastExitCode "Building city-tours embed dist"
       } finally {
         Pop-Location
       }
-      foreach ($file in @(Get-TrackedBuildChanges -RepoPath $solidToursPath.Path -RelativeBuildRoot "dist")) {
+      foreach ($file in @(Get-TrackedBuildChanges -RepoPath $cityToursPath.Path -RelativeBuildRoot "dist")) {
         [void]$buildFiles.Add($file)
       }
     }
@@ -1921,7 +1921,7 @@ function Get-RequiredBuildLabels([string]$Root, [string[]]$AffectedRepos) {
     @{ Path = Join-Path $Root "..\semantic-data-catalog"; Label = "semantic-data-catalog embed dist" },
     @{ Path = Join-Path $Root "..\solid-data-manager"; Label = "solid-data-manager embed dist" },
     @{ Path = Join-Path $Root "..\solid-health-app"; Label = "solid-health-app embed dist" },
-    @{ Path = Join-Path $Root "..\solid-tours"; Label = "solid-tours embed dist" },
+    @{ Path = Join-Path $Root "..\solid-tours"; Label = "city-tours embed dist" },
     @{ Path = Join-Path $Root "..\solid-health-questionnaire"; Label = "solid-health-questionnaire embed dist" },
     @{ Path = Join-Path $Root "..\solid-chatbot"; Label = "solid-chatbot embed dist" }
   )

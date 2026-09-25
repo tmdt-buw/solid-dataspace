@@ -42,12 +42,12 @@ services:
             "linkType": "internal"
           },
           {
-            "id": "solid-tours",
-            "title": "Solid Tours",
-            "href": "/web/solid-tours",
+            "id": "city-tours",
+            "title": "City Tours",
+            "href": "/web/city-tours",
             "section": "applications",
             "iconKey": "tour",
-            "visible": ${SOLID_TOURS_VISIBLE:-true},
+            "visible": ${CITY_TOURS_VISIBLE:-${SOLID_TOURS_VISIBLE:-true}},
             "order": 22,
             "linkType": "internal"
           },
@@ -149,14 +149,14 @@ services:
         aliases:
           - solid-dataspace-dev-solid-health-questionnaire
 
-  solid-tours:
-    image: son1i/solid-tours:latest
+  city-tours:
+    image: son1i/city-tours:latest
     restart: unless-stopped
     expose: ["3006"]
     networks:
       solid-dataspace:
         aliases:
-          - solid-dataspace-dev-solid-tours
+          - solid-dataspace-dev-city-tours
 
   solid-chatbot:
     image: son1i/solid-chatbot-frontend:latest
@@ -379,7 +379,7 @@ services:
       solid-health-questionnaire:
         condition: service_started
         restart: true
-      solid-tours:
+      city-tours:
         condition: service_started
         restart: true
       solid-chatbot:
