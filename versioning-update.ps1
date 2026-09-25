@@ -1211,7 +1211,7 @@ for repo_path, pkg_path, _ in targets:
         write_required_text(external_links, content, "Manager external links module")
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-health-app":
         version_ts = pkg_path.parent / "src" / "version.ts"
-        set_exported_version(version_ts, "appVersion", new_version, "Solid Health version module")
+        set_exported_version(version_ts, "appVersion", new_version, "Health App version module")
         external_links = root / ".." / "solid-dataspace-manager" / "src" / "externalLinks.js"
         require_tracked_file(manager_path, external_links, "Manager external links module")
         content = external_links.read_text(encoding="utf-8")
@@ -1219,7 +1219,7 @@ for repo_path, pkg_path, _ in targets:
             content,
             r'(slug:\s*"solid-health-app",[\s\S]*?version:\s*")[^"]+(")',
             rf'\g<1>{new_version}\2',
-            "Solid Health external-link version",
+            "Health App external-link version",
         )
         write_required_text(external_links, content, "Manager external links module")
     if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-tours":
@@ -1257,7 +1257,7 @@ for repo_path, pkg_path, _ in targets:
         frontend_pkg = pkg_path.parent / "frontend" / "package.json"
         write_package_version(frontend_pkg, new_version)
         version_js = pkg_path.parent / "frontend" / "src" / "version.js"
-        set_exported_version(version_js, "appVersion", new_version, "Solid Chatbot version module")
+        set_exported_version(version_js, "appVersion", new_version, "Chatbot version module")
         external_links = root / ".." / "solid-dataspace-manager" / "src" / "externalLinks.js"
         require_tracked_file(manager_path, external_links, "Manager external links module")
         content = external_links.read_text(encoding="utf-8")
@@ -1265,7 +1265,7 @@ for repo_path, pkg_path, _ in targets:
             content,
             r'(slug:\s*"solid-chatbot",[\s\S]*?version:\s*")[^"]+(")',
             rf'\g<1>{new_version}\2',
-            "Solid Chatbot external-link version",
+            "Chatbot external-link version",
         )
         write_required_text(external_links, content, "Manager external links module")
 
