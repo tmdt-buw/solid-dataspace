@@ -1,0 +1,18 @@
+[
+    {
+        "file":  "src/components/Notifications.jsx",
+        "before":  "7ca56e5cd666a222e99e06ecb571ffc6b84025c76be6b2d9b86f09c5f273e524"
+    },
+    {
+        "file":  "src/components/DecisionInbox.jsx",
+        "before":  "993bf06638de2d3b01fc619c1173f3651fb0cbbf73714951da9f1759b824397f"
+    },
+    {
+        "file":  "src/components/Notifications.css",
+        "before":  "58d3ea636790d25598659746e9854521d2012a557acec117eb868bee80d5b903"
+    },
+    {
+        "file":  "src/i18n.js",
+        "before":  "062c319d57717b94a1c4c1a413de3794844c0fccd0234bbf0306f128a9385250"
+    }
+]

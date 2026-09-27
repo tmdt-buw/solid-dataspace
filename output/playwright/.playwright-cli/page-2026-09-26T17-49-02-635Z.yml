@@ -1,0 +1,70 @@
+- main [ref=f6e4]:
+  - region "City Tours Arbeitsbereich" [ref=f6e5]:
+    - complementary [ref=f6e6]:
+      - generic [ref=f6e7]:
+        - generic [ref=f6e8]:
+          - generic [ref=f6e9]:
+            - heading "Tourenplaner" [level=1] [ref=f6e10]
+            - button "Neue Tour" [ref=f6e11] [cursor=pointer]
+          - generic [ref=f6e15]:
+            - text: Tourname
+            - textbox "Tourname" [disabled] [ref=f6e16]: UX-Testtour
+          - generic "Routenmodus" [ref=f6e17]:
+            - button "Frei zeichnen" [disabled] [ref=f6e18]
+            - generic [ref=f6e19] [cursor=pointer]: GPX / GeoJSON
+          - button "Route bearbeiten" [ref=f6e20] [cursor=pointer]
+        - generic [ref=f6e21]:
+          - generic [ref=f6e22]:
+            - heading "Meine Touren" [level=2] [ref=f6e23]
+            - strong [ref=f6e24]: "1"
+          - article [ref=f6e26]:
+            - button "UX-Testtour auswählen" [ref=f6e27] [cursor=pointer]:
+              - generic [ref=f6e28]: UX-Testtour
+              - generic [ref=f6e29]: 2,7 km
+            - generic [ref=f6e30]:
+              - button "Duplizieren" [ref=f6e31] [cursor=pointer]
+              - button "Löschen" [ref=f6e32] [cursor=pointer]
+          - generic [ref=f6e33]:
+            - generic [ref=f6e34]:
+              - text: Absolviert am
+              - textbox "Absolviert am" [ref=f6e35]:
+                - /placeholder: TT.MM.JJJJ
+                - text: 26.09.2026
+            - button "Tour gemacht" [ref=f6e36] [cursor=pointer]
+        - generic [ref=f6e37]:
+          - generic [ref=f6e38]:
+            - heading "Gemachte Touren" [level=2] [ref=f6e39]
+            - strong [ref=f6e40]: "1"
+          - article [ref=f6e42]:
+            - generic [ref=f6e43]:
+              - strong [ref=f6e44]: UX-Testtour
+              - generic [ref=f6e45]: 26.09.2026 · 2,7 km · 35 Min. · ca. 3.600 Schritte
+            - button "Löschen" [ref=f6e46] [cursor=pointer]
+    - region "Tourenkarte" [ref=f6e47]:
+      - generic [ref=f6e48]:
+        - generic:
+          - generic:
+            - img:
+              - generic [ref=f6e49] [cursor=pointer]
+        - generic:
+          - generic [ref=f6e50]:
+            - button "Vergrößern" [ref=f6e51] [cursor=pointer]: +
+            - button "Verkleinern" [ref=f6e52] [cursor=pointer]: −
+          - generic [ref=f6e53]:
+            - link "Leaflet" [ref=f6e54] [cursor=pointer]:
+              - /url: https://leafletjs.com
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=f6e59] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+      - complementary "Routeninformationen" [ref=f6e60]:
+        - generic [ref=f6e61]:
+          - generic [ref=f6e62]: Distanz
+          - strong [ref=f6e63]: 2,7 km
+        - generic [ref=f6e64]:
+          - generic [ref=f6e65]: Dauer
+          - strong [ref=f6e66]: –
+      - complementary "Kartenlegende" [ref=f6e67]:
+        - strong [ref=f6e68]: Routen
+        - generic [ref=f6e69]: Aktuelle Tour
+        - generic [ref=f6e71]: Gespeicherte Tour
+        - generic [ref=f6e73]: Katalogvorschau

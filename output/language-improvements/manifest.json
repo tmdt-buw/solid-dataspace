@@ -1,0 +1,272 @@
+[
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "src/i18n.js",
+    "before": "df326a4dd7b0b1dd0460e7256fa8ed233266bab5f2074240e0798c9e5bbcc2b8",
+    "after": "062c319d57717b94a1c4c1a413de3794844c0fccd0234bbf0306f128a9385250"
+  },
+  {
+    "repo": "solid-data-manager",
+    "file": "src/i18n.js",
+    "before": "c4a4fe3d3318d309abeeed35810b8e7858de599db1f35ea9b26860dc77d07a22",
+    "after": "6572cc9ad3006331b612adadc38f4758303da196c21bee9450ae48f659034914"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/i18n.js",
+    "before": "c1bac1bb25e36507e69c24edec0c3401cfdadf0560c076ae75a645cc936285e3",
+    "after": "90f1ca4fa79cda5f51274d90b83296e0bcf2711c2a15bec072464cd22175b771"
+  },
+  {
+    "repo": "solid-chatbot",
+    "file": "frontend/src/i18n.js",
+    "before": "d015340853dd7428766c742940a8d4c784a6eb2311232cc4ba237f2d267d2e98",
+    "after": "22f13575c37f31329b9f132c205fd605d26074a67c8af8c58667595dfdeaa15c"
+  },
+  {
+    "repo": "solid-health-app",
+    "file": "src/i18n.js",
+    "before": "47d4118a1d9023a56cc52dc8c2402625f0468153beda0f92919c75c75e505c97",
+    "after": "923dfb8a6a940b95861937d66872c1bb9ff353d149bb3fe057e9e98a0db3dd1e"
+  },
+  {
+    "repo": "environmental-monitoring",
+    "file": "src/i18n.tsx",
+    "before": "d3543d59fdf65517f69dffa2228502e686afea59da42abf17b280ed8253da9bc",
+    "after": "004b4feaa9e28526f3f22111d293c9d82f5da114fc5bc1ad5d812a168b925a37"
+  },
+  {
+    "repo": "solid-data-manager",
+    "file": "src/components/DataManager.jsx",
+    "before": "997f4543b08c7f55b25155338a3cefb701a9ca0bc41808a1d56667a601414f87",
+    "after": "55986ae19dd50bf7f0d70c044dcf4bf4525cf690535bd65a40a0cc10f92671cb"
+  },
+  {
+    "repo": "solid-data-manager",
+    "file": "src/components/DataManager.test.jsx",
+    "before": "5133c89fd10bae80859f8e53e1e79a51c3a4aab4ab1d77fdabd4ab919f286fe4",
+    "after": "bd69e05815359970960257f3dec6824d7785dbc33927135fa4bd4f28e6ac6ffa"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/PodContainerPicker.js",
+    "before": "889d3ef4bc5962b3bff4df283c3ec7c7f291b79c3a1dc38c4a925e1e09105101",
+    "after": "3d16579bc3cd152b769522fd11fecbca49d680afb45ab930f9bb0d98f1a0a0b9"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/PodResourcePicker.js",
+    "before": "4211ead89f888d439ea71a945ac0be123f0803378013a460ccdba3c8422928ff",
+    "after": "86dc95a16859bc9f39b9996a5b3227380793e2b7e6a2375e8817473ed36d1f5c"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/DatasetTable.js",
+    "before": "b1615cabffce7edd04e40c919f53594df6a3a64912d1b3b66ae08fc1836dda77",
+    "after": "42520b1613841bca31f5114daa5ab00ee9d0aeb33275774b443b6865e821e9c7"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/DatasetDetailModal.js",
+    "before": "ed240a3cb5dc87182f5539de90a72eadea8093c54c43a7c78a0e8e33419617ed",
+    "after": "764ace4f551b72f2368356bc11ca6c6b00d7c7c220c06bce25e6fde09c1f7efb"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/SemanticSearchResults.jsx",
+    "before": "8c19bf69b83eb664051a5715bdaa6c7977621cd7d791cd38439773a8b427e2c0",
+    "after": "7cbaeb47c81db2206f061a5e4c75c81fc3cf9adacfb5e292159bc378f295c3a6"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/DatasetAddModal.js",
+    "before": "8f0236dd95a463f90dc0a91fa9379aa5b90b74e3a1c5e957217fe42ffb8d7a53",
+    "after": "5ece8845a5f72fdbf1a3bd4fbb5742eafacb4cb7184b0de22be7213bdba284e2"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/DatasetEditModal.js",
+    "before": "a4d2295403e247c680ecdb24318692b15829f31904a92ecc53414e75da166091",
+    "after": "c1834f9ab00e5bb2930836ffbc5247f03a1686d5752d333544d19bcccfea0201"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/HeaderBar.js",
+    "before": "cbc1a967c8781250083942f4d43c825f10d219b47cb51386b8e83a47db95f2d7",
+    "after": "29aad9461c85b2d73abb6a3f96bac54cec9515e2b50937295eb2cd00ef4dc93f"
+  },
+  {
+    "repo": "solid-chatbot",
+    "file": "frontend/src/App.jsx",
+    "before": "e3b119712d379c7356c15c461091b08ed5e94046e5192ee5f28b2982899f6b3e",
+    "after": "009047439e4f9bc9e88e3f753299be3ec72c62de20c9a34348fd333130b38059"
+  },
+  {
+    "repo": "solid-chatbot",
+    "file": "frontend/src/components/DataSourcesModal.jsx",
+    "before": "85c3cb880d0c9266284c8980540c41fa108d262dbcdecac64fd11f137d3e1ba9",
+    "after": "0ff19ce58d5b9cc780e41fb5cfe59d7f040887ab363eff52f9644ef225dc8151"
+  },
+  {
+    "repo": "solid-health-app",
+    "file": "src/components/StandaloneHeader.tsx",
+    "before": "54d47c048ee8e0275628579e49c8586f417ef672ee3076e728185243417b82e7",
+    "after": "a930ca211456cd9c70cc50f49056df275944afcaeadecc76b5664a6663013245"
+  },
+  {
+    "repo": "solid-tours",
+    "file": "src/App.tsx",
+    "before": "663c051a5aaacc7779925598a0787f41a5814f7baaff1bc9738280ebccba1946",
+    "after": "1d17bfee335e624f1763061a5f4875bdd746af4f874ec331681e49afd5bec83d"
+  },
+  {
+    "repo": "solid-health-questionnaire",
+    "file": "src/App.tsx",
+    "before": "a25cd2a530d6d8ef47709aa53735d2e25a895d1c28360ce51bef0984f79858f1",
+    "after": "7026f314733052a6842daf3c3e216a1583c86d4491ae169308e4dd3632af0103"
+  },
+  {
+    "repo": "solid-health-questionnaire",
+    "file": "src/i18n.ts",
+    "before": "f7fa3e4d21b8bc4a527623ee11ba83ab99897ae70233503995de2af30042c330",
+    "after": "caa349fc5d40995db15833a99f9c6fe296156b99e8359efbf38d598025ec31fa"
+  },
+  {
+    "repo": "environmental-monitoring",
+    "file": "src/components/map/BicycleSensorMarkers.tsx",
+    "before": "d0e3604f634f981ad14d13d3d9cdac21bb6eeeb2b08ce12f97ceae486675ff4c",
+    "after": "e73b3d86a91cbf83eca594132ec7823ed096bd631f05e989c92f183ef038d48c"
+  },
+  {
+    "repo": "environmental-monitoring",
+    "file": "src/components/map/districtData.ts",
+    "before": "28cca5732af4fc0a1b1fc029113aa362c5da4ea5ed3d0c5938d55518d1ed1e3a",
+    "after": "b075480c98b359398133c38d3ef46837a68e45bdb0779d14d4bce29858190ef4"
+  },
+  {
+    "repo": "environmental-monitoring",
+    "file": "src/components/map/SolidSensorMarkers.tsx",
+    "before": "09fb9ee0769e17d26e40971768642635e2a0e705c084e4ada78fb10691ae7463",
+    "after": "77824bf0d8bb076a98318f8b498be3fa3cb90e6be6a467e8cce8ec4849a4018e"
+  },
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "src/components/DecisionInbox.jsx",
+    "before": "084025af077eab26f922873bff88e6e08f78016757b9c69a2554d4c1a015f35d",
+    "after": "993bf06638de2d3b01fc619c1173f3651fb0cbbf73714951da9f1759b824397f"
+  },
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "src/components/Notifications.jsx",
+    "before": "cbc1dc4d9edd0b033bcd65d5d96383e24a45eee58f69fccf8a97c883f67ff129",
+    "after": "7ca56e5cd666a222e99e06ecb571ffc6b84025c76be6b2d9b86f09c5f273e524"
+  },
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "src/components/TransactionHistory.jsx",
+    "before": "a9287355f1d10167f8784a277c8f1797044defeb15ce3a7fee6293f4d89ac302",
+    "after": "9e7f030b6edbb33100a93bf0ac122d77571fb359a6a796bec0d398264b92b4ee"
+  },
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "src/components/DataConnection.jsx",
+    "before": "df8a3919c53a367393dae2227542b3fcfb45bb50d2eb8caeafdba1b10ef2e158",
+    "after": "f12c3610926c25d444d0c2599923e306dd10ef23493cf4e570e333f3e8f6c64b"
+  },
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "src/components/StatisticsDashboard.jsx",
+    "before": "7f3647e39429d8593510693e25c3b56002af447de806891c3cc41cf883c6b75c",
+    "after": "ebd855567ea224eaeb4a2dd4557f33894fac0ed21156e5d700755e1b57cf7343"
+  },
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "src/components/SolidPodProvider.jsx",
+    "before": "8562ba9e5066d2ec30f81a420e54f591505a57e731bbed8e1bfc75919c8d2d29",
+    "after": "a4e2582c7d3711c586a1fd1f497051bb1555f7a5f5f542019709adb37b9c66bb"
+  },
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "src/components/Profile.jsx",
+    "before": "b164245caac2a9c8319ffeae4d33ca37db34e82ee40789e2ff707baac7977c5b",
+    "after": "fdf06a1691f4477bc8637526be36c28305fc8336ead82da968690f5fdadb5aad"
+  },
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "src/i18n.dom.test.js",
+    "before": null,
+    "after": "dfeade50ed921021d623abc05ab193a55e4e49d94f7c021598c65dc8fb7acf96"
+  },
+  {
+    "repo": "solid-data-manager",
+    "file": "src/i18n.dom.test.js",
+    "before": null,
+    "after": "dfeade50ed921021d623abc05ab193a55e4e49d94f7c021598c65dc8fb7acf96"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/i18n.dom.test.js",
+    "before": null,
+    "after": "dfeade50ed921021d623abc05ab193a55e4e49d94f7c021598c65dc8fb7acf96"
+  },
+  {
+    "repo": "solid-chatbot",
+    "file": "frontend/src/i18n.dom.test.js",
+    "before": null,
+    "after": "dfeade50ed921021d623abc05ab193a55e4e49d94f7c021598c65dc8fb7acf96"
+  },
+  {
+    "repo": "solid-health-app",
+    "file": "src/i18n.dom.test.js",
+    "before": null,
+    "after": "dfeade50ed921021d623abc05ab193a55e4e49d94f7c021598c65dc8fb7acf96"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/SemanticSearchResults.test.jsx",
+    "before": null,
+    "after": "10210dab4bdbb030d7f147542bac470ec05fae1561377db50029561c8f933af2"
+  },
+  {
+    "repo": "environmental-monitoring",
+    "file": "src/i18n.test.ts",
+    "before": null,
+    "after": "7c26d33bb4a823be94844201d0a6cbe0597675b36e5b0b08d750dc06e7a9d84c"
+  },
+  {
+    "repo": "environmental-monitoring",
+    "file": "package.json",
+    "before": "9a2d5c68c59ebf725bec97846459c7d0b25a011e27f6594752f44cd4d5446475",
+    "after": "69855a21845923c65aea56a05479aa758d58aeb97468092082499aa4ff9002e6"
+  },
+  {
+    "repo": "solid-dataspace-manager",
+    "file": "docs/localization.md",
+    "before": null,
+    "after": "9a66d349e4b46fff41e7b3f63a396b93ea30d95bf764cd27e9c9911686201a31"
+  },
+  {
+    "repo": "solid-health-questionnaire",
+    "file": "src/i18n.test.ts",
+    "before": "123d6fa614fdb02333bc4790082e51b1e4868f45ee946955267a53292179424e",
+    "after": "1d31e6f546e9991719476e7a1b24179b121e53355045d7b64641837715bae9c0"
+  },
+  {
+    "repo": "solid-health-questionnaire",
+    "file": "src/components/LoginScreen.test.tsx",
+    "before": "02e29ae5a79dc79e8a500a26dd657ddac292bf60ee15b31c0c3c4be5e766014e",
+    "after": "2d5dd933279f0d2ecbb5e24d2d29becf59a62339a880470312c1d7c37b29a9d9"
+  },
+  {
+    "repo": "solid-health-questionnaire",
+    "file": "src/components/LoginScreen.tsx",
+    "before": "e3849c0efcf6deef614a7a3841496908f880f5d03028e81622413a3602f967b4",
+    "after": "92aee83669a9bffaa3d30913dd690a25d6efb11d0f66aaf91aa5ac17903b7aaf"
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "file": "frontend/src/components/DatasetDetailModal.test.jsx",
+    "before": null,
+    "after": "c437af861f499459b5ec2a2902fe2cef0e4b0e1a158f4d425217d6f74f46d419"
+  }
+]

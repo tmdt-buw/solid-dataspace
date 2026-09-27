@@ -1,0 +1,25 @@
+- generic [ref=f11e2]:
+  - generic [ref=f11e3]:
+    - strong [ref=f11e4]: Lokale UI-Prüfung · Beispieldaten
+    - link "Requests" [ref=f11e5] [cursor=pointer]:
+      - /url: "?view=requests"
+    - link "Decisions" [ref=f11e6] [cursor=pointer]:
+      - /url: "?view=decisions"
+  - main [ref=f11e9]:
+    - generic [ref=f11e11]:
+      - generic [ref=f11e12]:
+        - generic [ref=f11e17]:
+          - paragraph [ref=f11e18]: Zugriffsverwaltung
+          - heading "Zugriffsanfragen" [level=1] [ref=f11e19]
+          - paragraph [ref=f11e20]: Verwalte den Zugriff auf deine Daten.
+        - button "Aktualisieren" [ref=f11e21] [cursor=pointer]
+      - group "Anfragen filtern" [ref=f11e24]:
+        - generic [ref=f11e25] [cursor=pointer]:
+          - checkbox "Geschlossene ausblenden" [checked] [ref=f11e26]
+          - generic [ref=f11e27]: Geschlossene ausblenden
+        - generic [ref=f11e28] [cursor=pointer]:
+          - checkbox "Frühere Szenario-Durchläufe anzeigen" [ref=f11e29]
+          - generic [ref=f11e30]: Frühere Szenario-Durchläufe anzeigen
+        - generic [ref=f11e31]: 0 Zugriffsanfrage(n) angezeigt
+        - button "Geschlossene löschen" [disabled] [ref=f11e32]
+      - alert [ref=f11e35]: Benachrichtigungen konnten nicht aus der Solid-Inbox geladen werden.

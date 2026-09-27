@@ -1,0 +1,75 @@
+- generic [ref=f2e2]:
+  - generic [ref=f2e3]:
+    - strong [ref=f2e4]: Lokale UI-Prüfung · Beispieldaten
+    - link "Requests" [ref=f2e5] [cursor=pointer]:
+      - /url: "?view=requests"
+    - link "Decisions" [ref=f2e6] [cursor=pointer]:
+      - /url: "?view=decisions"
+  - generic [ref=f2e7]:
+    - complementary "Navigation" [ref=f2e8]:
+      - strong [ref=f2e10]: Solid Dataspace
+      - generic [ref=f2e11]: Allgemein
+      - link "Solid Data Manager" [ref=f2e12] [cursor=pointer]:
+        - /url: "?view=requests"
+      - link "Zugriffsanfragen" [ref=f2e13] [cursor=pointer]:
+        - /url: "?view=requests"
+      - link "Zugriffsentscheidungen" [ref=f2e14] [cursor=pointer]:
+        - /url: "?view=decisions"
+    - main [ref=f2e16]:
+      - generic [ref=f2e18]:
+        - generic [ref=f2e19]:
+          - generic [ref=f2e24]:
+            - paragraph [ref=f2e25]: Zugriffsverwaltung
+            - heading "Zugriffsanfragen" [level=1] [ref=f2e26]
+            - paragraph [ref=f2e27]: Verwalte den Zugriff auf deine Daten.
+          - button "Aktualisieren" [ref=f2e28] [cursor=pointer]
+        - group "Anfragen filtern" [ref=f2e31]:
+          - generic [ref=f2e32] [cursor=pointer]:
+            - checkbox "Geschlossene ausblenden" [checked] [ref=f2e33]
+            - generic [ref=f2e34]: Geschlossene ausblenden
+          - generic [ref=f2e35] [cursor=pointer]:
+            - checkbox "Frühere Szenario-Durchläufe anzeigen" [ref=f2e36]
+            - generic [ref=f2e37]: Frühere Szenario-Durchläufe anzeigen
+          - generic [ref=f2e38]: 1 Zugriffsanfrage(n) angezeigt
+          - button "Geschlossene löschen" [disabled] [ref=f2e39]
+        - article [ref=f2e91]:
+          - generic [ref=f2e92]:
+            - generic [ref=f2e93]:
+              - heading "Environmental Monitoring möchte auf deine gespendeten Daten zugreifen" [level=2] [ref=f2e94]
+              - paragraph [ref=f2e95]: Nordpark · Wege und Grünflächen
+            - generic [ref=f2e96]: Genehmigt
+          - generic [ref=f2e99]:
+            - generic [ref=f2e100]:
+              - term [ref=f2e101]: "Anfragende Person:"
+              - definition [ref=f2e102]: Environmental Monitoring
+            - generic [ref=f2e103]:
+              - term [ref=f2e104]: "Angefragt:"
+              - definition [ref=f2e105]: 26.09.2026, 11:30
+          - generic [ref=f2e106]:
+            - generic [ref=f2e107]:
+              - strong [ref=f2e108]: "Daten:"
+              - generic [ref=f2e109]: Alle gespendeten gemachten Routen und ihre berechneten Aktivitätswerte
+            - generic [ref=f2e110]:
+              - strong [ref=f2e111]: "Zweck:"
+              - generic [ref=f2e112]: Mit deiner Zustimmung darf Environmental Monitoring deine gespendeten Routen und daraus berechneten Aktivitätswerte lesen und öffentlich darstellen. Deine Quelldaten im Pod bleiben geschützt.
+            - generic [ref=f2e113]:
+              - strong [ref=f2e114]: "Zugriff:"
+              - generic [ref=f2e115]: Nur lesen
+            - generic [ref=f2e116]:
+              - strong [ref=f2e117]: "Hinweis:"
+              - paragraph [ref=f2e118]: "Environmental Monitoring zeigt weder deinen Namen, deine WebID, Pod-URL, Kontakt-E-Mail, das genaue Abschlussdatum noch andere direkte Identifikatoren an. Eine Route und Aktivitätsart können bereits angezeigt werden, sobald der Zugriff auf einen passenden Beitrag einer einzelnen WebID genehmigt wurde; Werte aus weiteren genehmigten Beiträgen werden zusammengefasst, sofern sie vorliegen. Das Entfernen direkter Identifikatoren macht eine Route nicht anonym: Ort und Verlauf einer einzelnen Route, zeitliche Muster oder Bezüge zu bekannten Orten können weiterhin Rückschlüsse auf eine Person oder einen Ort ermöglichen. Die geschützte Quelldatei enthält die vollständigen Routenkoordinaten, das Abschlussdatum, die Aktivitätsart, berechnete Distanz, aktive Minuten, Tempo und beim Gehen eine geschätzte Schrittzahl. Dein öffentlicher Katalogeintrag kann weiterhin den Ersteller, die WebID und die im Solid-Profil hinterlegte Kontakt-E-Mail anzeigen."
+          - generic [ref=f2e119]:
+            - generic [ref=f2e120]:
+              - strong [ref=f2e121]: "Entscheidung:"
+              - generic [ref=f2e122]: Genehmigt
+            - generic [ref=f2e123]:
+              - strong [ref=f2e124]: "Entschieden am:"
+              - generic [ref=f2e125]: 26.09.2026, 22:24
+            - generic [ref=f2e126]:
+              - strong [ref=f2e127]: "Kommentar:"
+              - generic [ref=f2e128]: Freigabe für die Mobilitätsauswertung.
+          - button "Widerrufen" [ref=f2e131] [cursor=pointer]
+        - generic [ref=f2e85]:
+          - generic [ref=f2e88]: Inbox
+          - link "https://pod.example/alex/inbox/" [ref=f2e89] [cursor=pointer]:
+            - /url: https://pod.example/alex/inbox/

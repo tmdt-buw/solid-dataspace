@@ -1,0 +1,30 @@
+- generic [ref=f7e2]:
+  - generic [ref=f7e3]:
+    - strong [ref=f7e4]: Lokale UI-Prüfung · Beispieldaten
+    - link "Requests" [ref=f7e5] [cursor=pointer]:
+      - /url: "?view=requests"
+    - link "Decisions" [ref=f7e6] [cursor=pointer]:
+      - /url: "?view=decisions"
+  - main [ref=f7e9]:
+    - generic [ref=f7e11]:
+      - generic [ref=f7e12]:
+        - generic [ref=f7e17]:
+          - paragraph [ref=f7e18]: Zugriffsverwaltung
+          - heading "Zugriffsentscheidungen" [level=1] [ref=f7e19]
+          - paragraph [ref=f7e20]: Entscheidungen zu deinen Zugriffsanfragen.
+        - button "Aktualisieren" [ref=f7e21] [cursor=pointer]
+      - group "Entscheidungen filtern" [ref=f7e24]:
+        - generic [ref=f7e25] [cursor=pointer]:
+          - checkbox "Geschlossene ausblenden" [checked] [ref=f7e26]
+          - generic [ref=f7e27]: Geschlossene ausblenden
+        - generic [ref=f7e28] [cursor=pointer]:
+          - checkbox "Frühere Szenario-Durchläufe anzeigen" [ref=f7e29]
+          - generic [ref=f7e30]: Frühere Szenario-Durchläufe anzeigen
+        - generic [ref=f7e31]: 0 Zugriffsentscheidung(en) angezeigt
+      - status [ref=f7e32]:
+        - heading "Keine Zugriffsentscheidungen gefunden." [level=2] [ref=f7e36]
+        - paragraph [ref=f7e37]: Passe die Filter an oder aktualisiere deine Inbox.
+      - generic [ref=f7e38]:
+        - generic [ref=f7e41]: Inbox
+        - link "https://pod.example/alex/inbox/" [ref=f7e42] [cursor=pointer]:
+          - /url: https://pod.example/alex/inbox/

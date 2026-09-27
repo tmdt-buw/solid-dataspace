@@ -1,0 +1,70 @@
+- main [ref=e4]:
+  - region "City Tours Arbeitsbereich" [ref=e5]:
+    - navigation "City Tours Arbeitsbereich" [ref=e6]:
+      - button "Meine Touren" [ref=e7] [cursor=pointer]
+      - button "Entdecken" [ref=e8] [cursor=pointer]
+      - button "Aktivitäten" [ref=e9] [cursor=pointer]
+      - button "Freigaben" [ref=e10] [cursor=pointer]
+    - complementary [ref=e11]:
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - generic [ref=e15]:
+            - heading "Tourenplaner" [level=1] [ref=e16]
+            - button "Neue Tour" [ref=e17] [cursor=pointer]
+          - generic [ref=e21]:
+            - text: Tourname
+            - textbox "Tourname" [ref=e22]: Beyenburger Stausee Rundweg A2
+          - generic "Routenmodus" [ref=e23]:
+            - button "Zeichnen pausieren" [pressed] [ref=e24] [cursor=pointer]
+            - button "Datei importieren" [ref=e25] [cursor=pointer]
+          - paragraph [ref=e26]: Tippe auf die Karte, um Punkte zu setzen. Die Linien verbinden Punkte direkt; es gibt keine Straßenführung oder GPS-Aufzeichnung.
+          - status [ref=e27]: Ungespeicherte Änderungen
+          - generic [ref=e28]:
+            - button "Entwurf speichern" [ref=e29] [cursor=pointer]
+            - button "Bearbeitung abbrechen" [ref=e30] [cursor=pointer]
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - heading "Meine Touren" [level=2] [ref=e33]
+            - strong [ref=e34]: "0"
+          - generic [ref=e35]:
+            - generic [ref=e36]:
+              - text: Meine Touren durchsuchen
+              - searchbox "Meine Touren durchsuchen" [ref=e37]
+            - generic [ref=e38]:
+              - text: Sortieren
+              - combobox "Sortieren" [ref=e39]:
+                - option "Zuletzt bearbeitet" [selected]
+                - option "Name A–Z"
+          - paragraph [ref=e41]: Noch keine Tour gespeichert.
+          - button "Als absolviert eintragen" [disabled] [ref=e43]
+    - region "Tourenkarte" [ref=e44]:
+      - generic [ref=e45]:
+        - generic:
+          - generic:
+            - img:
+              - generic [ref=e71] [cursor=pointer]
+        - generic:
+          - generic [ref=e46]:
+            - button "Vergrößern" [ref=e47] [cursor=pointer]: +
+            - button "Verkleinern" [ref=e48] [cursor=pointer]: −
+          - generic [ref=e49]:
+            - link "Leaflet" [ref=e50] [cursor=pointer]:
+              - /url: https://leafletjs.com
+            - text: "| ©"
+            - link "OpenStreetMap" [ref=e55] [cursor=pointer]:
+              - /url: https://www.openstreetmap.org/copyright
+      - complementary "Routeninformationen" [ref=e56]:
+        - generic [ref=e57]:
+          - generic [ref=e58]: Distanz
+          - strong [ref=e59]: 5,0 km
+        - generic [ref=e60]:
+          - generic [ref=e61]: Dauer
+          - strong [ref=e62]: Nach Aktivitätswahl
+      - toolbar "Route bearbeiten" [ref=e72]:
+        - button "Punkt zurück" [disabled] [ref=e73]
+        - button "Route leeren" [ref=e77] [cursor=pointer]
+      - button "Route anzeigen" [ref=e63] [cursor=pointer]
+      - complementary "Kartenlegende" [ref=e64]:
+        - generic [ref=e65]: Aktuelle Tour
+        - generic [ref=e67]: Gespeicherte Tour
+        - generic [ref=e69]: Katalogvorschau

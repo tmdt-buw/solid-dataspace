@@ -1,0 +1,26 @@
+[
+  {
+    "file": "src/components/Notifications.jsx",
+    "after": "f42d4439c1fcee0262251aef3b2283cb0c716392361f0a1099a1872215a94e4b"
+  },
+  {
+    "file": "src/components/DecisionInbox.jsx",
+    "after": "197f161b00e7c1349ea459c3548bd1818e251f40a2a15550d30dd38cdc1f93e4"
+  },
+  {
+    "file": "src/components/Notifications.css",
+    "after": "3281e28cebf627f9781e8dbaf3eb2371f559934762cb421748c708a8f0b11cf7"
+  },
+  {
+    "file": "src/i18n.js",
+    "after": "544680041316ae29ee9c1ad088a92bb756ffd36d1f4642aa36865d8e59989cde"
+  },
+  {
+    "file": "src/components/AccessInboxUi.jsx",
+    "after": "12d044098cb56b4d9cddb28519955f72c796ab4b22da657ffdaab6a031ebdc56"
+  },
+  {
+    "file": "src/components/AccessConfirmDialog.jsx",
+    "after": "454caea99c2c0e545d00d1496dab60677cae837e2783652f208ff323401bd171"
+  }
+]

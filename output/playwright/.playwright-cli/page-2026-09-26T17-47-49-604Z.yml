@@ -1,0 +1,27 @@
+- main [ref=f4e4]:
+  - region [ref=f4e6]:
+    - heading "City Tours" [level=1] [ref=f4e12]
+    - generic [aria-hidden] [ref=f4e13]:
+      - generic: City Tours
+    - generic [ref=f4e16]:
+      - group "Vorgeschlagene Anbieter" [ref=f4e17]:
+        - generic [ref=f4e19]:
+          - button "TMDT Solid https://solid-community-server.tmdt.info" [pressed] [ref=f4e20] [cursor=pointer]:
+            - generic [ref=f4e22]:
+              - strong [ref=f4e23]: TMDT Solid
+              - generic [ref=f4e24]: https://solid-community-server.tmdt.info
+          - button "Solid Community https://solidcommunity.net" [ref=f4e25] [cursor=pointer]:
+            - generic [ref=f4e27]:
+              - strong [ref=f4e28]: Solid Community
+              - generic [ref=f4e29]: https://solidcommunity.net
+      - generic [ref=f4e30]:
+        - generic [ref=f4e31]: Eigener Issuer
+        - textbox "Eigener Issuer" [ref=f4e33]:
+          - /placeholder: https://mein-pod-anbieter.example
+      - generic [ref=f4e34]:
+        - generic [ref=f4e36]:
+          - generic [ref=f4e37]: Sprache
+          - combobox "Sprache" [ref=f4e38]:
+            - option "Englisch"
+            - option "Deutsch" [selected]
+        - button "Anmelden" [ref=f4e39] [cursor=pointer]

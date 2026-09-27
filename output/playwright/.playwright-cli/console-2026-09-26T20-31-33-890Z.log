@@ -1,0 +1,7 @@
+[      57ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:4308/.vite/deps/react-dom_client.js?v=3876d8cf:5
+[  170406ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:4308/@vite/client:963
+[  170408ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4308/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4308/@vite/client:1034
+[  171423ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4308/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4308/@vite/client:1034
+[  172435ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4308/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4308/@vite/client:1034
+[  173448ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4308/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4308/@vite/client:1034
+[  174451ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:4308/' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:4308/@vite/client:1034

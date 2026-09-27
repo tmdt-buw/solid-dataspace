@@ -1,0 +1,115 @@
+[
+  {
+    "repo": "solid-dataspace-manager",
+    "hash": "a04a1de4d66cd551d50056d3b780636a8c04ced6",
+    "previous": "c3a21e508836fcc480f9be533b16cec3871db06b",
+    "files": [
+      "src/i18n.js",
+      "src/components/DecisionInbox.jsx",
+      "src/components/Notifications.jsx",
+      "src/components/TransactionHistory.jsx",
+      "src/components/DataConnection.jsx",
+      "src/components/StatisticsDashboard.jsx",
+      "src/components/SolidPodProvider.jsx",
+      "src/components/Profile.jsx",
+      "src/i18n.dom.test.js",
+      "docs/localization.md"
+    ],
+    "status": ""
+  },
+  {
+    "repo": "solid-data-manager",
+    "hash": "491a306f29d37795cdd8c85f4bb4b1dbc485da79",
+    "previous": "53f6c75af4115aadcf0484973e4c88b203368128",
+    "files": [
+      "src/i18n.js",
+      "src/components/DataManager.jsx",
+      "src/components/DataManager.test.jsx",
+      "src/i18n.dom.test.js"
+    ],
+    "status": ""
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "hash": "95aa969d2114afeab5a9126cf8c2412a5b5382cd",
+    "previous": "fb69239c13eb72096b0b4c4fed00b545100e19af",
+    "files": [
+      "frontend/src/i18n.js",
+      "frontend/src/components/PodContainerPicker.js",
+      "frontend/src/components/PodResourcePicker.js",
+      "frontend/src/components/DatasetTable.js",
+      "frontend/src/components/DatasetDetailModal.js",
+      "frontend/src/components/SemanticSearchResults.jsx",
+      "frontend/src/components/DatasetAddModal.js",
+      "frontend/src/components/DatasetEditModal.js",
+      "frontend/src/components/HeaderBar.js",
+      "frontend/src/i18n.dom.test.js",
+      "frontend/src/components/SemanticSearchResults.test.jsx",
+      "frontend/src/components/DatasetDetailModal.test.jsx",
+      "frontend/dist/embed/index.js",
+      "frontend/dist/embed/index.js.map",
+      "frontend/dist/embed/index.cjs",
+      "frontend/dist/embed/index.cjs.map"
+    ],
+    "status": ""
+  },
+  {
+    "repo": "solid-chatbot",
+    "hash": "68e33a1f8b92c5fc1929db03f1a1ad7a8006f197",
+    "previous": "eea6c02d455693d0545d08e7d1142e04757fd5fa",
+    "files": [
+      "frontend/src/i18n.js",
+      "frontend/src/App.jsx",
+      "frontend/src/components/DataSourcesModal.jsx",
+      "frontend/src/i18n.dom.test.js"
+    ],
+    "status": ""
+  },
+  {
+    "repo": "solid-health-app",
+    "hash": "1a9edd28a522f1bd06f2504dc865ae055635923d",
+    "previous": "1b5142685f1662e9b9b3fdad7eacd0f985bb1104",
+    "files": [
+      "src/i18n.js",
+      "src/components/StandaloneHeader.tsx",
+      "src/i18n.dom.test.js"
+    ],
+    "status": ""
+  },
+  {
+    "repo": "environmental-monitoring",
+    "hash": "b10bedf042509fe2cd05bd2467153f85caa57e70",
+    "previous": "8369fdfa3a67fb37a546d8715b8d1106667c2d8b",
+    "files": [
+      "src/i18n.tsx",
+      "src/components/map/BicycleSensorMarkers.tsx",
+      "src/components/map/districtData.ts",
+      "src/components/map/SolidSensorMarkers.tsx",
+      "src/i18n.test.ts",
+      "package.json"
+    ],
+    "status": ""
+  },
+  {
+    "repo": "solid-tours",
+    "hash": "73b1c23723e53e7aa918c312bb40b1481909687d",
+    "previous": "65f944f6163df45f714864e5a1204a16b78fad92",
+    "files": [
+      "src/App.tsx"
+    ],
+    "status": ""
+  },
+  {
+    "repo": "solid-health-questionnaire",
+    "hash": "aed3c75f95538a63badb3705ec090ae4a71a213b",
+    "previous": "fdb3ea8ee587ccaa585fe0cfd061c228072948e3",
+    "files": [
+      "src/App.tsx",
+      "src/i18n.ts",
+      "src/i18n.test.ts",
+      "src/components/LoginScreen.test.tsx",
+      "src/components/LoginScreen.tsx"
+    ],
+    "status": ""
+  }
+]

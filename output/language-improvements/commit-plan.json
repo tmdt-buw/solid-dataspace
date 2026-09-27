@@ -1,0 +1,99 @@
+[
+  {
+    "repo": "solid-dataspace-manager",
+    "before": "c3a21e508836fcc480f9be533b16cec3871db06b",
+    "files": [
+      "src/i18n.js",
+      "src/components/DecisionInbox.jsx",
+      "src/components/Notifications.jsx",
+      "src/components/TransactionHistory.jsx",
+      "src/components/DataConnection.jsx",
+      "src/components/StatisticsDashboard.jsx",
+      "src/components/SolidPodProvider.jsx",
+      "src/components/Profile.jsx",
+      "src/i18n.dom.test.js",
+      "docs/localization.md"
+    ]
+  },
+  {
+    "repo": "solid-data-manager",
+    "before": "53f6c75af4115aadcf0484973e4c88b203368128",
+    "files": [
+      "src/i18n.js",
+      "src/components/DataManager.jsx",
+      "src/components/DataManager.test.jsx",
+      "src/i18n.dom.test.js"
+    ]
+  },
+  {
+    "repo": "semantic-data-catalog",
+    "before": "fb69239c13eb72096b0b4c4fed00b545100e19af",
+    "files": [
+      "frontend/src/i18n.js",
+      "frontend/src/components/PodContainerPicker.js",
+      "frontend/src/components/PodResourcePicker.js",
+      "frontend/src/components/DatasetTable.js",
+      "frontend/src/components/DatasetDetailModal.js",
+      "frontend/src/components/SemanticSearchResults.jsx",
+      "frontend/src/components/DatasetAddModal.js",
+      "frontend/src/components/DatasetEditModal.js",
+      "frontend/src/components/HeaderBar.js",
+      "frontend/src/i18n.dom.test.js",
+      "frontend/src/components/SemanticSearchResults.test.jsx",
+      "frontend/src/components/DatasetDetailModal.test.jsx",
+      "frontend/dist/embed/index.js",
+      "frontend/dist/embed/index.js.map",
+      "frontend/dist/embed/index.cjs",
+      "frontend/dist/embed/index.cjs.map"
+    ]
+  },
+  {
+    "repo": "solid-chatbot",
+    "before": "eea6c02d455693d0545d08e7d1142e04757fd5fa",
+    "files": [
+      "frontend/src/i18n.js",
+      "frontend/src/App.jsx",
+      "frontend/src/components/DataSourcesModal.jsx",
+      "frontend/src/i18n.dom.test.js"
+    ]
+  },
+  {
+    "repo": "solid-health-app",
+    "before": "1b5142685f1662e9b9b3fdad7eacd0f985bb1104",
+    "files": [
+      "src/i18n.js",
+      "src/components/StandaloneHeader.tsx",
+      "src/i18n.dom.test.js"
+    ]
+  },
+  {
+    "repo": "environmental-monitoring",
+    "before": "8369fdfa3a67fb37a546d8715b8d1106667c2d8b",
+    "files": [
+      "src/i18n.tsx",
+      "src/components/map/BicycleSensorMarkers.tsx",
+      "src/components/map/districtData.ts",
+      "src/components/map/SolidSensorMarkers.tsx",
+      "src/i18n.test.ts",
+      "package.json"
+    ]
+  },
+  {
+    "repo": "solid-tours",
+    "before": "65f944f6163df45f714864e5a1204a16b78fad92",
+    "files": [
+      "src/App.tsx"
+    ]
+  },
+  {
+    "repo": "solid-health-questionnaire",
+    "before": "fdb3ea8ee587ccaa585fe0cfd061c228072948e3",
+    "files": [
+      "src/App.tsx",
+      "src/i18n.ts",
+      "src/i18n.test.ts",
+      "src/components/LoginScreen.test.tsx",
+      "src/components/LoginScreen.tsx"
+    ]
+  }
+]

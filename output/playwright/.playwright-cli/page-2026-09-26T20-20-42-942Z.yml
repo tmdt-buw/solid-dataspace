@@ -1,0 +1,147 @@
+- generic [ref=f1e2]:
+  - generic [ref=f1e3]:
+    - strong [ref=f1e4]: Lokale UI-Prüfung · Beispieldaten
+    - link "Requests" [ref=f1e5] [cursor=pointer]:
+      - /url: "?view=requests"
+    - link "Decisions" [ref=f1e6] [cursor=pointer]:
+      - /url: "?view=decisions"
+  - generic [ref=f1e7]:
+    - complementary "Navigation" [ref=f1e8]:
+      - strong [ref=f1e10]: Solid Dataspace
+      - generic [ref=f1e11]: Allgemein
+      - link "Solid Data Manager" [ref=f1e12] [cursor=pointer]:
+        - /url: "?view=requests"
+      - link "Zugriffsanfragen" [ref=f1e13] [cursor=pointer]:
+        - /url: "?view=requests"
+      - link "Zugriffsentscheidungen" [ref=f1e14] [cursor=pointer]:
+        - /url: "?view=decisions"
+    - main [ref=f1e16]:
+      - generic [ref=f1e18]:
+        - generic [ref=f1e19]:
+          - generic [ref=f1e24]:
+            - paragraph [ref=f1e25]: Zugriffsverwaltung
+            - heading "Zugriffsentscheidungen" [level=1] [ref=f1e26]
+            - paragraph [ref=f1e27]: Entscheidungen zu deinen Zugriffsanfragen.
+          - button "Aktualisieren" [ref=f1e28] [cursor=pointer]
+        - group "Entscheidungen filtern" [ref=f1e31]:
+          - generic [ref=f1e32] [cursor=pointer]:
+            - checkbox "Geschlossene ausblenden" [checked] [ref=f1e33]
+            - generic [ref=f1e34]: Geschlossene ausblenden
+          - generic [ref=f1e35] [cursor=pointer]:
+            - checkbox "Frühere Szenario-Durchläufe anzeigen" [ref=f1e36]
+            - generic [ref=f1e37]: Frühere Szenario-Durchläufe anzeigen
+          - generic [ref=f1e38]: 6 Zugriffsentscheidung(en) angezeigt
+        - generic [ref=f1e39]:
+          - article [ref=f1e40]:
+            - generic [ref=f1e41]:
+              - generic [ref=f1e42]:
+                - heading "Nordpark · Wege und Grünflächen" [level=2] [ref=f1e43]
+                - paragraph [ref=f1e44]: "Kennung: dataset-2026-09-1"
+              - generic [ref=f1e45]:
+                - generic [ref=f1e46]: Genehmigt
+                - button "Entscheidung löschen" [ref=f1e49] [cursor=pointer]
+            - generic [ref=f1e52]:
+              - generic [ref=f1e53]:
+                - term [ref=f1e54]: "Entschieden:"
+                - definition [ref=f1e55]: 26.09.2026, 12:45
+              - generic [ref=f1e56]:
+                - term [ref=f1e57]: "Läuft ab:"
+                - definition [ref=f1e58]: N/A
+              - generic [ref=f1e59]:
+                - term [ref=f1e60]: "Anbieter:"
+                - definition [ref=f1e61]: https://research.example/mobility/
+            - generic [ref=f1e62]:
+              - strong [ref=f1e63]: "Kommentar:"
+              - paragraph [ref=f1e64]: Für die gemeinsame Auswertung freigegeben.
+          - article [ref=f1e65]:
+            - generic [ref=f1e66]:
+              - generic [ref=f1e67]:
+                - heading "Stadtrundgang durch Elberfeld" [level=2] [ref=f1e68]
+                - paragraph [ref=f1e69]: "Kennung: dataset-2026-09-6"
+              - generic [ref=f1e70]:
+                - generic [ref=f1e71]: Genehmigt
+                - button "Entscheidung löschen" [ref=f1e74] [cursor=pointer]
+            - generic [ref=f1e77]:
+              - generic [ref=f1e78]:
+                - term [ref=f1e79]: "Entschieden:"
+                - definition [ref=f1e80]: 21.09.2026, 12:45
+              - generic [ref=f1e81]:
+                - term [ref=f1e82]: "Läuft ab:"
+                - definition [ref=f1e83]: 31.12.2028, 17:00
+              - generic [ref=f1e84]:
+                - term [ref=f1e85]: "Anbieter:"
+                - definition [ref=f1e86]: https://research.example/mobility/
+            - generic [ref=f1e87]:
+              - strong [ref=f1e88]: "Kommentar:"
+              - paragraph [ref=f1e89]: Für die gemeinsame Auswertung freigegeben.
+          - article [ref=f1e90]:
+            - generic [ref=f1e91]:
+              - generic [ref=f1e92]:
+                - heading "Mobilität und Stadtklima" [level=2] [ref=f1e93]
+                - paragraph [ref=f1e94]: "Kennung: dataset-2026-09-7"
+              - generic [ref=f1e95]:
+                - generic [ref=f1e96]: Genehmigt
+                - button "Entscheidung löschen" [ref=f1e99] [cursor=pointer]
+            - generic [ref=f1e102]:
+              - generic [ref=f1e103]:
+                - term [ref=f1e104]: "Entschieden:"
+                - definition [ref=f1e105]: 20.09.2026, 12:45
+              - generic [ref=f1e106]:
+                - term [ref=f1e107]: "Läuft ab:"
+                - definition [ref=f1e108]: N/A
+              - generic [ref=f1e109]:
+                - term [ref=f1e110]: "Anbieter:"
+                - definition [ref=f1e111]: https://research.example/mobility/
+            - generic [ref=f1e112]:
+              - strong [ref=f1e113]: "Kommentar:"
+              - paragraph [ref=f1e114]: Für die gemeinsame Auswertung freigegeben.
+          - article [ref=f1e115]:
+            - generic [ref=f1e116]:
+              - generic [ref=f1e117]:
+                - heading "Routen entlang der Wupper" [level=2] [ref=f1e118]
+                - paragraph [ref=f1e119]: "Kennung: dataset-2026-09-8"
+              - generic [ref=f1e120]:
+                - generic [ref=f1e121]: Genehmigt
+                - button "Entscheidung löschen" [ref=f1e124] [cursor=pointer]
+            - generic [ref=f1e127]:
+              - generic [ref=f1e128]:
+                - term [ref=f1e129]: "Entschieden:"
+                - definition [ref=f1e130]: 19.09.2026, 12:45
+              - generic [ref=f1e131]:
+                - term [ref=f1e132]: "Läuft ab:"
+                - definition [ref=f1e133]: 31.12.2028, 17:00
+              - generic [ref=f1e134]:
+                - term [ref=f1e135]: "Anbieter:"
+                - definition [ref=f1e136]: https://research.example/mobility/
+            - generic [ref=f1e137]:
+              - strong [ref=f1e138]: "Kommentar:"
+              - paragraph [ref=f1e139]: Für die gemeinsame Auswertung freigegeben.
+          - article [ref=f1e140]:
+            - generic [ref=f1e141]:
+              - generic [ref=f1e142]:
+                - heading "Öffentliche Grünflächen" [level=2] [ref=f1e143]
+                - paragraph [ref=f1e144]: "Kennung: dataset-2026-09-9"
+              - generic [ref=f1e145]:
+                - generic [ref=f1e146]: Genehmigt
+                - button "Entscheidung löschen" [ref=f1e149] [cursor=pointer]
+            - generic [ref=f1e152]:
+              - generic [ref=f1e153]:
+                - term [ref=f1e154]: "Entschieden:"
+                - definition [ref=f1e155]: 18.09.2026, 12:45
+              - generic [ref=f1e156]:
+                - term [ref=f1e157]: "Läuft ab:"
+                - definition [ref=f1e158]: N/A
+              - generic [ref=f1e159]:
+                - term [ref=f1e160]: "Anbieter:"
+                - definition [ref=f1e161]: https://research.example/mobility/
+            - generic [ref=f1e162]:
+              - strong [ref=f1e163]: "Kommentar:"
+              - paragraph [ref=f1e164]: Für die gemeinsame Auswertung freigegeben.
+        - navigation "Seitennavigation" [ref=f1e165]:
+          - button "Zurück" [disabled] [ref=f1e166]
+          - generic [ref=f1e169]: Seite 1 von 2
+          - button "Weiter" [ref=f1e170] [cursor=pointer]
+        - generic [ref=f1e173]:
+          - generic [ref=f1e176]: Inbox
+          - link "https://pod.example/alex/inbox/" [ref=f1e177] [cursor=pointer]:
+            - /url: https://pod.example/alex/inbox/

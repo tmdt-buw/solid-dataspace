@@ -1,0 +1,214 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - strong [ref=e4]: Lokale UI-Prüfung · Beispieldaten
+    - link "Requests" [ref=e5] [cursor=pointer]:
+      - /url: "?view=requests"
+    - link "Decisions" [ref=e6] [cursor=pointer]:
+      - /url: "?view=decisions"
+  - generic [ref=e7]:
+    - complementary "Navigation" [ref=e8]:
+      - strong [ref=e10]: Solid Dataspace
+      - generic [ref=e11]: Allgemein
+      - link "Solid Data Manager" [ref=e12] [cursor=pointer]:
+        - /url: "?view=requests"
+      - link "Zugriffsanfragen" [ref=e13] [cursor=pointer]:
+        - /url: "?view=requests"
+      - link "Zugriffsentscheidungen" [ref=e14] [cursor=pointer]:
+        - /url: "?view=decisions"
+    - main [ref=e16]:
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - generic [ref=e24]:
+            - paragraph [ref=e25]: Zugriffsverwaltung
+            - heading "Zugriffsanfragen" [level=1] [ref=e26]
+            - paragraph [ref=e27]: Verwalte den Zugriff auf deine Daten.
+          - button "Aktualisieren" [ref=e28] [cursor=pointer]
+        - group "Anfragen filtern" [ref=e31]:
+          - generic [ref=e32] [cursor=pointer]:
+            - checkbox "Geschlossene ausblenden" [checked] [ref=e33]
+            - generic [ref=e34]: Geschlossene ausblenden
+          - generic [ref=e35] [cursor=pointer]:
+            - checkbox "Frühere Szenario-Durchläufe anzeigen" [ref=e36]
+            - generic [ref=e37]: Frühere Szenario-Durchläufe anzeigen
+          - generic [ref=e38]: 6 Zugriffsanfrage(n) angezeigt
+          - button "Geschlossene löschen" [ref=e39] [cursor=pointer]
+        - generic [ref=e42]:
+          - article [ref=e43]:
+            - generic [ref=e44]:
+              - generic [ref=e45]:
+                - heading "Nordpark · Wege und Grünflächen" [level=2] [ref=e46]
+                - paragraph [ref=e47]: "Kennung: dataset-2026-09-1"
+              - generic [ref=e48]: Ausstehend
+            - generic [ref=e51]:
+              - generic [ref=e52]:
+                - term [ref=e53]: "Anfragende Person:"
+                - definition [ref=e54]: Hannah Müller
+              - generic [ref=e55]:
+                - term [ref=e56]: "Angefragt:"
+                - definition [ref=e57]: 26.09.2026, 11:30
+              - generic [ref=e58]:
+                - term [ref=e59]: "Email:"
+                - definition [ref=e60]: hannah.mueller@example.org
+              - generic [ref=e61]:
+                - term [ref=e62]: WebID
+                - definition [ref=e63]: https://research.example/urban-mobility/research-team/profile/card#me
+            - generic [ref=e64]:
+              - strong [ref=e65]: "Nachricht:"
+              - paragraph [ref=e66]: Wir möchten die Daten für eine Auswertung zur nachhaltigen Mobilität in Wuppertal verwenden. Vielen Dank für die Unterstützung!
+            - generic [ref=e67]:
+              - heading "Deine Entscheidung" [level=3] [ref=e68]
+              - generic [ref=e69]:
+                - generic [ref=e70]:
+                  - text: Kommentar
+                  - textbox "Kommentar" [ref=e71]:
+                    - /placeholder: Optionaler Kommentar...
+                - generic [ref=e72]:
+                  - text: Ablaufdatum (optional)
+                  - textbox "Ablaufdatum (optional)" [ref=e73]
+              - generic [ref=e74]:
+                - button "Genehmigen" [ref=e75] [cursor=pointer]
+                - button "Ablehnen" [ref=e78] [cursor=pointer]
+          - article [ref=e81]:
+            - generic [ref=e82]:
+              - generic [ref=e83]:
+                - heading "Fahrradverkehr im Luisenviertel" [level=2] [ref=e84]
+                - paragraph [ref=e85]: "Kennung: dataset-2026-09-2"
+              - generic [ref=e86]: Genehmigt
+            - generic [ref=e89]:
+              - generic [ref=e90]:
+                - term [ref=e91]: "Anfragende Person:"
+                - definition [ref=e92]: Bergische Universität Wuppertal
+              - generic [ref=e93]:
+                - term [ref=e94]: "Angefragt:"
+                - definition [ref=e95]: 25.09.2026, 11:30
+              - generic [ref=e96]:
+                - term [ref=e97]: "Email:"
+                - definition [ref=e98]: hannah.mueller@example.org
+              - generic [ref=e99]:
+                - term [ref=e100]: WebID
+                - definition [ref=e101]: https://research.example/urban-mobility/research-team/profile/card#me
+            - generic [ref=e102]:
+              - strong [ref=e103]: "Nachricht:"
+              - paragraph [ref=e104]: Wir möchten die Daten für eine Auswertung zur nachhaltigen Mobilität in Wuppertal verwenden. Vielen Dank für die Unterstützung!
+            - generic [ref=e105]:
+              - generic [ref=e106]:
+                - strong [ref=e107]: "Entscheidung:"
+                - generic [ref=e108]: Genehmigt
+              - generic [ref=e109]:
+                - strong [ref=e110]: "Entschieden am:"
+                - generic [ref=e111]: 25.09.2026, 12:45
+              - generic [ref=e112]:
+                - strong [ref=e113]: "Kommentar:"
+                - generic [ref=e114]: Für die gemeinsame Auswertung freigegeben.
+            - button "Widerrufen" [ref=e117] [cursor=pointer]
+          - article [ref=e120]:
+            - generic [ref=e121]:
+              - generic [ref=e122]:
+                - heading "Settings" [level=2] [ref=e123]
+                - paragraph [ref=e124]: "Kennung: dataset-2026-09-3"
+              - generic [ref=e125]: Ausstehend
+            - generic [ref=e128]:
+              - generic [ref=e129]:
+                - term [ref=e130]: "Anfragende Person:"
+                - definition [ref=e131]: Hannah Müller
+              - generic [ref=e132]:
+                - term [ref=e133]: "Angefragt:"
+                - definition [ref=e134]: 24.09.2026, 11:30
+              - generic [ref=e135]:
+                - term [ref=e136]: "Email:"
+                - definition [ref=e137]: hannah.mueller@example.org
+              - generic [ref=e138]:
+                - term [ref=e139]: WebID
+                - definition [ref=e140]: https://research.example/urban-mobility/research-team/profile/card#me
+            - generic [ref=e141]:
+              - strong [ref=e142]: "Nachricht:"
+              - paragraph [ref=e143]: Wir möchten die Daten für eine Auswertung zur nachhaltigen Mobilität in Wuppertal verwenden. Vielen Dank für die Unterstützung!
+            - generic [ref=e144]:
+              - heading "Deine Entscheidung" [level=3] [ref=e145]
+              - generic [ref=e146]:
+                - generic [ref=e147]:
+                  - text: Kommentar
+                  - textbox "Kommentar" [ref=e148]:
+                    - /placeholder: Optionaler Kommentar...
+                - generic [ref=e149]:
+                  - text: Ablaufdatum (optional)
+                  - textbox "Ablaufdatum (optional)" [ref=e150]
+              - generic [ref=e151]:
+                - button "Genehmigen" [ref=e152] [cursor=pointer]
+                - button "Ablehnen" [ref=e155] [cursor=pointer]
+          - article [ref=e158]:
+            - generic [ref=e159]:
+              - generic [ref=e160]:
+                - heading "Luftqualität rund um die Nordbahntrasse" [level=2] [ref=e161]
+                - paragraph [ref=e162]: "Kennung: dataset-2026-09-4"
+              - generic [ref=e163]: Genehmigt
+            - generic [ref=e166]:
+              - generic [ref=e167]:
+                - term [ref=e168]: "Anfragende Person:"
+                - definition [ref=e169]: Bergische Universität Wuppertal
+              - generic [ref=e170]:
+                - term [ref=e171]: "Angefragt:"
+                - definition [ref=e172]: 23.09.2026, 11:30
+              - generic [ref=e173]:
+                - term [ref=e174]: "Email:"
+                - definition [ref=e175]: hannah.mueller@example.org
+              - generic [ref=e176]:
+                - term [ref=e177]: WebID
+                - definition [ref=e178]: https://research.example/urban-mobility/research-team/profile/card#me
+            - generic [ref=e179]:
+              - strong [ref=e180]: "Nachricht:"
+              - paragraph [ref=e181]: Wir möchten die Daten für eine Auswertung zur nachhaltigen Mobilität in Wuppertal verwenden. Vielen Dank für die Unterstützung!
+            - generic [ref=e182]:
+              - generic [ref=e183]:
+                - strong [ref=e184]: "Entscheidung:"
+                - generic [ref=e185]: Genehmigt
+              - generic [ref=e186]:
+                - strong [ref=e187]: "Entschieden am:"
+                - generic [ref=e188]: 23.09.2026, 12:45
+              - generic [ref=e189]:
+                - strong [ref=e190]: "Kommentar:"
+                - generic [ref=e191]: Für die gemeinsame Auswertung freigegeben.
+            - button "Widerrufen" [ref=e194] [cursor=pointer]
+          - article [ref=e197]:
+            - generic [ref=e198]:
+              - generic [ref=e199]:
+                - heading "Bewegung im Quartier" [level=2] [ref=e200]
+                - paragraph [ref=e201]: "Kennung: dataset-2026-09-5"
+              - generic [ref=e202]: Ausstehend
+            - generic [ref=e205]:
+              - generic [ref=e206]:
+                - term [ref=e207]: "Anfragende Person:"
+                - definition [ref=e208]: Hannah Müller
+              - generic [ref=e209]:
+                - term [ref=e210]: "Angefragt:"
+                - definition [ref=e211]: 22.09.2026, 11:30
+              - generic [ref=e212]:
+                - term [ref=e213]: "Email:"
+                - definition [ref=e214]: hannah.mueller@example.org
+              - generic [ref=e215]:
+                - term [ref=e216]: WebID
+                - definition [ref=e217]: https://research.example/urban-mobility/research-team/profile/card#me
+            - generic [ref=e218]:
+              - strong [ref=e219]: "Nachricht:"
+              - paragraph [ref=e220]: Wir möchten die Daten für eine Auswertung zur nachhaltigen Mobilität in Wuppertal verwenden. Vielen Dank für die Unterstützung!
+            - generic [ref=e221]:
+              - heading "Deine Entscheidung" [level=3] [ref=e222]
+              - generic [ref=e223]:
+                - generic [ref=e224]:
+                  - text: Kommentar
+                  - textbox "Kommentar" [ref=e225]:
+                    - /placeholder: Optionaler Kommentar...
+                - generic [ref=e226]:
+                  - text: Ablaufdatum (optional)
+                  - textbox "Ablaufdatum (optional)" [ref=e227]
+              - generic [ref=e228]:
+                - button "Genehmigen" [ref=e229] [cursor=pointer]
+                - button "Ablehnen" [ref=e232] [cursor=pointer]
+        - navigation "Seitennavigation" [ref=e235]:
+          - button "Zurück" [disabled] [ref=e236]
+          - generic [ref=e239]: Seite 1 von 2
+          - button "Weiter" [ref=e240] [cursor=pointer]
+        - generic [ref=e243]:
+          - generic [ref=e246]: Inbox
+          - link "https://pod.example/alex/inbox/" [ref=e247] [cursor=pointer]:
+            - /url: https://pod.example/alex/inbox/

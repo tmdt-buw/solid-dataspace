@@ -1,0 +1,44 @@
+- generic [ref=f8e3]:
+  - complementary [ref=f8e4]:
+    - img "Project Logo" [ref=f8e7]
+    - button "Navigation öffnen" [ref=f8e192]
+  - generic [ref=f8e90]:
+    - generic [ref=f8e91]:
+      - generic [ref=f8e92]: City Tours
+      - generic [ref=f8e93]: Lokale UI-Prüfung
+    - main [ref=f8e95]:
+      - region "City Tours Arbeitsbereich" [ref=f8e96]:
+        - navigation "City Tours Arbeitsbereich" [ref=f8e97]:
+          - button "Meine Touren" [ref=f8e98] [cursor=pointer]
+          - button "Entdecken" [ref=f8e99] [cursor=pointer]
+          - button "Aktivitäten" [ref=f8e100] [cursor=pointer]
+          - button "Freigaben" [ref=f8e101] [cursor=pointer]
+        - button "Zur Liste" [active] [ref=f8e194] [cursor=pointer]
+        - region "Tourenkarte" [ref=f8e138]:
+          - generic "Tourenkarte" [ref=f8e139]:
+            - generic:
+              - generic:
+                - img:
+                  - generic [ref=f8e195] [cursor=pointer]
+            - generic:
+              - generic [ref=f8e141]:
+                - button "Vergrößern" [ref=f8e142] [cursor=pointer]: +
+                - button "Verkleinern" [ref=f8e143] [cursor=pointer]: −
+              - generic [ref=f8e144]:
+                - link "Leaflet" [ref=f8e145] [cursor=pointer]:
+                  - /url: https://leafletjs.com
+                - text: "| ©"
+                - link "OpenStreetMap" [ref=f8e150] [cursor=pointer]:
+                  - /url: https://www.openstreetmap.org/copyright
+          - complementary "Routeninformationen" [ref=f8e151]:
+            - generic [ref=f8e152]:
+              - generic [ref=f8e153]: Distanz
+              - strong [ref=f8e154]: 5,0 km
+            - generic [ref=f8e155]:
+              - generic [ref=f8e156]: Dauer
+              - strong [ref=f8e157]: Nach Aktivitätswahl
+          - button "Route anzeigen" [ref=f8e158] [cursor=pointer]
+          - complementary "Kartenlegende" [ref=f8e159]:
+            - generic [ref=f8e160]: Aktuelle Tour
+            - generic [ref=f8e162]: Gespeicherte Tour
+            - generic [ref=f8e164]: Katalogvorschau

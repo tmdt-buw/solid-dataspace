@@ -1,0 +1,41 @@
+- generic [ref=f1e2]:
+  - banner [ref=f1e3]:
+    - strong [ref=f1e4]: Lokale Sprachprüfung mit fiktivem Pod
+    - button "Deutsch auswählen" [active] [ref=f1e5]
+    - button "Englisch auswählen" [ref=f1e6]
+    - button "Übersetzungsschutz prüfen" [ref=f1e7]
+    - generic [ref=f1e8]: Einstellungen
+    - generic [ref=f1e9]: Settings · WebID · Pod Root · Sprache
+    - status [ref=f1e134]: Alle sechs Übersetzer lassen die Daten unverändert.
+  - generic [ref=f1e10]:
+    - generic [ref=f1e11]: Solid Data Manager
+    - generic [ref=f1e15]: 0.4.18
+  - generic [ref=f1e18]:
+    - generic [ref=f1e19]:
+      - generic [ref=f1e20]:
+        - generic [ref=f1e21] [cursor=pointer]: Pod Root
+        - generic [ref=f1e100]: Settings
+      - generic [ref=f1e22]:
+        - generic [ref=f1e23]:
+          - button "Vorschau" [disabled] [ref=f1e135]
+          - button "Umbenennen" [disabled] [ref=f1e136]
+          - button "Herunterladen" [disabled] [ref=f1e137]
+          - button "Teilen" [disabled] [ref=f1e138]
+          - button "Löschen" [disabled] [ref=f1e139]
+        - button "Neuer Ordner" [ref=f1e140] [cursor=pointer]
+        - button "Neue Datei" [ref=f1e141] [cursor=pointer]
+        - button "Hochladen" [ref=f1e142] [cursor=pointer]
+        - textbox "Dateien suchen..." [ref=f1e143]
+    - table [ref=f1e102]:
+      - rowgroup [ref=f1e103]:
+        - row [ref=f1e144]:
+          - columnheader "Name" [ref=f1e105]
+          - columnheader "Typ" [ref=f1e145]
+          - columnheader "Größe" [ref=f1e146]
+          - columnheader "Zuletzt geändert" [ref=f1e147]
+      - rowgroup [ref=f1e109]:
+        - row [ref=f1e148]:
+          - cell "Profile" [ref=f1e111]
+          - cell "Sonstige" [ref=f1e149]
+          - cell "24 B" [ref=f1e117]
+          - cell "-" [ref=f1e118]

@@ -1,0 +1,44 @@
+- generic [ref=f3e3]:
+  - complementary [ref=f3e4]:
+    - img "Project Logo" [ref=f3e7]
+    - button "Navigation öffnen" [ref=f3e8]
+  - generic [ref=f3e12]:
+    - generic [ref=f3e13]:
+      - generic [ref=f3e14]: City Tours
+      - generic [ref=f3e15]: Lokale UI-Prüfung
+    - main [ref=f3e17]:
+      - region "City Tours Arbeitsbereich" [ref=f3e18]:
+        - navigation "City Tours Arbeitsbereich" [ref=f3e19]:
+          - button "Meine Touren" [ref=f3e20] [cursor=pointer]
+          - button "Entdecken" [ref=f3e21] [cursor=pointer]
+          - button "Aktivitäten" [ref=f3e22] [cursor=pointer]
+          - button "Freigaben" [ref=f3e23] [cursor=pointer]
+        - button "Zur Liste" [active] [ref=f3e61] [cursor=pointer]
+        - region "Tourenkarte" [ref=f3e62]:
+          - generic "Tourenkarte" [ref=f3e63]:
+            - generic:
+              - generic:
+                - img:
+                  - generic [ref=f3e64] [cursor=pointer]
+            - generic:
+              - generic [ref=f3e65]:
+                - button "Vergrößern" [ref=f3e66] [cursor=pointer]: +
+                - button "Verkleinern" [ref=f3e67] [cursor=pointer]: −
+              - generic [ref=f3e68]:
+                - link "Leaflet" [ref=f3e69] [cursor=pointer]:
+                  - /url: https://leafletjs.com
+                - text: "| ©"
+                - link "OpenStreetMap" [ref=f3e74] [cursor=pointer]:
+                  - /url: https://www.openstreetmap.org/copyright
+          - complementary "Routeninformationen" [ref=f3e75]:
+            - generic [ref=f3e76]:
+              - generic [ref=f3e77]: Distanz
+              - strong [ref=f3e78]: 5,0 km
+            - generic [ref=f3e79]:
+              - generic [ref=f3e80]: Dauer
+              - strong [ref=f3e81]: Nach Aktivitätswahl
+          - button "Route anzeigen" [ref=f3e82] [cursor=pointer]
+          - complementary "Kartenlegende" [ref=f3e83]:
+            - generic [ref=f3e84]: Aktuelle Tour
+            - generic [ref=f3e86]: Gespeicherte Tour
+            - generic [ref=f3e88]: Katalogvorschau

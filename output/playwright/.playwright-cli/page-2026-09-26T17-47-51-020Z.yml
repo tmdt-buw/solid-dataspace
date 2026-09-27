@@ -1,0 +1,76 @@
+- region [ref=f5e4]:
+  - generic [ref=f5e9]:
+    - generic [ref=f5e10]: CITY TOURS EINRICHTUNG
+    - heading "Deine Touren, unter deiner Kontrolle" [level=1] [ref=f5e11]
+    - paragraph [ref=f5e12]: Bevor City Tours seinen privaten App-Bereich anlegt, legst du fest, wie die App mit deinem Pod arbeiten darf.
+  - generic [ref=f5e13]:
+    - generic [ref=f5e14]: Privater App-Speicherort
+    - code [ref=f5e15]: https://example.test/demo/solid-tours/
+  - generic [ref=f5e16]:
+    - generic [ref=f5e17] [cursor=pointer]:
+      - checkbox "01 Privater Tourbereich Owner-only Ordner für Entwürfe, gemachte Touren und App-Einstellungen anlegen." [ref=f5e18]
+      - generic [ref=f5e22]:
+        - strong [ref=f5e23]:
+          - generic [ref=f5e24]: "01"
+          - text: Privater Tourbereich
+        - generic [ref=f5e25]: Owner-only Ordner für Entwürfe, gemachte Touren und App-Einstellungen anlegen.
+    - generic [ref=f5e26] [cursor=pointer]:
+      - checkbox "02 Abgeleitete Aktivitätswerte Distanz, Zeit, Tempo und Schritte werden aus der Route berechnet. Es sind keine Sensormesswerte." [ref=f5e27]
+      - generic [ref=f5e31]:
+        - strong [ref=f5e32]:
+          - generic [ref=f5e33]: "02"
+          - text: Abgeleitete Aktivitätswerte
+        - generic [ref=f5e34]: Distanz, Zeit, Tempo und Schritte werden aus der Route berechnet. Es sind keine Sensormesswerte.
+    - generic [ref=f5e35] [cursor=pointer]:
+      - checkbox "03 Solid-Inbox für Zugriffsanfragen Den Container inbox/ im Pod anlegen oder reparieren und im WebID-Profil verlinken. Jeder darf Zugriffsanfragen anhängen; öffentliches Lesen, Schreiben und Control bleiben deaktiviert." [ref=f5e36]
+      - generic [ref=f5e40]:
+        - strong [ref=f5e41]:
+          - generic [ref=f5e42]: "03"
+          - text: Solid-Inbox für Zugriffsanfragen
+        - generic [ref=f5e43]: Den Container inbox/ im Pod anlegen oder reparieren und im WebID-Profil verlinken. Jeder darf Zugriffsanfragen anhängen; öffentliches Lesen, Schreiben und Control bleiben deaktiviert.
+    - generic [ref=f5e44] [cursor=pointer]:
+      - checkbox "04 Öffentliche Forschungs-Registry Das Solid-Profil in den Research-Modus schalten, die gewählte öffentliche Registry ergänzen, deine WebID dort registrieren und öffentlich lesbare Katalogressourcen vorbereiten. Dadurch werden deine öffentlichen Katalogeinträge auffindbar." [ref=f5e45]
+      - generic [ref=f5e49]:
+        - strong [ref=f5e50]:
+          - generic [ref=f5e51]: "04"
+          - text: Öffentliche Forschungs-Registry
+        - generic [ref=f5e52]: Das Solid-Profil in den Research-Modus schalten, die gewählte öffentliche Registry ergänzen, deine WebID dort registrieren und öffentlich lesbare Katalogressourcen vorbereiten. Dadurch werden deine öffentlichen Katalogeinträge auffindbar.
+    - generic [ref=f5e53] [cursor=pointer]:
+      - checkbox "05 Öffentlicher Routenkatalog Nur ausdrücklich von dir indizierte Routen werden öffentliche Vorlagen. Der Tourname wird als öffentlicher Katalogtitel veröffentlicht; exakte Koordinaten, Start und Ziel können dann von anderen kopiert werden. Die öffentlichen Katalogmetadaten enthalten außerdem deinen Publisher-Namen, deine WebID als Creator und, sofern im Solid-Profil vorhanden, deine Kontakt-E-Mail." [ref=f5e54]
+      - generic [ref=f5e58]:
+        - strong [ref=f5e59]:
+          - generic [ref=f5e60]: "05"
+          - text: Öffentlicher Routenkatalog
+        - generic [ref=f5e61]: Nur ausdrücklich von dir indizierte Routen werden öffentliche Vorlagen. Der Tourname wird als öffentlicher Katalogtitel veröffentlicht; exakte Koordinaten, Start und Ziel können dann von anderen kopiert werden. Die öffentlichen Katalogmetadaten enthalten außerdem deinen Publisher-Namen, deine WebID als Creator und, sofern im Solid-Profil vorhanden, deine Kontakt-E-Mail.
+    - generic [ref=f5e62] [cursor=pointer]:
+      - checkbox "06 Gesundheitsdatenspende Eine Spende ist ein separater Restricted Snapshot. Environmental Monitoring muss Lesezugriff anfragen. Die öffentlichen Katalogmetadaten enthalten deinen Publisher-Namen, deine WebID als Creator und, sofern im Solid-Profil vorhanden, deine Kontakt-E-Mail. Nach deiner Lesefreigabe können deine Route und die daraus abgeleiteten Aktivitätsstatistiken bereits öffentlich erscheinen, wenn deine Spende der einzige Beitrag ist. WebID und direkte Pod-URLs werden aus dem Aggregat entfernt, die Route kann dich dennoch identifizierbar machen." [ref=f5e63]
+      - generic [ref=f5e67]:
+        - strong [ref=f5e68]:
+          - generic [ref=f5e69]: "06"
+          - text: Gesundheitsdatenspende
+        - generic [ref=f5e70]: Eine Spende ist ein separater Restricted Snapshot. Environmental Monitoring muss Lesezugriff anfragen. Die öffentlichen Katalogmetadaten enthalten deinen Publisher-Namen, deine WebID als Creator und, sofern im Solid-Profil vorhanden, deine Kontakt-E-Mail. Nach deiner Lesefreigabe können deine Route und die daraus abgeleiteten Aktivitätsstatistiken bereits öffentlich erscheinen, wenn deine Spende der einzige Beitrag ist. WebID und direkte Pod-URLs werden aus dem Aggregat entfernt, die Route kann dich dennoch identifizierbar machen.
+    - generic [ref=f5e71] [cursor=pointer]:
+      - checkbox "07 Eigenständige App-Einrichtung City Tours führt diese app-spezifischen Pod-Änderungen selbst aus. Du musst das Onboarding im Dataspace Manager dafür nicht zuerst abschließen." [ref=f5e72]
+      - generic [ref=f5e76]:
+        - strong [ref=f5e77]:
+          - generic [ref=f5e78]: "07"
+          - text: Eigenständige App-Einrichtung
+        - generic [ref=f5e79]: City Tours führt diese app-spezifischen Pod-Änderungen selbst aus. Du musst das Onboarding im Dataspace Manager dafür nicht zuerst abschließen.
+  - group "Öffentliche Katalogidentität" [ref=f5e80]:
+    - paragraph [ref=f5e82]: Nach deiner Bestätigung speichert City Tours diese Werte in deinem eigenen WebID-Profil. Sie werden als Publisher- und Kontaktmetadaten deiner öffentlichen Katalogeinträge veröffentlicht.
+    - generic [ref=f5e83]:
+      - generic [ref=f5e84]: Publisher-Name
+      - textbox "Publisher-Name" [ref=f5e85]
+    - generic [ref=f5e86]:
+      - generic [ref=f5e87]: Kontakt-E-Mail
+      - textbox "Kontakt-E-Mail" [ref=f5e88]
+    - alert [ref=f5e89]: Gib einen Publisher-Namen und eine gültige Kontakt-E-Mail ein.
+  - group "Öffentliche Registry für City Tours" [ref=f5e90]:
+    - generic [ref=f5e92] [cursor=pointer]:
+      - radio "Beispiel-Registry https://example.test/registry/" [ref=f5e93]
+      - generic [ref=f5e94]:
+        - strong [ref=f5e95]: Beispiel-Registry
+        - generic [ref=f5e96]: https://example.test/registry/
+  - generic [ref=f5e97]:
+    - paragraph [ref=f5e98]: Bestätige alle Hinweise, um fortzufahren.
+    - button "City Tours einrichten" [disabled] [ref=f5e100]

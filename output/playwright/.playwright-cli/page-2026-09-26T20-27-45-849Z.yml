@@ -1,0 +1,28 @@
+- generic [ref=f4e2]:
+  - generic [ref=f4e3]:
+    - strong [ref=f4e4]: Lokale UI-Prüfung · Beispieldaten
+    - link "Requests" [ref=f4e5] [cursor=pointer]:
+      - /url: "?view=requests"
+    - link "Decisions" [ref=f4e6] [cursor=pointer]:
+      - /url: "?view=decisions"
+  - main [ref=f4e9]:
+    - generic [ref=f4e11]:
+      - generic [ref=f4e12]:
+        - generic [ref=f4e17]:
+          - paragraph [ref=f4e18]: Zugriffsverwaltung
+          - heading "Zugriffsanfragen" [level=1] [ref=f4e19]
+          - paragraph [ref=f4e20]: Verwalte den Zugriff auf deine Daten.
+        - button "Aktualisieren" [ref=f4e21] [cursor=pointer]
+      - group "Anfragen filtern" [ref=f4e24]:
+        - generic [ref=f4e25] [cursor=pointer]:
+          - checkbox "Geschlossene ausblenden" [checked] [ref=f4e26]
+          - generic [ref=f4e27]: Geschlossene ausblenden
+        - generic [ref=f4e28] [cursor=pointer]:
+          - checkbox "Frühere Szenario-Durchläufe anzeigen" [ref=f4e29]
+          - generic [ref=f4e30]: Frühere Szenario-Durchläufe anzeigen
+        - generic [ref=f4e31]: 0 Zugriffsanfrage(n) angezeigt
+        - button "Geschlossene löschen" [disabled] [ref=f4e32]
+      - alert [ref=f4e35]: Benachrichtigungen konnten nicht aus der Solid-Inbox geladen werden.
+      - status [ref=f4e36]:
+        - heading "Keine Zugriffsanfragen gefunden." [level=2] [ref=f4e40]
+        - paragraph [ref=f4e41]: Passe die Filter an oder aktualisiere deine Inbox.

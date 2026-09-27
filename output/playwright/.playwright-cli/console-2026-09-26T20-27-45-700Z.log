@@ -1,0 +1,12 @@
+[      55ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:4308/.vite/deps/react-dom_client.js?v=3876d8cf:5
+[      71ms] [ERROR] Failed to load inbox: Error: Simulated local read failure
+    at getSolidDataset (http://127.0.0.1:4308/sdk.js:50:34)
+    at resolveInboxUrl (http://127.0.0.1:4308/@fs/C:/Users/hoelk/source/repos/solid-dataspace/solid-dataspace-manager/src/components/Notifications.jsx?t=1790454038663:112:34)
+    at loadNotifications (http://127.0.0.1:4308/@fs/C:/Users/hoelk/source/repos/solid-dataspace/solid-dataspace-manager/src/components/Notifications.jsx?t=1790454038663:273:27)
+    at http://127.0.0.1:4308/@fs/C:/Users/hoelk/source/repos/solid-dataspace/solid-dataspace-manager/src/components/Notifications.jsx?t=1790454038663:407:5
+    at Object.react_stack_bottom_frame (http://127.0.0.1:4308/.vite/deps/react-dom_client.js?v=3876d8cf:6:396097)
+    at runWithFiberInDEV (http://127.0.0.1:4308/.vite/deps/react-dom_client.js?v=3876d8cf:4:20408)
+    at commitHookEffectListMount (http://127.0.0.1:4308/.vite/deps/react-dom_client.js?v=3876d8cf:6:88026)
+    at commitHookPassiveMountEffects (http://127.0.0.1:4308/.vite/deps/react-dom_client.js?v=3876d8cf:6:90218)
+    at commitPassiveMountOnFiber (http://127.0.0.1:4308/.vite/deps/react-dom_client.js?v=3876d8cf:6:140652)
+    at recursivelyTraversePassiveMountEffects (http://127.0.0.1:4308/.vite/deps/react-dom_client.js?v=3876d8cf:6:139736) @ http://127.0.0.1:4308/@fs/C:/Users/hoelk/source/repos/solid-dataspace/solid-dataspace-manager/src/components/Notifications.jsx?t=1790454038663:311

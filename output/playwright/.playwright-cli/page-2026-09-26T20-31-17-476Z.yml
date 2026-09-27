@@ -1,0 +1,24 @@
+- generic [ref=f12e2]:
+  - generic [ref=f12e3]:
+    - strong [ref=f12e4]: Lokale UI-Prüfung · Beispieldaten
+    - link "Requests" [ref=f12e5] [cursor=pointer]:
+      - /url: "?view=requests"
+    - link "Decisions" [ref=f12e6] [cursor=pointer]:
+      - /url: "?view=decisions"
+  - main [ref=f12e9]:
+    - generic [ref=f12e11]:
+      - generic [ref=f12e12]:
+        - generic [ref=f12e17]:
+          - paragraph [ref=f12e18]: Zugriffsverwaltung
+          - heading "Zugriffsentscheidungen" [level=1] [ref=f12e19]
+          - paragraph [ref=f12e20]: Entscheidungen zu deinen Zugriffsanfragen.
+        - button "Aktualisieren" [ref=f12e21] [cursor=pointer]
+      - group "Entscheidungen filtern" [ref=f12e24]:
+        - generic [ref=f12e25] [cursor=pointer]:
+          - checkbox "Geschlossene ausblenden" [checked] [ref=f12e26]
+          - generic [ref=f12e27]: Geschlossene ausblenden
+        - generic [ref=f12e28] [cursor=pointer]:
+          - checkbox "Frühere Szenario-Durchläufe anzeigen" [ref=f12e29]
+          - generic [ref=f12e30]: Frühere Szenario-Durchläufe anzeigen
+        - generic [ref=f12e31]: 0 Zugriffsentscheidung(en) angezeigt
+      - alert [ref=f12e32]: Zugriffsentscheidungen konnten nicht geladen werden.

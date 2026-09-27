@@ -1,0 +1,68 @@
+- generic [ref=f3e2]:
+  - generic [ref=f3e3]:
+    - strong [ref=f3e4]: Lokale UI-Prüfung · Beispieldaten
+    - link "Requests" [ref=f3e5] [cursor=pointer]:
+      - /url: "?view=requests"
+    - link "Decisions" [ref=f3e6] [cursor=pointer]:
+      - /url: "?view=decisions"
+  - main [ref=f3e9]:
+    - generic [ref=f3e11]:
+      - generic [ref=f3e12]:
+        - generic [ref=f3e17]:
+          - paragraph [ref=f3e18]: Zugriffsverwaltung
+          - heading "Zugriffsanfragen" [level=1] [ref=f3e19]
+          - paragraph [ref=f3e20]: Verwalte den Zugriff auf deine Daten.
+        - button "Aktualisieren" [ref=f3e21] [cursor=pointer]
+      - group "Anfragen filtern" [ref=f3e24]:
+        - generic [ref=f3e25] [cursor=pointer]:
+          - checkbox "Geschlossene ausblenden" [checked] [ref=f3e26]
+          - generic [ref=f3e27]: Geschlossene ausblenden
+        - generic [ref=f3e28] [cursor=pointer]:
+          - checkbox "Frühere Szenario-Durchläufe anzeigen" [ref=f3e29]
+          - generic [ref=f3e30]: Frühere Szenario-Durchläufe anzeigen
+        - generic [ref=f3e31]: 1 Zugriffsanfrage(n) angezeigt
+        - button "Geschlossene löschen" [disabled] [ref=f3e32]
+      - article [ref=f3e36]:
+        - generic [ref=f3e37]:
+          - generic [ref=f3e38]:
+            - heading "Environmental Monitoring möchte auf deine gespendeten Daten zugreifen" [level=2] [ref=f3e39]
+            - paragraph [ref=f3e40]: Nordpark · Wege und Grünflächen
+          - generic [ref=f3e41]: Ausstehend
+        - generic [ref=f3e44]:
+          - generic [ref=f3e45]:
+            - term [ref=f3e46]: "Anfragende Person:"
+            - definition [ref=f3e47]: Environmental Monitoring
+          - generic [ref=f3e48]:
+            - term [ref=f3e49]: "Angefragt:"
+            - definition [ref=f3e50]: 26.09.2026, 11:30
+        - generic [ref=f3e51]:
+          - generic [ref=f3e52]:
+            - strong [ref=f3e53]: "Daten:"
+            - generic [ref=f3e54]: Alle gespendeten gemachten Routen und ihre berechneten Aktivitätswerte
+          - generic [ref=f3e55]:
+            - strong [ref=f3e56]: "Zweck:"
+            - generic [ref=f3e57]: Mit deiner Zustimmung darf Environmental Monitoring deine gespendeten Routen und daraus berechneten Aktivitätswerte lesen und öffentlich darstellen. Deine Quelldaten im Pod bleiben geschützt.
+          - generic [ref=f3e58]:
+            - strong [ref=f3e59]: "Zugriff:"
+            - generic [ref=f3e60]: Nur lesen
+          - generic [ref=f3e61]:
+            - strong [ref=f3e62]: "Hinweis:"
+            - paragraph [ref=f3e63]: "Environmental Monitoring zeigt weder deinen Namen, deine WebID, Pod-URL, Kontakt-E-Mail, das genaue Abschlussdatum noch andere direkte Identifikatoren an. Eine Route und Aktivitätsart können bereits angezeigt werden, sobald der Zugriff auf einen passenden Beitrag einer einzelnen WebID genehmigt wurde; Werte aus weiteren genehmigten Beiträgen werden zusammengefasst, sofern sie vorliegen. Das Entfernen direkter Identifikatoren macht eine Route nicht anonym: Ort und Verlauf einer einzelnen Route, zeitliche Muster oder Bezüge zu bekannten Orten können weiterhin Rückschlüsse auf eine Person oder einen Ort ermöglichen. Die geschützte Quelldatei enthält die vollständigen Routenkoordinaten, das Abschlussdatum, die Aktivitätsart, berechnete Distanz, aktive Minuten, Tempo und beim Gehen eine geschätzte Schrittzahl. Dein öffentlicher Katalogeintrag kann weiterhin den Ersteller, die WebID und die im Solid-Profil hinterlegte Kontakt-E-Mail anzeigen."
+          - alert [ref=f3e64]: "Diese Anfrage kann nicht genehmigt werden: Unsupported purpose."
+        - generic [ref=f3e65]:
+          - heading "Deine Entscheidung" [level=3] [ref=f3e66]
+          - generic [ref=f3e67]:
+            - generic [ref=f3e68]:
+              - text: Kommentar
+              - textbox "Kommentar" [ref=f3e69]:
+                - /placeholder: Optionaler Kommentar...
+            - generic [ref=f3e70]:
+              - text: Ablaufdatum (optional)
+              - textbox "Ablaufdatum (optional)" [ref=f3e71]
+          - generic [ref=f3e72]:
+            - button "Genehmigen" [disabled] [ref=f3e73]
+            - button "Ablehnen" [ref=f3e76] [cursor=pointer]
+      - generic [ref=f3e79]:
+        - generic [ref=f3e82]: Inbox
+        - link "https://pod.example/alex/inbox/" [ref=f3e83] [cursor=pointer]:
+          - /url: https://pod.example/alex/inbox/

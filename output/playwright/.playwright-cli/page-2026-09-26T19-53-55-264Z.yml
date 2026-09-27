@@ -1,0 +1,56 @@
+- generic [ref=f4e2]:
+  - banner [ref=f4e3]:
+    - strong [ref=f4e4]: Lokale Sprachprüfung mit fiktivem Pod
+    - button "Deutsch auswählen" [ref=f4e5]
+    - button "Englisch auswählen" [ref=f4e6]
+    - button "Übersetzungsschutz prüfen" [active] [ref=f4e7]
+    - generic [ref=f4e8]: Einstellungen
+    - generic [ref=f4e9]: Settings · WebID · Pod Root · Sprache
+    - status [ref=f4e98]: Alle sechs Übersetzer lassen die Daten unverändert.
+  - generic [ref=f4e10]:
+    - generic [ref=f4e11]: Solid Data Manager
+    - generic [ref=f4e15]: 0.4.18
+  - generic [ref=f4e18]:
+    - generic [ref=f4e19]:
+      - generic [ref=f4e20]: Pod Root
+      - generic [ref=f4e22]:
+        - generic [ref=f4e23]:
+          - button "Vorschau" [disabled] [ref=f4e24]
+          - button "Umbenennen" [disabled] [ref=f4e27]
+          - button "Herunterladen" [disabled] [ref=f4e30]
+          - button "Teilen" [disabled] [ref=f4e33]
+          - button "Löschen" [disabled] [ref=f4e36]
+        - button "Neuer Ordner" [ref=f4e39] [cursor=pointer]
+        - button "Neue Datei" [ref=f4e43] [cursor=pointer]
+        - button "Hochladen" [ref=f4e47] [cursor=pointer]
+        - textbox "Dateien suchen..." [ref=f4e52]
+    - table [ref=f4e54]:
+      - rowgroup [ref=f4e55]:
+        - row [ref=f4e56]:
+          - columnheader "Name" [ref=f4e57]
+          - columnheader "Typ" [ref=f4e58]
+          - columnheader "Größe" [ref=f4e59]
+          - columnheader "Zuletzt geändert" [ref=f4e60]
+      - rowgroup [ref=f4e61]:
+        - row [ref=f4e62]:
+          - cell [ref=f4e63]:
+            - button "Settings" [ref=f4e64] [cursor=pointer]
+          - cell "Ordner" [ref=f4e68]
+          - cell "-" [ref=f4e69]
+          - cell "-" [ref=f4e70]
+        - row [ref=f4e71]:
+          - cell [ref=f4e72]:
+            - button "settings" [ref=f4e73] [cursor=pointer]
+          - cell "Ordner" [ref=f4e77]
+          - cell "-" [ref=f4e78]
+          - cell "-" [ref=f4e79]
+        - row [ref=f4e80]:
+          - cell "Profile" [ref=f4e81]
+          - cell "Sonstige" [ref=f4e86]
+          - cell "24 B" [ref=f4e87]
+          - cell "-" [ref=f4e88]
+        - row [ref=f4e89]:
+          - cell "Sprache" [ref=f4e90]
+          - cell "Sonstige" [ref=f4e95]
+          - cell "24 B" [ref=f4e96]
+          - cell "-" [ref=f4e97]

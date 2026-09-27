@@ -1,0 +1,27 @@
+- generic [ref=f10e2]:
+  - generic [ref=f10e3]:
+    - strong [ref=f10e4]: Lokale UI-Prüfung · Beispieldaten
+    - link "Requests" [ref=f10e5] [cursor=pointer]:
+      - /url: "?view=requests"
+    - link "Decisions" [ref=f10e6] [cursor=pointer]:
+      - /url: "?view=decisions"
+  - main [ref=f10e9]:
+    - generic [ref=f10e11]:
+      - generic [ref=f10e12]:
+        - generic [ref=f10e17]:
+          - paragraph [ref=f10e18]: Zugriffsverwaltung
+          - heading "Zugriffsentscheidungen" [level=1] [ref=f10e19]
+          - paragraph [ref=f10e20]: Entscheidungen zu deinen Zugriffsanfragen.
+        - button "Aktualisieren" [disabled] [ref=f10e21]
+      - group "Entscheidungen filtern" [ref=f10e24]:
+        - generic [ref=f10e25] [cursor=pointer]:
+          - checkbox "Geschlossene ausblenden" [checked] [ref=f10e26]
+          - generic [ref=f10e27]: Geschlossene ausblenden
+        - generic [ref=f10e28] [cursor=pointer]:
+          - checkbox "Frühere Szenario-Durchläufe anzeigen" [ref=f10e29]
+          - generic [ref=f10e30]: Frühere Szenario-Durchläufe anzeigen
+        - generic [ref=f10e31]: 0 Zugriffsentscheidung(en) angezeigt
+      - generic [ref=f10e32]:
+        - strong [ref=f10e36]: Zugriffsentscheidungen
+        - status [ref=f10e37]: Dein persönlicher Bereich für Zugriffsentscheidungen wird geladen …
+        - progressbar "Dein persönlicher Bereich für Zugriffsentscheidungen wird geladen …" [ref=f10e38]

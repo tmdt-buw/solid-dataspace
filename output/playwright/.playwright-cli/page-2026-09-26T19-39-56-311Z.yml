@@ -1,0 +1,56 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - strong [ref=e4]: Lokale Sprachprüfung mit fiktivem Pod
+    - button "Deutsch auswählen" [ref=e5]
+    - button "Englisch auswählen" [ref=e6]
+    - button "Übersetzungsschutz prüfen" [ref=e7]
+    - generic [ref=e8]: Einstellungen
+    - generic [ref=e9]: Settings · WebID · Pod Root · Sprache
+    - status
+  - generic [ref=e10]:
+    - generic [ref=e11]: Solid Daten Manager
+    - generic [ref=e15]: 0.4.18
+  - generic [ref=e18]:
+    - generic [ref=e19]:
+      - generic [ref=e20]: Pod Root
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - button "Vorschau" [disabled] [ref=e24]
+          - button "Umbenennen" [disabled] [ref=e27]
+          - button "Herunterladen" [disabled] [ref=e30]
+          - button "Teilen" [disabled] [ref=e33]
+          - button "Löschen" [disabled] [ref=e36]
+        - button "Neuer Ordner" [ref=e39] [cursor=pointer]
+        - button "Neue Datei" [ref=e43] [cursor=pointer]
+        - button "Hochladen" [ref=e47] [cursor=pointer]
+        - textbox "Dateien suchen..." [ref=e52]
+    - table [ref=e54]:
+      - rowgroup [ref=e55]:
+        - row [ref=e56]:
+          - columnheader "Name" [ref=e57]
+          - columnheader "Type" [ref=e58]
+          - columnheader "Size" [ref=e59]
+          - columnheader "Last Modified" [ref=e60]
+      - rowgroup [ref=e61]:
+        - row [ref=e62]:
+          - cell [ref=e63]:
+            - button "Settings" [ref=e64] [cursor=pointer]
+          - cell "Folder" [ref=e68]
+          - cell "-" [ref=e69]
+          - cell "-" [ref=e70]
+        - row [ref=e71]:
+          - cell [ref=e72]:
+            - button "settings" [ref=e73] [cursor=pointer]
+          - cell "Folder" [ref=e77]
+          - cell "-" [ref=e78]
+          - cell "-" [ref=e79]
+        - row [ref=e80]:
+          - cell "Profile" [ref=e81]
+          - cell "Other" [ref=e86]
+          - cell "24 B" [ref=e87]
+          - cell "-" [ref=e88]
+        - row [ref=e89]:
+          - cell "Sprache" [ref=e90]
+          - cell "Other" [ref=e95]
+          - cell "24 B" [ref=e96]
+          - cell "-" [ref=e97]

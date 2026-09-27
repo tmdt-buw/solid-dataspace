@@ -1,0 +1,32 @@
+- region [ref=f4e4]:
+  - generic [ref=f4e9]:
+    - generic [ref=f4e10]: CITY TOURS EINRICHTUNG
+    - heading "Deine Touren, unter deiner Kontrolle" [level=1] [ref=f4e11]
+    - paragraph [ref=f4e12]: Starte mit deinem privaten Tourbereich. Öffentliches Teilen kannst du später einrichten.
+  - group [ref=f4e13]:
+    - generic "Privater App-Speicherort" [ref=f4e14] [cursor=pointer]
+  - generic [ref=f4e15]:
+    - generic [ref=f4e16] [cursor=pointer]:
+      - checkbox "01 Privater Tourbereich Touren, Aktivitäten und Einstellungen in deinem Pod speichern. Nur du erhältst Zugriff." [ref=f4e17]
+      - generic [ref=f4e21]:
+        - strong [ref=f4e22]:
+          - generic [ref=f4e23]: "01"
+          - text: Privater Tourbereich
+        - generic [ref=f4e24]: Touren, Aktivitäten und Einstellungen in deinem Pod speichern. Nur du erhältst Zugriff.
+    - generic [ref=f4e25] [cursor=pointer]:
+      - checkbox "02 Abgeleitete Aktivitätswerte Distanz, Zeit, Tempo und Schritte werden aus der Route berechnet. Es sind keine Sensormesswerte." [ref=f4e26]
+      - generic [ref=f4e30]:
+        - strong [ref=f4e31]:
+          - generic [ref=f4e32]: "02"
+          - text: Abgeleitete Aktivitätswerte
+        - generic [ref=f4e33]: Distanz, Zeit, Tempo und Schritte werden aus der Route berechnet. Es sind keine Sensormesswerte.
+    - generic [ref=f4e34] [cursor=pointer]:
+      - checkbox "03 Eigenständige App-Einrichtung City Tours führt diese app-spezifischen Pod-Änderungen selbst aus. Du musst das Onboarding im Dataspace Manager dafür nicht zuerst abschließen." [ref=f4e35]
+      - generic [ref=f4e39]:
+        - strong [ref=f4e40]:
+          - generic [ref=f4e41]: "03"
+          - text: Eigenständige App-Einrichtung
+        - generic [ref=f4e42]: City Tours führt diese app-spezifischen Pod-Änderungen selbst aus. Du musst das Onboarding im Dataspace Manager dafür nicht zuerst abschließen.
+  - generic [ref=f4e43]:
+    - paragraph [ref=f4e44]: Bestätige alle Hinweise, um fortzufahren.
+    - button "Privaten Tourbereich einrichten" [disabled] [ref=f4e46]

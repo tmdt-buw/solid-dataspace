@@ -1,0 +1,6 @@
+:root { --dataspace-scaled-vh: calc(100vh - 40px); }
+.fixture-bar { display: flex; gap: 16px; align-items: center; height: 40px; padding: 0 16px; background: #142642; color: #fff; font: 11px/1.4 "Segoe UI", sans-serif; }
+.fixture-bar a { color: #fff; }
+.fixture-nav { top: 40px; }
+.fixture-nav .sb-brand { min-height: 64px; padding: 12px; }
+@media (max-width: 900px) { .fixture-nav { display: none; } .layout > .main { margin-left: 0; } .fixture-bar { gap: 8px; padding-inline: 8px; } }
