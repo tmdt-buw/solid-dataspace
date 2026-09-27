@@ -490,7 +490,7 @@ def committed_package_version(repo_path: pathlib.Path, package_path: pathlib.Pat
     parse(version, f"{repo_path}/HEAD:{relative_path}")
     return version
 
-def committed_file_text(repo_path: pathlib.Path, file_path: pathlib.Path):
+def committed_file_text(repo_path: pathlib.Path, file_path: pathlib.Path, ref="HEAD"):
     try:
         relative_path = file_path.resolve().relative_to(repo_path.resolve()).as_posix()
     except ValueError:
@@ -503,7 +503,7 @@ def committed_file_text(repo_path: pathlib.Path, file_path: pathlib.Path):
             "-C",
             str(repo_path),
             "show",
-            f"HEAD:{relative_path}",
+            f"{ref}:{relative_path}",
         ],
         capture_output=True,
         text=True,
@@ -512,6 +512,59 @@ def committed_file_text(repo_path: pathlib.Path, file_path: pathlib.Path):
         check=False,
     )
     return result.stdout.strip() if result.returncode == 0 else None
+
+def committed_release_changes(repo_path: pathlib.Path, version_path: pathlib.Path):
+    """Find committed changes not covered by the current version's commit.
+
+    A clean worktree can contain new source changes, even after a failed push
+    has synchronized origin/main. Conversely, a prepared release whose version
+    commit already includes those changes must remain safe to resume.
+    """
+    git = ["git", "-c", f"safe.directory={repo_path}", "-C", str(repo_path)]
+
+    def read_git(*args):
+        result = subprocess.run(
+            [*git, *args], capture_output=True, text=True,
+            encoding="utf-8", errors="strict", check=False,
+        )
+        if result.returncode != 0:
+            raise RuntimeError(f"Cannot inspect release history in {repo_path}: {result.stderr.strip()}")
+        return result.stdout
+
+    if read_git("rev-parse", "--is-shallow-repository").strip() == "true":
+        raise RuntimeError(
+            f"Cannot determine the version boundary in shallow repository {repo_path}. "
+            "Fetch the complete history before preparing a release."
+        )
+
+    head = read_git("rev-parse", "HEAD").strip()
+    relative_path = version_path.resolve().relative_to(repo_path.resolve()).as_posix()
+
+    def version_at(ref):
+        source = committed_file_text(repo_path, version_path, ref)
+        if source is None:
+            raise RuntimeError(f"Cannot read version history {ref}:{relative_path} in {repo_path}")
+        return json.loads(source).get("version") if version_path.name == "package.json" else source
+
+    version = version_at(head)
+    parse(version, f"{repo_path}/{relative_path} committed version")
+    history = read_git("log", "--first-parent", "--format=%H", head, "--", relative_path).splitlines()
+    version_commit = None
+    for commit in history:
+        if version_at(commit) != version:
+            break
+        version_commit = commit
+    if version_commit is None:
+        raise RuntimeError(f"Cannot find the commit introducing version {version} in {repo_path}")
+
+    # Compare trees, not commit counts: a fully reverted change needs no release.
+    # -z preserves filenames rather than relying on Git's quoted path output.
+    changed = read_git("diff", "--no-ext-diff", "--name-only", "-z", version_commit, head, "--")
+    files = [name for name in changed.split("\0") if name]
+    if not files:
+        return None
+    return {"repo": repo_key(repo_path), "head": head, "versionCommit": version_commit, "files": files}
+
 
 def is_tracked(repo_path: pathlib.Path, file_path: pathlib.Path) -> bool:
     try:
@@ -1007,6 +1060,7 @@ repository_roots = sorted(
 )
 
 current_versions = {}
+committed_changes = []
 for repo_path, pkg_path, _ in targets:
     if not repo_path.exists():
         raise FileNotFoundError(f"Required repository is missing: {repo_path}")
@@ -1014,6 +1068,16 @@ for repo_path, pkg_path, _ in targets:
     current_version = read_json(pkg_path).get("version")
     parse(current_version, f"{pkg_path} version")
     current_versions[repo_key(repo_path)] = current_version
+    changes = committed_release_changes(repo_path, pkg_path)
+    if changes:
+        committed_changes.append(changes)
+        affected_set.add(repo_key(repo_path))
+
+root_changes = committed_release_changes(root, root / "VERSION")
+if root_changes:
+    committed_changes.append(root_changes)
+    affected_set.add(repo_key(root))
+    dirty_set.add(repo_key(root))
 
 catalog_pkg = semantic_catalog_path / "frontend" / "package.json"
 data_manager_pkg = solid_data_manager_path / "package.json"
@@ -1416,6 +1480,7 @@ print(
             "versions": sorted(version_plan, key=lambda item: item["repo"]),
             "changedFiles": sorted(changed_files),
             "skippedUntracked": sorted(skipped_untracked),
+            "committedChanges": sorted(committed_changes, key=lambda item: item["repo"]),
         }
     )
 )
@@ -1477,7 +1542,8 @@ function Assert-ReleasePreflight([string[]]$RepoPaths) {
 
 function Get-OriginMainStates(
   [string[]]$RepoPaths,
-  [hashtable]$TrackedOrSelectedFilesByRepo
+  [hashtable]$TrackedOrSelectedFilesByRepo,
+  [string[]]$PlannedReleaseRepos = @()
 ) {
   $states = New-Object System.Collections.Generic.List[object]
   foreach ($repoPath in @($RepoPaths | Select-Object -Unique)) {
@@ -1523,7 +1589,7 @@ function Get-OriginMainStates(
             -RepoPath $repoPath `
             -BaseCommit $remoteCommit `
             -HeadCommit $localCommit
-          if ($selectedCount -gt 0) {
+          if ($selectedCount -gt 0 -or $repoPath -in $PlannedReleaseRepos) {
             $state = "AheadWithReleaseChanges"
             Write-Host "$repoPath is $aheadCommitCount linear commit(s) ahead of origin/main; approved release changes will be committed on top."
           } else {
@@ -1574,6 +1640,16 @@ function Get-NormalizedReleasePlanJson([object]$Plan) {
     )
     changedFiles = @($Plan.changedFiles | ForEach-Object { [System.IO.Path]::GetFullPath($_).ToLowerInvariant() } | Sort-Object)
     skippedUntracked = @($Plan.skippedUntracked | ForEach-Object { [System.IO.Path]::GetFullPath($_).ToLowerInvariant() } | Sort-Object)
+    committedChanges = @(
+      $Plan.committedChanges | ForEach-Object {
+        [ordered]@{
+          repo = [System.IO.Path]::GetFullPath($_.repo).ToLowerInvariant()
+          head = [string]$_.head
+          versionCommit = [string]$_.versionCommit
+          files = @($_.files | Sort-Object)
+        }
+      } | Sort-Object { $_.repo }
+    )
   }
   return (ConvertTo-Json -InputObject $normalized -Depth 10 -Compress)
 }
@@ -1954,6 +2030,14 @@ function Show-ReleasePlan(
     Write-Host "  No version changes."
   }
 
+  if (@($Plan.committedChanges).Count -gt 0) {
+    Write-Host ""
+    Write-Host "Committed changes since the current version was introduced:"
+    foreach ($change in @($Plan.committedChanges)) {
+      Write-Host "  $(Split-Path $change.repo -Leaf): $(@($change.files).Count) changed file(s) since $($change.versionCommit.Substring(0, 8))"
+    }
+  }
+
   $buildLabels = @(Get-RequiredBuildLabels -Root $Root -AffectedRepos $AffectedRepoPaths)
   Write-Host ""
   Write-Host "Builds:"
@@ -2093,7 +2177,8 @@ Assert-ReleasePreflight -RepoPaths $repos
 $originStates = @(
   Get-OriginMainStates `
     -RepoPaths $repos `
-    -TrackedOrSelectedFilesByRepo $initialFilesByRepo
+    -TrackedOrSelectedFilesByRepo $initialFilesByRepo `
+    -PlannedReleaseRepos $affectedRepoPaths
 )
 foreach ($repoPath in $repos) {
   $key = Get-NormalizedPath $repoPath
