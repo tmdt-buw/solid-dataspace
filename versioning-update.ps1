@@ -323,13 +323,11 @@ function Assert-ManagerPublishGuard([string]$ManagerPath) {
     "@hoelk-f/solid-health-app",
     "@hoelk-f/city-tours",
     "@hoelk-f/solid-health-questionnaire",
-    "@hoelk-f/solid-chatbot",
     "SOLID_DATA_MANAGER_PACKAGE_VERSION",
     "SEMANTIC_DATA_CATALOG_PACKAGE_VERSION",
     "SOLID_HEALTH_APP_PACKAGE_VERSION",
     "CITY_TOURS_PACKAGE_VERSION",
-    "SOLID_HEALTH_QUESTIONNAIRE_PACKAGE_VERSION",
-    "SOLID_CHATBOT_PACKAGE_VERSION"
+    "SOLID_HEALTH_QUESTIONNAIRE_PACKAGE_VERSION"
   )
   foreach ($marker in $requiredMarkers) {
     if (-not $content.Contains($marker)) {
@@ -344,8 +342,7 @@ function Assert-PackageReleaseWorkflows([string]$Root) {
     (Join-Path $Root "..\semantic-data-catalog\.github\workflows\docker-image_frontend.yml"),
     (Join-Path $Root "..\solid-health-app\.github\workflows\docker-image.yml"),
     (Join-Path $Root "..\solid-tours\.github\workflows\ci.yml"),
-    (Join-Path $Root "..\solid-health-questionnaire\.github\workflows\ci.yml"),
-    (Join-Path $Root "..\solid-chatbot\.github\workflows\docker-image-frontend.yml")
+    (Join-Path $Root "..\solid-health-questionnaire\.github\workflows\ci.yml")
   )
   foreach ($workflow in $workflows) {
     if (-not (Test-Path $workflow)) {
@@ -756,14 +753,6 @@ def dependency_metadata(pkg_path: pathlib.Path, version: str):
             "react-router-dom",
             "recharts",
         ),
-        "@hoelk-f/solid-chatbot": (
-            "@fortawesome/fontawesome-svg-core",
-            "@fortawesome/free-solid-svg-icons",
-            "@fortawesome/react-fontawesome",
-            "@inrupt/solid-client",
-            "@inrupt/solid-client-authn-browser",
-            "@inrupt/vocab-common-rdf",
-        ),
     }
     package_name = package.get("name")
     allowed_dependencies = published_dependency_names.get(package_name)
@@ -1029,7 +1018,6 @@ environmental_path = (root / ".." / "environmental-monitoring").resolve()
 solid_health_path = (root / ".." / "solid-health-app").resolve()
 solid_health_questionnaire_path = (root / ".." / "solid-health-questionnaire").resolve()
 city_tours_path = (root / ".." / "solid-tours").resolve()
-solid_chatbot_path = (root / ".." / "solid-chatbot").resolve()
 
 manager_repo = repo_key(manager_path)
 solid_data_manager_repo = repo_key(solid_data_manager_path)
@@ -1039,7 +1027,6 @@ environmental_repo = repo_key(environmental_path)
 solid_health_repo = repo_key(solid_health_path)
 solid_health_questionnaire_repo = repo_key(solid_health_questionnaire_path)
 city_tours_repo = repo_key(city_tours_path)
-solid_chatbot_repo = repo_key(solid_chatbot_path)
 affected_set = set(dirty_set)
 
 targets = [
@@ -1051,7 +1038,6 @@ targets = [
     (solid_health_questionnaire_path, solid_health_questionnaire_path / "package.json", "0.1.0"),
     (city_tours_path, city_tours_path / "package.json", "0.1.0"),
     (semantic_catalog_path, semantic_catalog_path / "frontend" / "package.json", "0.8.0"),
-    (solid_chatbot_path, solid_chatbot_path / "package.json", "0.1.0"),
 ]
 repository_roots = sorted(
     {root, *(repo_path for repo_path, _, _ in targets)},
@@ -1084,7 +1070,6 @@ data_manager_pkg = solid_data_manager_path / "package.json"
 health_pkg = solid_health_path / "package.json"
 tours_pkg = city_tours_path / "package.json"
 questionnaire_pkg = solid_health_questionnaire_path / "package.json"
-chatbot_pkg = solid_chatbot_path / "package.json"
 manager_pkg = manager_path / "package.json"
 manager_dockerfile = manager_path / "Dockerfile"
 
@@ -1093,7 +1078,6 @@ data_manager_current = current_versions.get(solid_data_manager_repo)
 health_current = current_versions.get(solid_health_repo)
 tours_current = current_versions.get(city_tours_repo)
 questionnaire_current = current_versions.get(solid_health_questionnaire_repo)
-chatbot_current = current_versions.get(solid_chatbot_repo)
 tours_dist_package = city_tours_path / "dist" / "package.json"
 
 # Build the dependency closure before calculating any version. This prevents a
@@ -1122,7 +1106,6 @@ embedded_repos = {
     solid_health_repo,
     solid_health_questionnaire_repo,
     city_tours_repo,
-    solid_chatbot_repo,
 }
 if affected_set.intersection(embedded_repos):
     affected_set.add(manager_repo)
@@ -1163,13 +1146,6 @@ manager_dependency_sources = [
         questionnaire_current,
         questionnaire_pkg,
         "SOLID_HEALTH_QUESTIONNAIRE_PACKAGE_VERSION",
-    ),
-    (
-        "@hoelk-f/solid-chatbot",
-        solid_chatbot_repo,
-        chatbot_current,
-        chatbot_pkg,
-        "SOLID_CHATBOT_PACKAGE_VERSION",
     ),
 ]
 manager_floor_versions = {}
@@ -1317,28 +1293,11 @@ for repo_path, pkg_path, _ in targets:
         write_required_text(citation_file, citation, "Questionnaire citation file")
 
 
-    if pkg_path.name == "package.json" and pkg_path.parent.name == "solid-chatbot":
-        frontend_pkg = pkg_path.parent / "frontend" / "package.json"
-        write_package_version(frontend_pkg, new_version)
-        version_js = pkg_path.parent / "frontend" / "src" / "version.js"
-        set_exported_version(version_js, "appVersion", new_version, "Chatbot version module")
-        external_links = root / ".." / "solid-dataspace-manager" / "src" / "externalLinks.js"
-        require_tracked_file(manager_path, external_links, "Manager external links module")
-        content = external_links.read_text(encoding="utf-8")
-        content = replace_exactly_once(
-            content,
-            r'(slug:\s*"solid-chatbot",[\s\S]*?version:\s*")[^"]+(")',
-            rf'\g<1>{new_version}\2',
-            "Chatbot external-link version",
-        )
-        write_required_text(external_links, content, "Manager external links module")
-
 catalog_version = effective_versions.get(semantic_catalog_repo)
 data_manager_version = effective_versions.get(solid_data_manager_repo)
 health_version = effective_versions.get(solid_health_repo)
 tours_version = effective_versions.get(city_tours_repo)
 questionnaire_version = effective_versions.get(solid_health_questionnaire_repo)
-chatbot_version = effective_versions.get(solid_chatbot_repo)
 
 if catalog_version and tours_pkg.exists() and city_tours_repo in affected_set:
     sync_dependency(
@@ -1379,12 +1338,6 @@ if manager_pkg.exists() and manager_repo in affected_set:
             questionnaire_version,
             questionnaire_pkg,
             "SOLID_HEALTH_QUESTIONNAIRE_PACKAGE_VERSION",
-        ),
-        (
-            "@hoelk-f/solid-chatbot",
-            chatbot_version,
-            chatbot_pkg,
-            "SOLID_CHATBOT_PACKAGE_VERSION",
         ),
     ]
     for package_name, package_version, metadata_path, docker_arg in manager_effective_specs:
@@ -1691,7 +1644,6 @@ function Invoke-RequiredBuilds([string]$root, [string[]]$AffectedRepos) {
   $solidHealthPath = Resolve-Path (Join-Path $root "..\solid-health-app") -ErrorAction Stop
   $cityToursPath = Resolve-Path (Join-Path $root "..\solid-tours") -ErrorAction Stop
   $solidHealthQuestionnairePath = Resolve-Path (Join-Path $root "..\solid-health-questionnaire") -ErrorAction Stop
-  $solidChatbotPath = Resolve-Path (Join-Path $root "..\solid-chatbot") -ErrorAction Stop
   $buildFiles = New-Object System.Collections.Generic.HashSet[string]([System.StringComparer]::OrdinalIgnoreCase)
 
   $semanticCatalogRepo = $null
@@ -1783,21 +1735,6 @@ function Invoke-RequiredBuilds([string]$root, [string[]]$AffectedRepos) {
       foreach ($file in @(Get-TrackedBuildChanges -RepoPath $solidHealthQuestionnairePath.Path -RelativeBuildRoot "dist")) {
         [void]$buildFiles.Add($file)
       }
-    }
-  }
-
-  $solidChatbotRepo = $solidChatbotPath.Path.ToLowerInvariant()
-  if ($affectedNormalized -contains $solidChatbotRepo) {
-    Write-Host "Building solid-chatbot embed dist"
-    Push-Location $solidChatbotPath.Path
-    try {
-      npm run build:lib | Out-Host
-      Assert-LastExitCode "Building solid-chatbot embed dist"
-    } finally {
-      Pop-Location
-    }
-    foreach ($file in @(Get-TrackedBuildChanges -RepoPath $solidChatbotPath.Path -RelativeBuildRoot "frontend/dist")) {
-      [void]$buildFiles.Add($file)
     }
   }
 
@@ -1998,8 +1935,7 @@ function Get-RequiredBuildLabels([string]$Root, [string[]]$AffectedRepos) {
     @{ Path = Join-Path $Root "..\solid-data-manager"; Label = "solid-data-manager embed dist" },
     @{ Path = Join-Path $Root "..\solid-health-app"; Label = "solid-health-app embed dist" },
     @{ Path = Join-Path $Root "..\solid-tours"; Label = "city-tours embed dist" },
-    @{ Path = Join-Path $Root "..\solid-health-questionnaire"; Label = "solid-health-questionnaire embed dist" },
-    @{ Path = Join-Path $Root "..\solid-chatbot"; Label = "solid-chatbot embed dist" }
+    @{ Path = Join-Path $Root "..\solid-health-questionnaire"; Label = "solid-health-questionnaire embed dist" }
   )
   $affectedKeys = @($AffectedRepos | ForEach-Object { Get-NormalizedPath $_ })
   foreach ($buildRepo in $buildRepos) {
@@ -2147,8 +2083,7 @@ $requiredTargetRepos = @(
   (Join-Path $root "..\solid-health-app"),
   (Join-Path $root "..\solid-health-questionnaire"),
   (Join-Path $root "..\solid-tours"),
-  (Join-Path $root "..\semantic-data-catalog"),
-  (Join-Path $root "..\solid-chatbot")
+  (Join-Path $root "..\semantic-data-catalog")
 )
 foreach ($requiredRepo in $requiredTargetRepos) {
   $requiredKey = Get-NormalizedPath $requiredRepo

@@ -178,7 +178,6 @@ class ReleasePlannerTests(unittest.TestCase):
         "solid-health-app": ("@hoelk-f/solid-health-app", "SOLID_HEALTH_APP_PACKAGE_VERSION"),
         "solid-tours": ("@hoelk-f/city-tours", "CITY_TOURS_PACKAGE_VERSION"),
         "solid-health-questionnaire": ("@hoelk-f/solid-health-questionnaire", "SOLID_HEALTH_QUESTIONNAIRE_PACKAGE_VERSION"),
-        "solid-chatbot": ("@hoelk-f/solid-chatbot", "SOLID_CHATBOT_PACKAGE_VERSION"),
     }
 
     def setUp(self):
@@ -202,8 +201,6 @@ class ReleasePlannerTests(unittest.TestCase):
                 package_name = self.embedded.get(name, (name, ""))[0]
                 self.make_package(self.repo / "frontend" if name == "semantic-data-catalog" else self.repo,
                                   package_name, dependencies)
-                if name == "solid-chatbot":
-                    self.make_package(self.repo / "frontend", package_name, {})
                 for base in [self.repo, self.repo / "frontend"]:
                     (base / "src").mkdir(parents=True, exist_ok=True)
                     (base / "src/version.js").write_text('export const appVersion = "1.0.0";\n', encoding="utf-8")
@@ -220,8 +217,7 @@ class ReleasePlannerTests(unittest.TestCase):
                     (self.repo / "src/versions.js").write_text('export const appVersion = "1.0.0";\n', encoding="utf-8")
                     (self.repo / "src/externalLinks.js").write_text(
                         'const links = [{slug: "environmental-monitoring", version: "1.0.0"}, '
-                        '{slug: "solid-health-app", version: "1.0.0"}, '
-                        '{slug: "solid-chatbot", version: "1.0.0"}];\n', encoding="utf-8",
+                        '{slug: "solid-health-app", version: "1.0.0"}];\n', encoding="utf-8",
                     )
             self.commit("prepared release")
 

@@ -60,16 +60,6 @@ services:
             "visible": ${SOLID_HEALTH_QUESTIONNAIRE_VISIBLE:-true},
             "order": 24,
             "linkType": "internal"
-          },
-          {
-            "id": "solid-chatbot",
-            "title": "Chatbot",
-            "href": "/web/solid-chatbot",
-            "section": "applications",
-            "iconKey": "rocketchat",
-            "visible": ${SOLID_CHATBOT_VISIBLE:-true},
-            "order": 25,
-            "linkType": "internal"
           }
         ]
 
@@ -157,59 +147,6 @@ services:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-city-tours
-
-  solid-chatbot:
-    image: son1i/solid-chatbot-frontend:latest
-    restart: unless-stopped
-    expose: ["3005"]
-    depends_on:
-      - solid-chatbot-backend
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-solid-chatbot
-
-  solid-chatbot-backend:
-    image: son1i/solid-chatbot-backend:latest
-    restart: unless-stopped
-    env_file:
-      - ../solid-chatbot/.env
-    environment:
-      CHAINLIT_DISABLE_TELEMETRY: "true"
-      QDRANT_URL: http://solid-chatbot-qdrant:6333
-      OLLAMA_URL: http://solid-chatbot-ollama:11434
-    expose: ["8001"]
-    depends_on:
-      solid-chatbot-qdrant:
-        condition: service_started
-      solid-chatbot-ollama:
-        condition: service_started
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-solid-chatbot-backend
-
-  solid-chatbot-ollama:
-    image: ollama/ollama:latest
-    restart: unless-stopped
-    volumes:
-      - solid_chatbot_ollama_data:/root/.ollama
-    expose: ["11434"]
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-solid-chatbot-ollama
-
-  solid-chatbot-qdrant:
-    image: qdrant/qdrant:latest
-    restart: unless-stopped
-    volumes:
-      - solid_chatbot_qdrant_data:/qdrant/storage
-    expose: ["6333"]
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-solid-chatbot-qdrant
 
   semantic-data-catalog-frontend:
     image: son1i/semantic-data-catalog-frontend:latest
@@ -382,9 +319,6 @@ services:
       city-tours:
         condition: service_started
         restart: true
-      solid-chatbot:
-        condition: service_started
-        restart: true
       semantic-data-catalog-frontend:
         condition: service_started
         restart: true
@@ -402,8 +336,6 @@ volumes:
   semantic_search_data:
   nodered-data:
   solid_data_connection_sync_worker_data:
-  solid_chatbot_qdrant_data:
-  solid_chatbot_ollama_data:
 networks:
   catalog-search:
     internal: true

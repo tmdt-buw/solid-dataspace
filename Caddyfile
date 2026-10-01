@@ -61,30 +61,9 @@
         lb_try_interval 1s
     }
 
-    reverse_proxy /chainlit* solid-chatbot-backend:8001 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-    reverse_proxy /rag* solid-chatbot-backend:8001 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-    respond /set-webid* 204 {
-        close
-    }
-
     route /sync-worker* {
         uri strip_prefix /sync-worker
         reverse_proxy solid-data-connection-sync-worker:8080 {
-            lb_try_duration 300s
-            lb_try_interval 1s
-        }
-    }
-
-    redir /solid-chatbot /solid-chatbot/
-    route /solid-chatbot/* {
-        uri strip_prefix /solid-chatbot
-        reverse_proxy solid-chatbot:3005 {
             lb_try_duration 300s
             lb_try_interval 1s
         }

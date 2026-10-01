@@ -56,15 +56,6 @@ repos:
       - solid
       - mobility
 
-  solid-chatbot:
-    path: ..\solid-chatbot
-    repo: https://github.com/hoelk-f/solid-chatbot
-    scope:
-      - chatbot
-      - rag
-      - app
-      - solid
-
   solid-data-connection-sync-worker:
     path: ..\solid-data-connection-sync-worker
     repo: https://github.com/hoelk-f/solid-data-connection-sync-worker

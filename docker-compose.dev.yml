@@ -87,16 +87,6 @@ services:
             "visible": ${SOLID_HEALTH_QUESTIONNAIRE_VISIBLE:-true},
             "order": 24,
             "linkType": "internal"
-          },
-          {
-            "id": "solid-chatbot",
-            "title": "Chatbot",
-            "href": "/web/solid-chatbot",
-            "section": "applications",
-            "iconKey": "rocketchat",
-            "visible": ${SOLID_CHATBOT_VISIBLE:-true},
-            "order": 25,
-            "linkType": "internal"
           }
         ]
 
@@ -120,7 +110,7 @@ services:
           }
         ]
 
-    command: sh -c "cd /app && find /app/node_modules -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && if [ \"$${DATASPACE_MANAGER_PACKAGE_SOURCE}\" = \"local\" ]; then while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /solid-health-app/dist/package.json ] || [ ! -f /solid-health-questionnaire/dist/package.json ] || [ ! -f /solid-chatbot/dist/package.json ]; do sleep 1; done; npm install --install-links=true --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist /solid-health-app/dist /city-tours/dist /solid-health-questionnaire/dist /solid-chatbot/dist && npm run start:local-packages; else npm install && npm install --no-save --package-lock=false @hoelk-f/solid-data-manager@latest @hoelk-f/semantic-data-catalog@latest @hoelk-f/solid-health-app@latest @hoelk-f/city-tours@latest @hoelk-f/solid-health-questionnaire@latest @hoelk-f/solid-chatbot@latest && npm start; fi"
+    command: sh -c "cd /app && find /app/node_modules -mindepth 1 -maxdepth 1 -exec rm -rf {} + 2>/dev/null || true && echo \"@hoelk-f:registry=https://npm.pkg.github.com/\" > $${NPM_CONFIG_USERCONFIG} && echo \"//npm.pkg.github.com/:_authToken=$${NPM_TOKEN}\" >> $${NPM_CONFIG_USERCONFIG} && if [ \"$${DATASPACE_MANAGER_PACKAGE_SOURCE}\" = \"local\" ]; then while [ ! -f /solid-data-manager/dist/package.json ] || [ ! -f /solid-health-app/dist/package.json ] || [ ! -f /solid-health-questionnaire/dist/package.json ]; do sleep 1; done; npm install --install-links=true --no-save --package-lock=false /solid-data-manager/dist /semantic-data-catalog/dist /solid-health-app/dist /city-tours/dist /solid-health-questionnaire/dist && npm run start:local-packages; else npm install && npm install --no-save --package-lock=false @hoelk-f/solid-data-manager@latest @hoelk-f/semantic-data-catalog@latest @hoelk-f/solid-health-app@latest @hoelk-f/city-tours@latest @hoelk-f/solid-health-questionnaire@latest && npm start; fi"
     volumes:
       - ../solid-dataspace-manager:/app:delegated
       - solid_data_manager_dist:/solid-data-manager/dist
@@ -128,7 +118,6 @@ services:
       - solid_health_app_dist:/solid-health-app/dist
       - city_tours_dist:/city-tours/dist
       - solid_health_questionnaire_dist:/solid-health-questionnaire/dist
-      - solid_chatbot_dist:/solid-chatbot/dist
       - /app/node_modules
     depends_on:
       solid-data-manager:
@@ -141,8 +130,6 @@ services:
         condition: service_healthy
       solid-health-questionnaire:
         condition: service_healthy
-      solid-chatbot:
-        condition: service_started
     expose: ["3001"]
     networks:
       solid-dataspace:
@@ -274,73 +261,6 @@ services:
       solid-dataspace:
         aliases:
           - solid-dataspace-dev-solid-health-questionnaire
-
-  solid-chatbot:
-    image: node:20-alpine
-    restart: unless-stopped
-    working_dir: /app
-    environment:
-      - PUBLIC_URL=/solid-chatbot
-      - REACT_APP_CHAINLIT_URL=/chainlit/
-      - REACT_APP_OIDC_ISSUER=${SOLID_CHATBOT_OIDC_ISSUER:-https://solid-community-server.tmdt.info}
-      - CHOKIDAR_USEPOLLING=true
-      - WATCHPACK_POLLING=true
-    command: sh -c "npm install && npm run build:lib && (npm run build:lib:watch & npm run start-watch)"
-    volumes:
-      - ../solid-chatbot/frontend:/app:delegated
-      - solid_chatbot_dist:/app/dist
-      - /app/node_modules
-    expose: ["3005"]
-    depends_on:
-      - solid-chatbot-backend
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-solid-chatbot
-
-  solid-chatbot-backend:
-    build: ../solid-chatbot/backend
-    restart: unless-stopped
-    env_file:
-      - ../solid-chatbot/.env
-    environment:
-      CHAINLIT_DISABLE_TELEMETRY: "true"
-      QDRANT_URL: http://solid-chatbot-qdrant:6333
-      OLLAMA_URL: http://solid-chatbot-ollama:11434
-    volumes:
-      - ../solid-chatbot/backend:/app:delegated
-    expose: ["8001"]
-    depends_on:
-      solid-chatbot-qdrant:
-        condition: service_started
-      solid-chatbot-ollama:
-        condition: service_started
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-solid-chatbot-backend
-
-  solid-chatbot-ollama:
-    image: ollama/ollama:latest
-    restart: unless-stopped
-    volumes:
-      - solid_chatbot_ollama_data:/root/.ollama
-    expose: ["11434"]
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-solid-chatbot-ollama
-
-  solid-chatbot-qdrant:
-    image: qdrant/qdrant:latest
-    restart: unless-stopped
-    volumes:
-      - solid_chatbot_qdrant_data:/qdrant/storage
-    expose: ["6333"]
-    networks:
-      solid-dataspace:
-        aliases:
-          - solid-dataspace-dev-solid-chatbot-qdrant
 
   semantic-data-catalog-frontend:
     image: node:20-alpine
@@ -635,9 +555,6 @@ services:
       city-tours:
         condition: service_started
         restart: true
-      solid-chatbot:
-        condition: service_started
-        restart: true
       semantic-data-catalog-frontend:
         condition: service_started
         restart: true
@@ -663,9 +580,6 @@ volumes:
   solid_health_app_dist:
   city_tours_dist:
   solid_health_questionnaire_dist:
-  solid_chatbot_dist:
-  solid_chatbot_qdrant_data:
-  solid_chatbot_ollama_data:
   plasma_fuseki_data:
     name: plasma_fuseki_data
   plasma_mariadb_sms:
