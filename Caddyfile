@@ -21,6 +21,16 @@
         }
     }
 
+    # /catalog serves the standalone app; /web/catalog belongs to the Manager.
+    @standaloneCatalog path /catalog /catalog/
+    route @standaloneCatalog {
+        rewrite * /semantic-data-catalog/
+        reverse_proxy semantic-data-catalog-frontend:5000 {
+            lb_try_duration 300s
+            lb_try_interval 1s
+        }
+    }
+
     redir /semantic-data-catalog /semantic-data-catalog/
     reverse_proxy /semantic-data-catalog/* semantic-data-catalog-frontend:5000 {
         lb_try_duration 300s
