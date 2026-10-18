@@ -1,0 +1,146 @@
+schemaVersion: 1
+id: dace
+environment: prod
+domains:
+- solid-dataspace-dace.tmdt.info
+- www.solid-dataspace-dace.tmdt.info
+public:
+  cityToursLegacyContinuousWebIds: []
+  dataspaceId: dace
+  plasmaUrl: /plasma/modelings
+  apps:
+  - id: solid-data-manager
+    title: Solid Data Manager
+    href: /
+    section: general
+    iconKey: solid-data-manager
+    visible: true
+    enabled: true
+    order: 0
+    linkType: internal
+  - id: catalog
+    title: Semantic Data Catalog
+    href: /web/catalog
+    section: consume
+    iconKey: catalog
+    visible: true
+    enabled: true
+    order: 10
+    linkType: internal
+  - id: plasma
+    title: PLASMA
+    href: /web/plasma
+    section: consume
+    iconKey: plasma
+    visible: true
+    enabled: true
+    order: 20
+    linkType: internal
+  - id: node-red
+    title: Node-RED
+    href: /web/node-red
+    section: consume
+    iconKey: node-red
+    visible: true
+    enabled: true
+    order: 30
+    linkType: internal
+  - id: data-connection
+    title: Data Connection
+    href: /data-connection
+    section: consume
+    iconKey: data-connection
+    visible: true
+    enabled: true
+    order: 40
+    linkType: internal
+  - id: environmental-monitoring
+    title: Environmental Monitoring
+    href: /web/environmental-monitoring
+    section: applications
+    iconKey: temperature
+    visible: false
+    order: 15
+    linkType: internal
+    enabled: true
+  - id: solid-health-app
+    title: Health App
+    href: /web/solid-health-app
+    section: applications
+    iconKey: health
+    visible: false
+    order: 20
+    linkType: internal
+    enabled: true
+  - id: city-tours
+    title: City Tours
+    href: /web/city-tours
+    section: applications
+    iconKey: tour
+    visible: false
+    order: 22
+    linkType: internal
+    enabled: true
+  - id: solid-health-questionnaire
+    title: Health Questionnaire
+    href: /web/solid-health-questionnaire
+    section: applications
+    iconKey: questionnaire
+    visible: false
+    order: 24
+    linkType: internal
+    enabled: true
+  providers:
+  - id: tmdt-solid
+    label: TMDT Solid
+    issuer: https://solid-community-server.tmdt.info
+    note: Recommended
+    enabled: true
+    recommended: true
+  - id: solid-community
+    label: Solid Community
+    issuer: https://solidcommunity.net
+    note: Public community server
+    enabled: true
+    recommended: false
+  branding:
+    projectName: DACE
+    logoUrl: /project-logos/DACE_Logo_grün.png
+    logoAlt: DACE Logo
+    logoWidth: 120px
+    logoHeight: auto
+  fundingLogos:
+  - id: bmftr
+    src: /foerder-logos/BMFTR_de_Web_RGB_gef_durch.png
+    alt: Federal Ministry of Research, Technology and Space
+    order: 1
+    logoWidth: 200px
+    logoHeight: auto
+    logoMaxHeight: 70px
+  - id: EU
+    src: /foerder-logos/csm_Förderhinweis_EU_vertikal_bb912c393b.jpg
+    alt: EU
+    order: 2
+    logoWidth: 200px
+    logoHeight: auto
+    logoMaxHeight: 70px
+  fundingGrantNumber: 16DKZ2056C
+  syncWorker:
+    enabled: true
+    apiUrl: /sync-worker
+    serviceWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
+    intervalMinutes: 10
+  statistics:
+    enabled: true
+    adminWebIds: &id001
+    - https://solid-community-server.tmdt.info/solidtestpod/profile/card#me
+    workerWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
+    podBaseUrl: https://solid-community-server.tmdt.info/solidtestpod/statistics/
+    eventsUrl: https://solid-community-server.tmdt.info/solidtestpod/statistics/events/catalog-instances/dace/downloads/
+    timezone: Europe/Berlin
+    activityResourcePath: statistics/activity/activity.ttl
+  catalog:
+    defaultRegistry: https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace
+administration:
+  enabled: true
+  adminWebIds: *id001

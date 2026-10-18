@@ -5,3 +5,4 @@ server/
 **/dist/
 **/build/
 **/.env
+config/.configuration.lock

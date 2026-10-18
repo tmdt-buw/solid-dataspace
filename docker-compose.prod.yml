@@ -1,0 +1,933 @@
+name: solid-dataspace-prod
+services:
+  solid-dataspace-manager:
+    image: local/consolidation/manager:20261017-consolidation
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/solid-dataspace-manager.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-solid-dataspace-manager
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - serve
+    - --config
+    - /app/serve.json
+    - -l
+    - '3001'
+    cpus: 2
+    mem_limit: 2g
+  solid-data-manager:
+    image: local/consolidation/solid-data-manager:de02faec3d16
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/solid-data-manager.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-solid-data-manager
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - nginx
+    - -g
+    - daemon off;
+  environmental-monitoring:
+    image: local/consolidation/environmental-monitoring:3b8364b2f1bd
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/environmental-monitoring.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-environmental-monitoring
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - nginx
+    - -g
+    - daemon off;
+  solid-health-app:
+    image: local/consolidation/solid-health-app:7b56742afdea
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/solid-health-app.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-solid-health-app
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - nginx
+    - -g
+    - daemon off;
+  solid-health-questionnaire:
+    image: local/consolidation/solid-health-questionnaire:fc91c50a1319
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/solid-health-questionnaire.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-solid-health-questionnaire
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - nginx
+    - -g
+    - daemon off;
+  city-tours:
+    image: local/consolidation/city-tours:2b4383b080f3
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/city-tours.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-city-tours
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - nginx
+    - -g
+    - daemon off;
+  semantic-data-catalog-frontend:
+    image: local/consolidation/catalog:20261017-consolidation
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/semantic-data-catalog-frontend.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-semantic-data-catalog-frontend
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - serve
+    - --config
+    - /catalog/serve.json
+    - -l
+    - '5000'
+    cpus: 2
+    mem_limit: 2g
+  semantic-data-catalog-backend:
+    image: local/consolidation/backend:20261017-consolidation
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/semantic-data-catalog-backend.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-semantic-data-catalog-backend
+      search: {}
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - uvicorn
+    - main:app
+    - --host
+    - 0.0.0.0
+    - --port
+    - '8000'
+    depends_on:
+      semantic-data-catalog-fuseki:
+        condition: service_healthy
+  semantic-data-catalog-indexer:
+    image: local/consolidation/backend:20261017-consolidation
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/semantic-data-catalog-indexer.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-semantic-data-catalog-indexer
+      search: {}
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - python
+    - -m
+    - semantic_indexer
+    depends_on:
+      semantic-data-catalog-fuseki:
+        condition: service_healthy
+  semantic-data-catalog-fuseki:
+    image: local/consolidation/semantic-data-catalog-fuseki:32101e2ec027
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/semantic-data-catalog-fuseki.env
+    networks:
+      search: {}
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: volume
+      source: solid-dataspace-prod_catalog_search
+      target: /fuseki/databases
+    - type: bind
+      source: /srv/solid-dataspace-prod/generated/fuseki.ttl
+      target: /opt/fuseki/config.ttl
+      read_only: true
+    environment:
+      JAVA_TOOL_OPTIONS: -Xmx768m
+  solid-data-connection-sync-worker:
+    image: local/consolidation/worker:20261017-consolidation
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/solid-data-connection-sync-worker.env
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-solid-data-connection-sync-worker
+      legacy-edge:
+        aliases:
+        - solid-data-connection-sync-worker
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - npm
+    - start
+    volumes:
+    - type: volume
+      source: solid-data-connection-sync-worker_solid_data_connection_sync_worker_data
+      target: /data
+  stadt-wuppertal-node-red:
+    image: local/consolidation/node-red:d36f20ba9ce3
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/stadt-wuppertal-node-red.env
+    networks:
+      workspace-stadt-wuppertal:
+        aliases:
+        - node-red
+      edge:
+        aliases:
+        - solid-dataspace-prod-stadt-wuppertal-node-red
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: bind
+      source: /srv/solid-dataspace-prod/workspace-config/stadt-wuppertal-node-red/settings.js
+      target: /data/settings.js
+      read_only: false
+    - type: volume
+      source: solid-dataspace-stadt-wuppertal_nodered-data
+      target: /data
+    profiles:
+    - workspaces
+  stadt-wuppertal-plasma-mariadb-sms:
+    image: local/consolidation/plasma-mariadb-sms:73d2c069f75f
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/stadt-wuppertal-plasma-mariadb-sms.env
+    networks:
+      workspace-stadt-wuppertal:
+        aliases:
+        - plasma-mariadb-sms
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - mariadbd
+    - --character-set-server=utf8mb4
+    - --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - type: volume
+      source: solid-dataspace-stadt-wuppertal_plasma_mariadb_sms
+      target: /var/lib/mysql
+    profiles:
+    - workspaces
+  stadt-wuppertal-plasma-fuseki:
+    image: local/consolidation/plasma-fuseki:a99855f619c4
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/stadt-wuppertal-plasma-fuseki.env
+    networks:
+      workspace-stadt-wuppertal:
+        aliases:
+        - plasma-fuseki
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - /jena-fuseki/fuseki-server
+    volumes:
+    - type: volume
+      source: solid-dataspace-stadt-wuppertal_plasma_fuseki_data
+      target: /fuseki
+    profiles:
+    - workspaces
+  stadt-wuppertal-plasma-sms:
+    image: local/consolidation/plasma-sms:f85e03bbfa60
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/stadt-wuppertal-plasma-sms.env
+    networks:
+      workspace-stadt-wuppertal:
+        aliases:
+        - plasma-sms
+      edge:
+        aliases:
+        - solid-dataspace-prod-stadt-wuppertal-plasma-sms
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: volume
+      source: solid-dataspace-stadt-wuppertal_plasma_ontologies
+      target: /var/ontologies
+    - type: volume
+      source: solid-dataspace-stadt-wuppertal_plasma_sms_configs
+      target: /var/plasma/configs
+    profiles:
+    - workspaces
+    depends_on:
+      stadt-wuppertal-plasma-mariadb-sms:
+        condition: service_started
+  stadt-wuppertal-plasma-dps:
+    image: local/consolidation/plasma-dps:27e012fab7eb
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/stadt-wuppertal-plasma-dps.env
+    networks:
+      workspace-stadt-wuppertal:
+        aliases:
+        - plasma-dps
+      edge:
+        aliases:
+        - solid-dataspace-prod-stadt-wuppertal-plasma-dps
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: volume
+      source: solid-dataspace-stadt-wuppertal_plasma_dps_storage
+      target: /var/plasma/localstorage
+    profiles:
+    - workspaces
+    depends_on:
+      stadt-wuppertal-plasma-mariadb-sms:
+        condition: service_started
+  stadt-wuppertal-plasma-frontend:
+    image: local/consolidation/plasma-frontend:7cba3e1da099
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/stadt-wuppertal-plasma-frontend.env
+    networks:
+      workspace-stadt-wuppertal:
+        aliases:
+        - plasma-frontend
+      edge:
+        aliases:
+        - solid-dataspace-prod-stadt-wuppertal-plasma-frontend
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - nginx
+    - -g
+    - daemon off;
+    volumes: []
+    profiles:
+    - workspaces
+  dace-node-red:
+    image: local/consolidation/node-red:d36f20ba9ce3
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/dace-node-red.env
+    networks:
+      workspace-dace:
+        aliases:
+        - node-red
+      edge:
+        aliases:
+        - solid-dataspace-prod-dace-node-red
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: bind
+      source: /srv/solid-dataspace-prod/workspace-config/dace-node-red/settings.js
+      target: /data/settings.js
+      read_only: false
+    - type: volume
+      source: solid-dataspace-dace_nodered-data
+      target: /data
+    profiles:
+    - workspaces
+  dace-plasma-mariadb-sms:
+    image: local/consolidation/plasma-mariadb-sms:73d2c069f75f
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/dace-plasma-mariadb-sms.env
+    networks:
+      workspace-dace:
+        aliases:
+        - plasma-mariadb-sms
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - mariadbd
+    - --character-set-server=utf8mb4
+    - --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - type: volume
+      source: solid-dataspace-dace_plasma_mariadb_sms
+      target: /var/lib/mysql
+    profiles:
+    - workspaces
+  dace-plasma-fuseki:
+    image: local/consolidation/plasma-fuseki:a99855f619c4
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/dace-plasma-fuseki.env
+    networks:
+      workspace-dace:
+        aliases:
+        - plasma-fuseki
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - /jena-fuseki/fuseki-server
+    volumes:
+    - type: volume
+      source: solid-dataspace-dace_plasma_fuseki_data
+      target: /fuseki
+    profiles:
+    - workspaces
+  dace-plasma-sms:
+    image: local/consolidation/plasma-sms:f85e03bbfa60
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/dace-plasma-sms.env
+    networks:
+      workspace-dace:
+        aliases:
+        - plasma-sms
+      edge:
+        aliases:
+        - solid-dataspace-prod-dace-plasma-sms
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: volume
+      source: solid-dataspace-dace_plasma_sms_configs
+      target: /var/plasma/configs
+    - type: volume
+      source: solid-dataspace-dace_plasma_ontologies
+      target: /var/ontologies
+    profiles:
+    - workspaces
+    depends_on:
+      dace-plasma-mariadb-sms:
+        condition: service_started
+  dace-plasma-dps:
+    image: local/consolidation/plasma-dps:27e012fab7eb
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/dace-plasma-dps.env
+    networks:
+      workspace-dace:
+        aliases:
+        - plasma-dps
+      edge:
+        aliases:
+        - solid-dataspace-prod-dace-plasma-dps
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: volume
+      source: solid-dataspace-dace_plasma_dps_storage
+      target: /var/plasma/localstorage
+    profiles:
+    - workspaces
+    depends_on:
+      dace-plasma-mariadb-sms:
+        condition: service_started
+  dace-plasma-frontend:
+    image: local/consolidation/plasma-frontend:7cba3e1da099
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/dace-plasma-frontend.env
+    networks:
+      workspace-dace:
+        aliases:
+        - plasma-frontend
+      edge:
+        aliases:
+        - solid-dataspace-prod-dace-plasma-frontend
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - nginx
+    - -g
+    - daemon off;
+    volumes: []
+    profiles:
+    - workspaces
+  timberconnect-node-red:
+    image: local/consolidation/node-red:d36f20ba9ce3
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/timberconnect-node-red.env
+    networks:
+      workspace-timberconnect:
+        aliases:
+        - node-red
+      edge:
+        aliases:
+        - solid-dataspace-prod-timberconnect-node-red
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: bind
+      source: /srv/solid-dataspace-prod/workspace-config/timberconnect-node-red/settings.js
+      target: /data/settings.js
+      read_only: false
+    - type: volume
+      source: solid-dataspace-timberconnect_nodered-data
+      target: /data
+    profiles:
+    - workspaces
+  timberconnect-plasma-mariadb-sms:
+    image: local/consolidation/plasma-mariadb-sms:73d2c069f75f
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/timberconnect-plasma-mariadb-sms.env
+    networks:
+      workspace-timberconnect:
+        aliases:
+        - plasma-mariadb-sms
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - mariadbd
+    - --character-set-server=utf8mb4
+    - --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - type: volume
+      source: solid-dataspace-timberconnect_plasma_mariadb_sms
+      target: /var/lib/mysql
+    profiles:
+    - workspaces
+  timberconnect-plasma-fuseki:
+    image: local/consolidation/plasma-fuseki:a99855f619c4
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/timberconnect-plasma-fuseki.env
+    networks:
+      workspace-timberconnect:
+        aliases:
+        - plasma-fuseki
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - /jena-fuseki/fuseki-server
+    volumes:
+    - type: volume
+      source: solid-dataspace-timberconnect_plasma_fuseki_data
+      target: /fuseki
+    profiles:
+    - workspaces
+  timberconnect-plasma-sms:
+    image: local/consolidation/plasma-sms:f85e03bbfa60
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/timberconnect-plasma-sms.env
+    networks:
+      workspace-timberconnect:
+        aliases:
+        - plasma-sms
+      edge:
+        aliases:
+        - solid-dataspace-prod-timberconnect-plasma-sms
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: volume
+      source: solid-dataspace-timberconnect_plasma_sms_configs
+      target: /var/plasma/configs
+    - type: volume
+      source: solid-dataspace-timberconnect_plasma_ontologies
+      target: /var/ontologies
+    profiles:
+    - workspaces
+    depends_on:
+      timberconnect-plasma-mariadb-sms:
+        condition: service_started
+  timberconnect-plasma-dps:
+    image: local/consolidation/plasma-dps:27e012fab7eb
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/timberconnect-plasma-dps.env
+    networks:
+      workspace-timberconnect:
+        aliases:
+        - plasma-dps
+      edge:
+        aliases:
+        - solid-dataspace-prod-timberconnect-plasma-dps
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    volumes:
+    - type: volume
+      source: solid-dataspace-timberconnect_plasma_dps_storage
+      target: /var/plasma/localstorage
+    profiles:
+    - workspaces
+    depends_on:
+      timberconnect-plasma-mariadb-sms:
+        condition: service_started
+  timberconnect-plasma-frontend:
+    image: local/consolidation/plasma-frontend:7cba3e1da099
+    pull_policy: never
+    restart: unless-stopped
+    env_file:
+    - secrets/timberconnect-plasma-frontend.env
+    networks:
+      workspace-timberconnect:
+        aliases:
+        - plasma-frontend
+      edge:
+        aliases:
+        - solid-dataspace-prod-timberconnect-plasma-frontend
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    command:
+    - nginx
+    - -g
+    - daemon off;
+    volumes: []
+    profiles:
+    - workspaces
+  admin-api:
+    pull_policy: if_not_present
+    user: 1000:1000
+    init: true
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+    - no-new-privileges:true
+    cap_drop:
+    - ALL
+    cpus: 0.5
+    mem_limit: 256m
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    tmpfs:
+    - /tmp:rw,noexec,nosuid,size=32m
+    image: son1i/solid-dataspace-admin-api:0.3.98
+    working_dir: /app
+    command:
+    - node
+    - server.mjs
+    environment:
+      PORT: '3012'
+      ADMIN_SOURCE: /config-source
+      ADMIN_PROFILES: stadt-wuppertal,dace,timberconnect
+      ADMIN_SOCKET: /ipc/control.sock
+      ADMIN_IDENTITY_HOSTS: solid-community-server.tmdt.info,solidcommunity.net
+      ADMIN_ISSUERS: https://solid-community-server.tmdt.info/,https://solidcommunity.net/
+      ADMIN_ENVIRONMENT: prod
+    volumes:
+    - /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/solid-dataspace/config:/config-source:ro
+    - /srv/solid-config/admin-prod/ipc:/ipc
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-admin-api
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - -e
+      - fetch('http://127.0.0.1:3012/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))
+      interval: 20s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      admin-controller:
+        condition: service_healthy
+  admin-controller:
+    pull_policy: if_not_present
+    user: 1000:1000
+    init: true
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+    - no-new-privileges:true
+    cap_drop:
+    - ALL
+    cpus: 0.5
+    mem_limit: 256m
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    tmpfs:
+    - /tmp:rw,noexec,nosuid,size=32m
+    image: son1i/solid-dataspace-admin-controller:0.3.98
+    network_mode: none
+    group_add:
+    - '988'
+    working_dir: /app
+    command:
+    - python
+    - /app/admin-service/controller.py
+    environment:
+      PYTHONUNBUFFERED: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      DOCKER_CONFIG: /tmp/docker-config
+      ADMIN_SOURCE: /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/solid-dataspace/config
+      ADMIN_STATE: /srv/solid-config/admin-prod/state
+      ADMIN_SOCKET: /srv/solid-config/admin-prod/ipc/control.sock
+      ADMIN_RUNTIME: /srv/solid-config/consolidated
+      ADMIN_CADDY_CONFIG: /srv/solid-config/Caddyfile
+      ADMIN_PROFILES: stadt-wuppertal,dace,timberconnect
+      ADMIN_IDENTITY_HOSTS: solid-community-server.tmdt.info,solidcommunity.net
+      ADMIN_ENVIRONMENT: prod
+      ADMIN_STACK: /srv/solid-dataspace-prod
+      ADMIN_API_CONTAINER: solid-dataspace-prod-admin-api-1
+    volumes:
+    - /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/solid-dataspace/config:/home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/solid-dataspace/config
+    - /srv/solid-config:/srv/solid-config
+    - /usr/bin/docker:/usr/bin/docker:ro
+    - /var/run/docker.sock:/var/run/docker.sock
+    - /usr/libexec/docker/cli-plugins/docker-compose:/usr/libexec/docker/cli-plugins/docker-compose:ro
+    - /srv/solid-dataspace-prod:/srv/solid-dataspace-prod
+    healthcheck:
+      test:
+      - CMD
+      - python
+      - -c
+      - import socket; s=socket.socket(socket.AF_UNIX); s.connect('/srv/solid-config/admin-prod/ipc/control.sock');
+        s.close()
+      interval: 20s
+      timeout: 5s
+      retries: 3
+  account-handoff:
+    image: local/solid-account-handoff:20261016
+    pull_policy: never
+    user: 1000:1000
+    init: true
+    read_only: true
+    restart: unless-stopped
+    security_opt:
+    - no-new-privileges:true
+    cap_drop:
+    - ALL
+    cpus: 0.25
+    mem_limit: 128m
+    environment:
+      SOLID_ISSUER: https://solid-community-server.tmdt.info
+      SOLID_UPSTREAM: http://css:80
+      DATASPACE_ORIGINS: '["https://solid-dataspace-timberconnect.tmdt.info","https://www.solid-dataspace-timberconnect.tmdt.info","https://solid-dataspace-dace.tmdt.info","https://www.solid-dataspace-dace.tmdt.info","https://solid-dataspace-stadt-wuppertal.tmdt.info","https://www.solid-dataspace-stadt-wuppertal.tmdt.info"]'
+    networks:
+      edge:
+        aliases:
+        - solid-dataspace-prod-account-handoff
+      legacy-edge: {}
+    healthcheck:
+      test:
+      - CMD
+      - node
+      - -e
+      - fetch('http://127.0.0.1:8080/healthz').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+networks:
+  edge:
+    name: solid-dataspace-prod-edge
+  search:
+    internal: true
+  workspace-stadt-wuppertal:
+    internal: true
+  workspace-dace:
+    internal: true
+  workspace-timberconnect:
+    internal: true
+  legacy-edge:
+    external: true
+    name: solid-dataspace
+volumes:
+  solid-dataspace-prod_catalog_search:
+    name: solid-dataspace-prod_catalog_search
+  solid-data-connection-sync-worker_solid_data_connection_sync_worker_data:
+    external: true
+    name: solid-data-connection-sync-worker_solid_data_connection_sync_worker_data
+  solid-dataspace-stadt-wuppertal_nodered-data:
+    external: true
+    name: solid-dataspace-stadt-wuppertal_nodered-data
+  solid-dataspace-stadt-wuppertal_plasma_mariadb_sms:
+    external: true
+    name: solid-dataspace-stadt-wuppertal_plasma_mariadb_sms
+  solid-dataspace-stadt-wuppertal_plasma_fuseki_data:
+    external: true
+    name: solid-dataspace-stadt-wuppertal_plasma_fuseki_data
+  solid-dataspace-stadt-wuppertal_plasma_ontologies:
+    external: true
+    name: solid-dataspace-stadt-wuppertal_plasma_ontologies
+  solid-dataspace-stadt-wuppertal_plasma_sms_configs:
+    external: true
+    name: solid-dataspace-stadt-wuppertal_plasma_sms_configs
+  solid-dataspace-stadt-wuppertal_plasma_dps_storage:
+    external: true
+    name: solid-dataspace-stadt-wuppertal_plasma_dps_storage
+  solid-dataspace-dace_nodered-data:
+    external: true
+    name: solid-dataspace-dace_nodered-data
+  solid-dataspace-dace_plasma_mariadb_sms:
+    external: true
+    name: solid-dataspace-dace_plasma_mariadb_sms
+  solid-dataspace-dace_plasma_fuseki_data:
+    external: true
+    name: solid-dataspace-dace_plasma_fuseki_data
+  solid-dataspace-dace_plasma_sms_configs:
+    external: true
+    name: solid-dataspace-dace_plasma_sms_configs
+  solid-dataspace-dace_plasma_ontologies:
+    external: true
+    name: solid-dataspace-dace_plasma_ontologies
+  solid-dataspace-dace_plasma_dps_storage:
+    external: true
+    name: solid-dataspace-dace_plasma_dps_storage
+  solid-dataspace-timberconnect_nodered-data:
+    external: true
+    name: solid-dataspace-timberconnect_nodered-data
+  solid-dataspace-timberconnect_plasma_mariadb_sms:
+    external: true
+    name: solid-dataspace-timberconnect_plasma_mariadb_sms
+  solid-dataspace-timberconnect_plasma_fuseki_data:
+    external: true
+    name: solid-dataspace-timberconnect_plasma_fuseki_data
+  solid-dataspace-timberconnect_plasma_sms_configs:
+    external: true
+    name: solid-dataspace-timberconnect_plasma_sms_configs
+  solid-dataspace-timberconnect_plasma_ontologies:
+    external: true
+    name: solid-dataspace-timberconnect_plasma_ontologies
+  solid-dataspace-timberconnect_plasma_dps_storage:
+    external: true
+    name: solid-dataspace-timberconnect_plasma_dps_storage

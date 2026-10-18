@@ -1,0 +1,29 @@
+schemaVersion: 1
+apps:
+- id: solid-data-manager
+  title: Solid Data Manager
+  href: /
+- id: catalog
+  title: Semantic Data Catalog
+  href: /web/catalog
+- id: plasma
+  title: PLASMA
+  href: /web/plasma
+- id: node-red
+  title: Node-RED
+  href: /web/node-red
+- id: data-connection
+  title: Data Connection
+  href: /data-connection
+- id: environmental-monitoring
+  title: Environmental Monitoring
+  href: /web/environmental-monitoring
+- id: solid-health-app
+  title: Health App
+  href: /web/solid-health-app
+- id: city-tours
+  title: City Tours
+  href: /web/city-tours
+- id: solid-health-questionnaire
+  title: Health Questionnaire
+  href: /web/solid-health-questionnaire

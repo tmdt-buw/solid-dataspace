@@ -1,0 +1,18 @@
+schemaVersion: 1
+registries:
+- id: stadt-wuppertal
+  label: Gesundes Tal
+  url: https://solid-community-server.tmdt.info/semanticdatacatalog/public/stadt-wuppertal
+  logo: /Wuppertal_Logo.png
+- id: dace
+  label: DACE
+  url: https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace
+  logo: /DACE_Logo_grün.png
+- id: timberconnect
+  label: TimberConnect
+  url: https://solid-community-server.tmdt.info/semanticdatacatalog/public/timberconnect
+  logo: /TimberConnect_Logo2.png
+- id: test
+  label: Test
+  url: https://solid-community-server.tmdt.info/semanticdatacatalog/public/test
+  logo: /Logo_TMDT.png

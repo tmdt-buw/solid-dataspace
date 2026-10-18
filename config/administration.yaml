@@ -1,0 +1,34 @@
+schemaVersion: 1
+environments:
+  test:
+    identityHosts:
+    - solid-community-server.tmdt.info
+    - solidcommunity.net
+    issuers:
+    - https://solid-community-server.tmdt.info/
+    - https://solidcommunity.net/
+    operatorWebIds:
+    - https://solid-community-server.tmdt.info/solidtestpod/profile/card#me
+    runtime:
+      catalogCacheSeconds: 300
+      indexIntervalSeconds: 300
+      monitoringCacheSeconds: 3600
+      syncTickSeconds: 600
+    serverAddresses:
+    - 132.195.160.191
+  prod:
+    identityHosts:
+    - solid-community-server.tmdt.info
+    - solidcommunity.net
+    issuers:
+    - https://solid-community-server.tmdt.info/
+    - https://solidcommunity.net/
+    operatorWebIds:
+    - https://solid-community-server.tmdt.info/solidtestpod/profile/card#me
+    runtime:
+      catalogCacheSeconds: 300
+      indexIntervalSeconds: 300
+      monitoringCacheSeconds: 3600
+      syncTickSeconds: 600
+    serverAddresses:
+    - 132.195.160.191

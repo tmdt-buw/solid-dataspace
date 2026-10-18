@@ -1,0 +1,135 @@
+administration:
+  adminWebIds:
+  - https://solid-community-server.tmdt.info/solidtestpod/profile/card#me
+  enabled: true
+domains:
+- solid-dataspace-test.tmdt.info
+- www.solid-dataspace-test.tmdt.info
+- solid-dataspace-test2.tmdt.info
+- www.solid-dataspace-test2.tmdt.info
+environment: test
+id: test
+public:
+  apps:
+  - enabled: true
+    href: /
+    iconKey: solid-data-manager
+    id: solid-data-manager
+    linkType: internal
+    order: 0
+    section: general
+    title: Solid Data Manager
+    visible: true
+  - enabled: true
+    href: /web/catalog
+    iconKey: catalog
+    id: catalog
+    linkType: internal
+    order: 10
+    section: consume
+    title: Semantic Data Catalog
+    visible: true
+  - enabled: true
+    href: /web/plasma
+    iconKey: plasma
+    id: plasma
+    linkType: internal
+    order: 20
+    section: consume
+    title: PLASMA
+    visible: true
+  - enabled: true
+    href: /web/node-red
+    iconKey: node-red
+    id: node-red
+    linkType: internal
+    order: 30
+    section: consume
+    title: Node-RED
+    visible: true
+  - enabled: true
+    href: /data-connection
+    iconKey: data-connection
+    id: data-connection
+    linkType: internal
+    order: 40
+    section: consume
+    title: Data Connection
+    visible: true
+  - enabled: true
+    href: /web/environmental-monitoring
+    iconKey: temperature
+    id: environmental-monitoring
+    linkType: internal
+    order: 15
+    section: applications
+    title: Environmental Monitoring
+    visible: true
+  - enabled: true
+    href: /web/solid-health-app
+    iconKey: health
+    id: solid-health-app
+    linkType: internal
+    order: 20
+    section: applications
+    title: Health App
+    visible: true
+  - enabled: true
+    href: /web/city-tours
+    iconKey: tour
+    id: city-tours
+    linkType: internal
+    order: 22
+    section: applications
+    title: City Tours
+    visible: true
+  - enabled: true
+    href: /web/solid-health-questionnaire
+    iconKey: questionnaire
+    id: solid-health-questionnaire
+    linkType: internal
+    order: 24
+    section: applications
+    title: Health Questionnaire
+    visible: true
+  branding:
+    logoAlt: Test Instance Logo
+    logoHeight: auto
+    logoUrl: /project-logos/Logo_TMDT.png
+    logoWidth: 95px
+    projectName: Test Instance
+  catalog:
+    defaultRegistry: https://solid-community-server.tmdt.info/semanticdatacatalog/public/test
+  cityToursLegacyContinuousWebIds: []
+  dataspaceId: test
+  fundingGrantNumber: ''
+  fundingLogos: []
+  plasmaUrl: /plasma/modelings
+  providers:
+  - enabled: true
+    id: tmdt-solid
+    issuer: https://solid-community-server.tmdt.info
+    label: TMDT Solid
+    note: Recommended
+    recommended: true
+  - enabled: true
+    id: solid-community
+    issuer: https://solidcommunity.net
+    label: Solid Community
+    note: Public community server
+    recommended: false
+  statistics:
+    activityResourcePath: statistics/activity/activity.ttl
+    adminWebIds:
+    - https://solid-community-server.tmdt.info/solidtestpod/profile/card#me
+    enabled: false
+    eventsUrl: https://solid-community-server.tmdt.info/solidtestpod/statistics/events/catalog-instances/test/downloads/
+    podBaseUrl: https://solid-community-server.tmdt.info/solidtestpod/statistics/
+    timezone: Europe/Berlin
+    workerWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
+  syncWorker:
+    apiUrl: /sync-worker
+    enabled: false
+    intervalMinutes: 10
+    serviceWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
+schemaVersion: 1

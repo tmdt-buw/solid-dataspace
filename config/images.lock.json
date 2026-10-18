@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "sourceWorkspace": "/home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation",
+  "services": {
+    "solid-dataspace-live-test-semantic-data-catalog-frontend-1": {
+      "image": "local/consolidation/live-node:7c3b093add7c",
+      "imageId": "sha256:7c3b093add7c43400ee83b815ab2cda98794a10045bcf76ce9bb2f89b97cbc5c"
+    },
+    "solid-dataspace-prod-stadt-wuppertal-plasma-sms-1": {
+      "image": "local/consolidation/plasma-sms:f85e03bbfa60",
+      "imageId": "sha256:f85e03bbfa6066b77c2dfca6489ba8cbc9065d8eef2501397b8ac8e1f7200721"
+    },
+    "solid-dataspace-prod-stadt-wuppertal-plasma-dps-1": {
+      "image": "local/consolidation/plasma-dps:27e012fab7eb",
+      "imageId": "sha256:27e012fab7eb30e0adc7ebd1d81e527fc3a52dff39f11d9cd2bc45c6d6e0571b"
+    },
+    "solid-dataspace-prod-stadt-wuppertal-plasma-mariadb-sms-1": {
+      "image": "local/consolidation/plasma-mariadb-sms:73d2c069f75f",
+      "imageId": "sha256:73d2c069f75f0c7900c6bf85a1f48dad9071e0c1644fe804fd1d585f16a9134f"
+    },
+    "solid-dataspace-prod-stadt-wuppertal-plasma-fuseki-1": {
+      "image": "local/consolidation/plasma-fuseki:a99855f619c4",
+      "imageId": "sha256:a99855f619c4cb1534a399b354366af03bcc39b88024d66b43e01feb61a2639d"
+    },
+    "solid-dataspace-prod-stadt-wuppertal-node-red-1": {
+      "image": "local/consolidation/node-red:d36f20ba9ce3",
+      "imageId": "sha256:d36f20ba9ce3bdb621dbd79864999567d12a5aeeb4521f12dcdb08f6a784ccda"
+    },
+    "solid-dataspace-prod-stadt-wuppertal-plasma-frontend-1": {
+      "image": "local/consolidation/plasma-frontend:7cba3e1da099",
+      "imageId": "sha256:7cba3e1da0993c97f45ef7c536b83a0c3a877cc3300c10867702710a1873fefd"
+    },
+    "solid-dataspace-prod-dace-plasma-dps-1": {
+      "image": "local/consolidation/plasma-dps:27e012fab7eb",
+      "imageId": "sha256:27e012fab7eb30e0adc7ebd1d81e527fc3a52dff39f11d9cd2bc45c6d6e0571b"
+    },
+    "solid-dataspace-prod-dace-plasma-sms-1": {
+      "image": "local/consolidation/plasma-sms:f85e03bbfa60",
+      "imageId": "sha256:f85e03bbfa6066b77c2dfca6489ba8cbc9065d8eef2501397b8ac8e1f7200721"
+    },
+    "solid-dataspace-prod-dace-node-red-1": {
+      "image": "local/consolidation/node-red:d36f20ba9ce3",
+      "imageId": "sha256:d36f20ba9ce3bdb621dbd79864999567d12a5aeeb4521f12dcdb08f6a784ccda"
+    },
+    "solid-dataspace-prod-dace-plasma-fuseki-1": {
+      "image": "local/consolidation/plasma-fuseki:a99855f619c4",
+      "imageId": "sha256:a99855f619c4cb1534a399b354366af03bcc39b88024d66b43e01feb61a2639d"
+    },
+    "solid-dataspace-prod-dace-plasma-frontend-1": {
+      "image": "local/consolidation/plasma-frontend:7cba3e1da099",
+      "imageId": "sha256:7cba3e1da0993c97f45ef7c536b83a0c3a877cc3300c10867702710a1873fefd"
+    },
+    "solid-dataspace-prod-dace-plasma-mariadb-sms-1": {
+      "image": "local/consolidation/plasma-mariadb-sms:73d2c069f75f",
+      "imageId": "sha256:73d2c069f75f0c7900c6bf85a1f48dad9071e0c1644fe804fd1d585f16a9134f"
+    },
+    "solid-dataspace-live-test-solid-dataspace-manager-1": {
+      "image": "local/consolidation/manager:20261017-consolidation",
+      "imageId": "sha256:298d720b07606a49daa2744af04c16be8ed908fdd3540a7606c434b9caac9d99"
+    },
+    "solid-dataspace-prod-timberconnect-plasma-sms-1": {
+      "image": "local/consolidation/plasma-sms:f85e03bbfa60",
+      "imageId": "sha256:f85e03bbfa6066b77c2dfca6489ba8cbc9065d8eef2501397b8ac8e1f7200721"
+    },
+    "solid-dataspace-prod-timberconnect-plasma-dps-1": {
+      "image": "local/consolidation/plasma-dps:27e012fab7eb",
+      "imageId": "sha256:27e012fab7eb30e0adc7ebd1d81e527fc3a52dff39f11d9cd2bc45c6d6e0571b"
+    },
+    "solid-dataspace-prod-timberconnect-plasma-mariadb-sms-1": {
+      "image": "local/consolidation/plasma-mariadb-sms:73d2c069f75f",
+      "imageId": "sha256:73d2c069f75f0c7900c6bf85a1f48dad9071e0c1644fe804fd1d585f16a9134f"
+    },
+    "solid-dataspace-prod-timberconnect-plasma-fuseki-1": {
+      "image": "local/consolidation/plasma-fuseki:a99855f619c4",
+      "imageId": "sha256:a99855f619c4cb1534a399b354366af03bcc39b88024d66b43e01feb61a2639d"
+    },
+    "solid-dataspace-prod-timberconnect-plasma-frontend-1": {
+      "image": "local/consolidation/plasma-frontend:7cba3e1da099",
+      "imageId": "sha256:7cba3e1da0993c97f45ef7c536b83a0c3a877cc3300c10867702710a1873fefd"
+    },
+    "solid-dataspace-prod-timberconnect-node-red-1": {
+      "image": "local/consolidation/node-red:d36f20ba9ce3",
+      "imageId": "sha256:d36f20ba9ce3bdb621dbd79864999567d12a5aeeb4521f12dcdb08f6a784ccda"
+    },
+    "solid-dataspace-prod-solid-data-connection-sync-worker-1": {
+      "image": "local/consolidation/worker:20261017-consolidation",
+      "imageId": "sha256:65da8a51918c62dbb975c3a06a96f6413c1f8fb37c808936a339890add8e810a"
+    },
+    "solid-dataspace-prod-semantic-data-catalog-indexer-1": {
+      "image": "local/consolidation/backend:20261017-consolidation",
+      "imageId": "sha256:ba5c2d18534459287cc7272acd71e16df33a303ed2f0ea0383c46638cb4a5105"
+    },
+    "solid-dataspace-prod-semantic-data-catalog-backend-1": {
+      "image": "local/consolidation/backend:20261017-consolidation",
+      "imageId": "sha256:ba5c2d18534459287cc7272acd71e16df33a303ed2f0ea0383c46638cb4a5105"
+    },
+    "solid-dataspace-prod-solid-dataspace-manager-1": {
+      "image": "local/consolidation/manager:20261017-consolidation",
+      "imageId": "sha256:298d720b07606a49daa2744af04c16be8ed908fdd3540a7606c434b9caac9d99"
+    },
+    "solid-dataspace-prod-solid-health-questionnaire-1": {
+      "image": "local/consolidation/solid-health-questionnaire:fc91c50a1319",
+      "imageId": "sha256:fc91c50a131986956110bf91b1587ad4370eb361d7dcc94e0b9787f0bffa5a0f"
+    },
+    "solid-dataspace-prod-solid-data-manager-1": {
+      "image": "local/consolidation/solid-data-manager:de02faec3d16",
+      "imageId": "sha256:de02faec3d16a11fb1be004ab2231394f96c6df448874a2b5d6fc2780c2c7178"
+    },
+    "solid-dataspace-prod-solid-health-app-1": {
+      "image": "local/consolidation/solid-health-app:7b56742afdea",
+      "imageId": "sha256:7b56742afdeaebcffda097955692ea52101e38c884b37aaad6edcc9d8002b839"
+    },
+    "solid-dataspace-prod-environmental-monitoring-1": {
+      "image": "local/consolidation/environmental-monitoring:3b8364b2f1bd",
+      "imageId": "sha256:3b8364b2f1bd5a582dfabd6714d0654d18eed11596dba006e140558c7c93694e"
+    },
+    "solid-dataspace-prod-semantic-data-catalog-frontend-1": {
+      "image": "local/consolidation/catalog:20261017-consolidation",
+      "imageId": "sha256:ae6ece05f0fc37a6cf082c41619a7fee26c140c653a876771aba7f7fdc1708b2"
+    },
+    "solid-dataspace-prod-city-tours-1": {
+      "image": "local/consolidation/city-tours:2b4383b080f3",
+      "imageId": "sha256:2b4383b080f3f2fd5ce1b12307621aec1f65c6218a295cecc0e1147a4613760a"
+    },
+    "solid-dataspace-prod-semantic-data-catalog-fuseki-1": {
+      "image": "local/consolidation/semantic-data-catalog-fuseki:32101e2ec027",
+      "imageId": "sha256:32101e2ec027c1676fd75daa2b36506c71c93ed0514c9ad5e40d4673a35cb226"
+    },
+    "solid-dataspace-live-test-plasma-dps-1": {
+      "image": "local/consolidation/plasma-dps:27e012fab7eb",
+      "imageId": "sha256:27e012fab7eb30e0adc7ebd1d81e527fc3a52dff39f11d9cd2bc45c6d6e0571b"
+    },
+    "solid-dataspace-live-test-plasma-sms-1": {
+      "image": "local/consolidation/plasma-sms:f85e03bbfa60",
+      "imageId": "sha256:f85e03bbfa6066b77c2dfca6489ba8cbc9065d8eef2501397b8ac8e1f7200721"
+    },
+    "solid-dataspace-live-test-plasma-fuseki-1": {
+      "image": "local/consolidation/plasma-fuseki:a99855f619c4",
+      "imageId": "sha256:a99855f619c4cb1534a399b354366af03bcc39b88024d66b43e01feb61a2639d"
+    },
+    "solid-dataspace-live-test-node-red-1": {
+      "image": "local/consolidation/node-red:d36f20ba9ce3",
+      "imageId": "sha256:d36f20ba9ce3bdb621dbd79864999567d12a5aeeb4521f12dcdb08f6a784ccda"
+    },
+    "solid-dataspace-live-test-plasma-mariadb-sms-1": {
+      "image": "local/consolidation/plasma-mariadb-sms:57c69e064d6c",
+      "imageId": "sha256:57c69e064d6c79e7cbe8c77a3342327d13455947616e7e7908bda2fbad348e34"
+    },
+    "solid-dataspace-live-test-plasma-frontend-1": {
+      "image": "local/consolidation/plasma-frontend:7cba3e1da099",
+      "imageId": "sha256:7cba3e1da0993c97f45ef7c536b83a0c3a877cc3300c10867702710a1873fefd"
+    },
+    "solid-dataspace-live-test-semantic-data-catalog-backend-1": {
+      "image": "local/consolidation/backend:20261017-consolidation",
+      "imageId": "sha256:ba5c2d18534459287cc7272acd71e16df33a303ed2f0ea0383c46638cb4a5105"
+    },
+    "solid-dataspace-live-test-semantic-data-catalog-indexer-1": {
+      "image": "local/consolidation/backend:20261017-consolidation",
+      "imageId": "sha256:ba5c2d18534459287cc7272acd71e16df33a303ed2f0ea0383c46638cb4a5105"
+    },
+    "solid-dataspace-live-test-semantic-data-catalog-fuseki-1": {
+      "image": "local/consolidation/semantic-data-catalog-fuseki:32101e2ec027",
+      "imageId": "sha256:32101e2ec027c1676fd75daa2b36506c71c93ed0514c9ad5e40d4673a35cb226"
+    },
+    "solid-dataspace-live-test-solid-health-questionnaire-1": {
+      "image": "local/consolidation/solid-health-questionnaire:fc91c50a1319",
+      "imageId": "sha256:fc91c50a131986956110bf91b1587ad4370eb361d7dcc94e0b9787f0bffa5a0f"
+    },
+    "solid-dataspace-live-test-environmental-monitoring-1": {
+      "image": "local/consolidation/environmental-monitoring:3b8364b2f1bd",
+      "imageId": "sha256:3b8364b2f1bd5a582dfabd6714d0654d18eed11596dba006e140558c7c93694e"
+    },
+    "solid-dataspace-live-test-solid-data-connection-sync-worker-1": {
+      "image": "local/consolidation/worker:20261017-consolidation",
+      "imageId": "sha256:65da8a51918c62dbb975c3a06a96f6413c1f8fb37c808936a339890add8e810a"
+    },
+    "solid-dataspace-live-test-solid-health-app-1": {
+      "image": "local/consolidation/solid-health-app:7b56742afdea",
+      "imageId": "sha256:7b56742afdeaebcffda097955692ea52101e38c884b37aaad6edcc9d8002b839"
+    },
+    "solid-dataspace-live-test-solid-data-manager-1": {
+      "image": "local/consolidation/solid-data-manager:de02faec3d16",
+      "imageId": "sha256:de02faec3d16a11fb1be004ab2231394f96c6df448874a2b5d6fc2780c2c7178"
+    },
+    "solid-dataspace-live-test-city-tours-1": {
+      "image": "local/consolidation/city-tours:2b4383b080f3",
+      "imageId": "sha256:2b4383b080f3f2fd5ce1b12307621aec1f65c6218a295cecc0e1147a4613760a"
+    }
+  }
+}

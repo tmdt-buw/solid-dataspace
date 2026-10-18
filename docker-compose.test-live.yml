@@ -1,0 +1,116 @@
+services:
+  semantic-data-catalog-frontend:
+    image: local/consolidation/live-node:7c3b093add7c
+    pull_policy: never
+    user: 1000:1000
+    init: true
+    security_opt:
+    - no-new-privileges:true
+    cap_drop:
+    - ALL
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    working_dir: /app/frontend
+    cpus: 1.5
+    mem_limit: 3g
+    cpu_shares: 256
+    environment:
+      NODE_ENV: development
+      BROWSER: none
+      HOST: 0.0.0.0
+      PORT: '5000'
+      WDS_SOCKET_PORT: '443'
+      WDS_SOCKET_PATH: /semantic-data-catalog/ws
+      WATCHPACK_POLLING: '1000'
+      CHOKIDAR_USEPOLLING: 'true'
+      CHOKIDAR_INTERVAL: '1000'
+      NODE_OPTIONS: --max-old-space-size=2048
+      BACKEND_URL: http://solid-dataspace-live-test-semantic-data-catalog-backend:8000
+    volumes:
+    - type: bind
+      source: /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/semantic-data-catalog/frontend
+      target: /app/frontend
+    - type: volume
+      source: live_catalog_modules
+      target: /app/frontend/node_modules
+    - type: bind
+      source: /srv/solid-dataspace-live-test/live/start-catalog.cjs
+      target: /live/start-catalog.cjs
+      read_only: true
+    - type: bind
+      source: /srv/solid-dataspace-live-test/live/configure-catalog-websocket.cjs
+      target: /live/configure-catalog-websocket.cjs
+      read_only: true
+    command:
+    - node
+    - /live/start-catalog.cjs
+  solid-dataspace-manager:
+    image: local/consolidation/manager:20261017-consolidation
+    pull_policy: never
+    user: 1000:1000
+    init: true
+    security_opt:
+    - no-new-privileges:true
+    cap_drop:
+    - ALL
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'
+    working_dir: /app
+    cpus: 2
+    mem_limit: 4g
+    cpu_shares: 256
+    environment:
+      NODE_ENV: development
+      BROWSER: none
+      HOST: 0.0.0.0
+      PORT: '3001'
+      WDS_SOCKET_PORT: '443'
+      WDS_SOCKET_PATH: /ws
+      WATCHPACK_POLLING: '1000'
+      CHOKIDAR_USEPOLLING: 'true'
+      CHOKIDAR_INTERVAL: '1000'
+      NODE_OPTIONS: --max-old-space-size=3072 --require /live/configure-manager-webpack.cjs
+      PUBLIC_URL: /
+      BACKEND_URL: http://solid-dataspace-live-test-semantic-data-catalog-backend:8000
+    volumes:
+    - type: bind
+      source: /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/solid-dataspace-manager
+      target: /app
+    - type: volume
+      source: live_manager_modules
+      target: /app/node_modules
+    - type: bind
+      source: /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/semantic-data-catalog/frontend/dist/embed
+      target: /app/node_modules/@hoelk-f/semantic-data-catalog/embed
+      read_only: true
+    - type: bind
+      source: /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/semantic-data-catalog/frontend/dist/catalog-api
+      target: /app/node_modules/@hoelk-f/semantic-data-catalog/catalog-api
+      read_only: true
+    - type: bind
+      source: /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/semantic-data-catalog/frontend/dist/package.json
+      target: /app/node_modules/@hoelk-f/semantic-data-catalog/package.json
+      read_only: true
+    - type: bind
+      source: /srv/solid-dataspace-live-test/live/configure-manager-webpack.cjs
+      target: /live/configure-manager-webpack.cjs
+      read_only: true
+    command:
+    - sh
+    - -ec
+    - node -e 'require("./scripts/local-package-sync").clearCraWebpackCache(process.cwd())';
+      exec npm start
+volumes:
+  live_catalog_modules:
+    name: solid-dataspace-live-test_live_catalog_modules
+    external: true
+  live_manager_modules:
+    name: solid-dataspace-live-test_live_manager_modules

@@ -1,101 +1,18 @@
-:80 {
-    redir /plasma /plasma/ 308
-    route /plasma/* {
-        uri strip_prefix /plasma
-
-        @plasmaSms path /api/sms /api/sms/*
-        reverse_proxy @plasmaSms plasma-sms:8181 {
-            lb_try_duration 300s
-            lb_try_interval 1s
-        }
-
-        @plasmaDps path /api/dps /api/dps/*
-        reverse_proxy @plasmaDps plasma-dps:8182 {
-            lb_try_duration 300s
-            lb_try_interval 1s
-        }
-
-        reverse_proxy plasma-frontend:80 {
-            lb_try_duration 300s
-            lb_try_interval 1s
-        }
-    }
-
-    # /catalog serves the standalone app; /web/catalog belongs to the Manager.
-    @standaloneCatalog path /catalog /catalog/
-    route @standaloneCatalog {
-        rewrite * /semantic-data-catalog/
-        reverse_proxy semantic-data-catalog-frontend:5000 {
-            lb_try_duration 300s
-            lb_try_interval 1s
-        }
-    }
-
-    redir /semantic-data-catalog /semantic-data-catalog/
-    reverse_proxy /semantic-data-catalog/* semantic-data-catalog-frontend:5000 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-    reverse_proxy /api/* semantic-data-catalog-backend:8000 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-
-    redir /environmental-monitoring /environmental-monitoring/
-    reverse_proxy /environmental-monitoring/* environmental-monitoring:5173 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-    redir /solid-data-manager /solid-data-manager/
-    reverse_proxy /solid-data-manager/* solid-data-manager:3002 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-    redir /solid-health-app /solid-health-app/
-    reverse_proxy /solid-health-app/* solid-health-app:3000 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-    redir /solid-health-questionnaire /solid-health-questionnaire/
-    reverse_proxy /solid-health-questionnaire/* solid-health-questionnaire:3007 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-    # Keep existing standalone bookmarks and authentication callbacks working.
-    redir /solid-tours /city-tours/?{query} 308
-    @legacyCityTours path_regexp legacyCityTours ^/solid-tours/(.*)$
-    redir @legacyCityTours /city-tours/{re.legacyCityTours.1}?{query} 308
-    redir /city-tours /city-tours/?{query}
-    reverse_proxy /city-tours/* city-tours:3006 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-
-    route /sync-worker* {
-        uri strip_prefix /sync-worker
-        reverse_proxy solid-data-connection-sync-worker:8080 {
-            lb_try_duration 300s
-            lb_try_interval 1s
-        }
-    }
-
-    reverse_proxy /node-red/* node-red:1880 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
-
-    # BrowserRouter deep links belong to the Dataspace Manager SPA. Keep the
-    # public URL while asking the CRA server for its entry document.
-    route /web/* {
-        rewrite * /
-        reverse_proxy solid-dataspace-manager:3001 {
-            lb_try_duration 300s
-            lb_try_interval 1s
-        }
-    }
-
-    reverse_proxy solid-dataspace-manager:3001 {
-        lb_try_duration 300s
-        lb_try_interval 1s
-    }
+{
+	log {
+		format console
+	}
 }
+
+solid-community-server.tmdt.info, www.solid-community-server.tmdt.info {
+	handle /.account/dataspace-login/ {
+		import /config/consolidated/login-test.caddy
+		import /config/consolidated/login-prod.caddy
+		reverse_proxy solid-account-handoff:8080
+	}
+	handle {
+		reverse_proxy css:80
+	}
+}
+
+import /config/consolidated/sites.caddy
