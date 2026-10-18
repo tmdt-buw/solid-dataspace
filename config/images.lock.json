@@ -83,44 +83,44 @@
       "imageId": "sha256:d36f20ba9ce3bdb621dbd79864999567d12a5aeeb4521f12dcdb08f6a784ccda"
     },
     "solid-dataspace-prod-solid-data-connection-sync-worker-1": {
-      "image": "son1i/solid-data-connection-sync-worker@sha256:6ac101e0f2814143a4ec5d8f7472ff0985430084ffa19ffe692fd9ac288c3117",
-      "imageId": "sha256:50a6bccc0965d23a065b3e32d18438fd956469f949a44b6aec236e5ac73982d3"
+      "image": "son1i/solid-data-connection-sync-worker@sha256:b8b383b26db9598beb3e39651d99917e28b5f12ee324b08d8b148b30b2e3a676",
+      "imageId": "sha256:d6665ae4b8ad157a6efda540990cd264a2f05400fe923d088107a30cf99acbb6"
     },
     "solid-dataspace-prod-semantic-data-catalog-indexer-1": {
-      "image": "son1i/semantic-data-catalog-backend@sha256:b9006fcd29941a673a4bdc978d0390f60909e9c610221433963653cc9f70c89c",
-      "imageId": "sha256:748164db30e27bf0336c9031a5d48270a110d0df9e2d2c2926c9350ed3d17091"
+      "image": "son1i/semantic-data-catalog-backend@sha256:9a12e7676eb47a4ed306c574a81eb2a344b63cb5720eef13c95f038347e97469",
+      "imageId": "sha256:ab59ecceef318b2acd56a0d69b61165c7be8a29e8b1abf0dfbd9b480702e9361"
     },
     "solid-dataspace-prod-semantic-data-catalog-backend-1": {
-      "image": "son1i/semantic-data-catalog-backend@sha256:b9006fcd29941a673a4bdc978d0390f60909e9c610221433963653cc9f70c89c",
-      "imageId": "sha256:748164db30e27bf0336c9031a5d48270a110d0df9e2d2c2926c9350ed3d17091"
+      "image": "son1i/semantic-data-catalog-backend@sha256:9a12e7676eb47a4ed306c574a81eb2a344b63cb5720eef13c95f038347e97469",
+      "imageId": "sha256:ab59ecceef318b2acd56a0d69b61165c7be8a29e8b1abf0dfbd9b480702e9361"
     },
     "solid-dataspace-prod-solid-dataspace-manager-1": {
-      "image": "son1i/solid-dataspace-manager@sha256:7fa9438d726ff8ba47b4b237ee68843caec2cbce40aeb5b373f2c93c44c94240",
-      "imageId": "sha256:53aeda13714a8aec81eb38d84dd904401288495d9992d87c3f47c238cc096bb9"
+      "image": "son1i/solid-dataspace-manager@sha256:00839a64c06db160a9aead2750db775c841f8a64c2696bde2ae1183d1023031d",
+      "imageId": "sha256:bb264701213e6e18bb59ed2e5cadd5ae47005a44a16463e8e00b20aef0a5060d"
     },
     "solid-dataspace-prod-solid-health-questionnaire-1": {
       "image": "local/consolidation/solid-health-questionnaire:fc91c50a1319",
       "imageId": "sha256:fc91c50a131986956110bf91b1587ad4370eb361d7dcc94e0b9787f0bffa5a0f"
     },
     "solid-dataspace-prod-solid-data-manager-1": {
-      "image": "local/consolidation/solid-data-manager:de02faec3d16",
-      "imageId": "sha256:de02faec3d16a11fb1be004ab2231394f96c6df448874a2b5d6fc2780c2c7178"
+      "image": "son1i/solid-data-manager@sha256:351d4201a7a313d1b59aca6670ea3bf8d60560517f02e19c7244541f9b46c224",
+      "imageId": "sha256:1ea4c3b251e351548dc58eb119c1c60be0bd23a6a9e78f8865a5864ed935bb5b"
     },
     "solid-dataspace-prod-solid-health-app-1": {
       "image": "local/consolidation/solid-health-app:7b56742afdea",
       "imageId": "sha256:7b56742afdeaebcffda097955692ea52101e38c884b37aaad6edcc9d8002b839"
     },
     "solid-dataspace-prod-environmental-monitoring-1": {
-      "image": "local/consolidation/environmental-monitoring:3b8364b2f1bd",
-      "imageId": "sha256:3b8364b2f1bd5a582dfabd6714d0654d18eed11596dba006e140558c7c93694e"
+      "image": "son1i/environmental-monitoring@sha256:6ca09f4ee171e18fec514fcd47c268fe8301b0b2471eeeee1b1040fe0c4dc05a",
+      "imageId": "sha256:a264fc311f2663716226b9c9add098b3fed70a756879e5eeb237379fc3e584f8"
     },
     "solid-dataspace-prod-semantic-data-catalog-frontend-1": {
-      "image": "son1i/semantic-data-catalog-frontend@sha256:8449577340b8a82c3a84f6413474fcbf376c042e0233e9d03b8de1eac3897604",
-      "imageId": "sha256:025d407541a7c735dcb533df8c703c3bc4afba9311ff8cb318e287278c1ed0bc"
+      "image": "son1i/semantic-data-catalog-frontend@sha256:d655f6cf1ac48ef8f28eae3be3c95c76c039207affbd5f13246736b93905b56e",
+      "imageId": "sha256:bb9885b242aeeb552f79164145217dc3ef10e46b568ff2ca0a575c95bf287e61"
     },
     "solid-dataspace-prod-city-tours-1": {
-      "image": "son1i/city-tours@sha256:ffeeef29d139052b8f97a8ba29e70178741e6039b3ec85d8399a3a08d9aca628",
-      "imageId": "sha256:d52bd9bd378279bd372f4e5defab177f1fa4ea67c12f4d3553bcdd2505173e69"
+      "image": "son1i/city-tours@sha256:e3edb4328f4a229840e1b7e502d5da021471770f39bd471814f9985cdae22cb4",
+      "imageId": "sha256:19ff874379c956d738761a72e2f8af063060e1cf04c230b67b72697f873df130"
     },
     "solid-dataspace-prod-semantic-data-catalog-fuseki-1": {
       "image": "local/consolidation/semantic-data-catalog-fuseki:32101e2ec027",
@@ -187,12 +187,12 @@
       "imageId": "sha256:2b4383b080f3f2fd5ce1b12307621aec1f65c6218a295cecc0e1147a4613760a"
     },
     "solid-dataspace-prod-admin-api-1": {
-      "image": "son1i/solid-dataspace-admin-api@sha256:afa46f67a098512962b2b7aa24941ed751157dd7badd16061b215f8f9d9fc337",
-      "imageId": "sha256:51a72d7120e15e9482312d6cd25590d2b6ffec4d0b5084999925a66395368eb1"
+      "image": "son1i/solid-dataspace-admin-api@sha256:e20f6523db37ff8d5781b215d4b0c82435275788839da2555b8fb801b449545d",
+      "imageId": "sha256:83f5233a2c9fc0b8bdfacdc738022d6d4af29e0359bf908402881580d59cc827"
     },
     "solid-dataspace-prod-admin-controller-1": {
-      "image": "son1i/solid-dataspace-admin-controller@sha256:e965accd289919b5b794b6e152a51bd587a513962029c51f384ffd1fc2e48ff5",
-      "imageId": "sha256:272f40e07b818adea5b40200a95358ffb4c8260ab384ae1a035b1759569008ce"
+      "image": "son1i/solid-dataspace-admin-controller@sha256:01c96424297346c91e88553901420e51d603880c4060cf8319134efa23c461e8",
+      "imageId": "sha256:d021e4d7b47e7d9cca278c8390a11b604ba3768622105d4a06bc2b29803bee9b"
     },
     "solid-dataspace-prod-account-handoff-1": {
       "image": "local/solid-account-handoff:20261016",

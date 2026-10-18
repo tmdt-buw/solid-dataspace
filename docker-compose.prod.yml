@@ -1,7 +1,7 @@
 name: solid-dataspace-prod
 services:
   solid-dataspace-manager:
-    image: son1i/solid-dataspace-manager@sha256:7fa9438d726ff8ba47b4b237ee68843caec2cbce40aeb5b373f2c93c44c94240
+    image: son1i/solid-dataspace-manager@sha256:00839a64c06db160a9aead2750db775c841f8a64c2696bde2ae1183d1023031d
     pull_policy: if_not_present
     restart: unless-stopped
     env_file:
@@ -24,8 +24,8 @@ services:
     cpus: 2
     mem_limit: 2g
   solid-data-manager:
-    image: local/consolidation/solid-data-manager:de02faec3d16
-    pull_policy: never
+    image: son1i/solid-data-manager@sha256:351d4201a7a313d1b59aca6670ea3bf8d60560517f02e19c7244541f9b46c224
+    pull_policy: if_not_present
     restart: unless-stopped
     env_file:
     - secrets/solid-data-manager.env
@@ -43,8 +43,8 @@ services:
     - -g
     - daemon off;
   environmental-monitoring:
-    image: local/consolidation/environmental-monitoring:3b8364b2f1bd
-    pull_policy: never
+    image: son1i/environmental-monitoring@sha256:6ca09f4ee171e18fec514fcd47c268fe8301b0b2471eeeee1b1040fe0c4dc05a
+    pull_policy: if_not_present
     restart: unless-stopped
     env_file:
     - secrets/environmental-monitoring.env
@@ -100,7 +100,7 @@ services:
     - -g
     - daemon off;
   city-tours:
-    image: son1i/city-tours@sha256:ffeeef29d139052b8f97a8ba29e70178741e6039b3ec85d8399a3a08d9aca628
+    image: son1i/city-tours@sha256:e3edb4328f4a229840e1b7e502d5da021471770f39bd471814f9985cdae22cb4
     pull_policy: if_not_present
     restart: unless-stopped
     env_file:
@@ -119,7 +119,7 @@ services:
     - -g
     - daemon off;
   semantic-data-catalog-frontend:
-    image: son1i/semantic-data-catalog-frontend@sha256:8449577340b8a82c3a84f6413474fcbf376c042e0233e9d03b8de1eac3897604
+    image: son1i/semantic-data-catalog-frontend@sha256:d655f6cf1ac48ef8f28eae3be3c95c76c039207affbd5f13246736b93905b56e
     pull_policy: if_not_present
     restart: unless-stopped
     env_file:
@@ -146,7 +146,7 @@ services:
       target: /runtime/catalog-serve.json
       read_only: true
   semantic-data-catalog-backend:
-    image: son1i/semantic-data-catalog-backend@sha256:b9006fcd29941a673a4bdc978d0390f60909e9c610221433963653cc9f70c89c
+    image: son1i/semantic-data-catalog-backend@sha256:9a12e7676eb47a4ed306c574a81eb2a344b63cb5720eef13c95f038347e97469
     pull_policy: if_not_present
     restart: unless-stopped
     env_file:
@@ -172,7 +172,7 @@ services:
       semantic-data-catalog-fuseki:
         condition: service_healthy
   semantic-data-catalog-indexer:
-    image: son1i/semantic-data-catalog-backend@sha256:b9006fcd29941a673a4bdc978d0390f60909e9c610221433963653cc9f70c89c
+    image: son1i/semantic-data-catalog-backend@sha256:9a12e7676eb47a4ed306c574a81eb2a344b63cb5720eef13c95f038347e97469
     pull_policy: if_not_present
     restart: unless-stopped
     env_file:
@@ -218,7 +218,7 @@ services:
     environment:
       JAVA_TOOL_OPTIONS: -Xmx768m
   solid-data-connection-sync-worker:
-    image: son1i/solid-data-connection-sync-worker@sha256:6ac101e0f2814143a4ec5d8f7472ff0985430084ffa19ffe692fd9ac288c3117
+    image: son1i/solid-data-connection-sync-worker@sha256:b8b383b26db9598beb3e39651d99917e28b5f12ee324b08d8b148b30b2e3a676
     pull_policy: if_not_present
     restart: unless-stopped
     env_file:
@@ -741,7 +741,7 @@ services:
         max-file: '3'
     tmpfs:
     - /tmp:rw,noexec,nosuid,size=32m
-    image: son1i/solid-dataspace-admin-api@sha256:afa46f67a098512962b2b7aa24941ed751157dd7badd16061b215f8f9d9fc337
+    image: son1i/solid-dataspace-admin-api@sha256:e20f6523db37ff8d5781b215d4b0c82435275788839da2555b8fb801b449545d
     working_dir: /app
     command:
     - node
@@ -797,7 +797,7 @@ services:
         max-file: '3'
     tmpfs:
     - /tmp:rw,noexec,nosuid,size=32m
-    image: son1i/solid-dataspace-admin-controller@sha256:e965accd289919b5b794b6e152a51bd587a513962029c51f384ffd1fc2e48ff5
+    image: son1i/solid-dataspace-admin-controller@sha256:01c96424297346c91e88553901420e51d603880c4060cf8319134efa23c461e8
     network_mode: none
     group_add:
     - '988'
