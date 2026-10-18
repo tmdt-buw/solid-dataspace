@@ -1,0 +1,20 @@
+{
+  "public": "/tmp/catalog-site",
+  "rewrites": [
+    {
+      "source": "/semantic-data-catalog/**",
+      "destination": "/semantic-data-catalog/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "**/*.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ]
+}

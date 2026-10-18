@@ -134,13 +134,17 @@ services:
         max-size: 10m
         max-file: '3'
     command:
-    - serve
-    - --config
-    - /catalog/serve.json
-    - -l
-    - '5000'
+    - sh
+    - -c
+    - mkdir -p /tmp/catalog-site && ln -s /app/frontend/build /tmp/catalog-site/semantic-data-catalog
+      && exec serve --config /runtime/catalog-serve.json -l 5000
     cpus: 2
     mem_limit: 2g
+    volumes:
+    - type: bind
+      source: /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/solid-dataspace/config/deployment/catalog-serve.json
+      target: /runtime/catalog-serve.json
+      read_only: true
   semantic-data-catalog-backend:
     image: local/consolidation/backend:20261017-consolidation
     pull_policy: never
@@ -731,7 +735,7 @@ services:
         max-file: '3'
     tmpfs:
     - /tmp:rw,noexec,nosuid,size=32m
-    image: son1i/solid-dataspace-admin-api:0.3.98
+    image: son1i/solid-dataspace-admin-api:0.3.99
     working_dir: /app
     command:
     - node
@@ -782,7 +786,7 @@ services:
         max-file: '3'
     tmpfs:
     - /tmp:rw,noexec,nosuid,size=32m
-    image: son1i/solid-dataspace-admin-controller:0.3.98
+    image: son1i/solid-dataspace-admin-controller:0.3.99
     network_mode: none
     group_add:
     - '988'
