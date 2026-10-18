@@ -1,7 +1,7 @@
 name: solid-dataspace-prod
 services:
   solid-dataspace-manager:
-    image: son1i/solid-dataspace-manager@sha256:7207a7bdc6c8559662137e1d12877b69a6d41e13207aed1879ae555ef42e5f0c
+    image: son1i/solid-dataspace-manager@sha256:7fa9438d726ff8ba47b4b237ee68843caec2cbce40aeb5b373f2c93c44c94240
     pull_policy: if_not_present
     restart: unless-stopped
     env_file:
@@ -735,7 +735,7 @@ services:
         max-file: '3'
     tmpfs:
     - /tmp:rw,noexec,nosuid,size=32m
-    image: son1i/solid-dataspace-admin-api@sha256:891995bcdf8187a61a2371bd9324ed5eb666009c474d61050dbf942e32743d88
+    image: son1i/solid-dataspace-admin-api@sha256:afa46f67a098512962b2b7aa24941ed751157dd7badd16061b215f8f9d9fc337
     working_dir: /app
     command:
     - node
@@ -786,7 +786,7 @@ services:
         max-file: '3'
     tmpfs:
     - /tmp:rw,noexec,nosuid,size=32m
-    image: son1i/solid-dataspace-admin-controller@sha256:7153a7014e4ee498f5efee985c2eb8483ce533f95fb16f6dc7cb9b28b8faa6b5
+    image: son1i/solid-dataspace-admin-controller@sha256:e965accd289919b5b794b6e152a51bd587a513962029c51f384ffd1fc2e48ff5
     network_mode: none
     group_add:
     - '988'

@@ -95,8 +95,8 @@
       "imageId": "sha256:748164db30e27bf0336c9031a5d48270a110d0df9e2d2c2926c9350ed3d17091"
     },
     "solid-dataspace-prod-solid-dataspace-manager-1": {
-      "image": "son1i/solid-dataspace-manager@sha256:7207a7bdc6c8559662137e1d12877b69a6d41e13207aed1879ae555ef42e5f0c",
-      "imageId": "sha256:e6bd80bbb17f25b0720025a64dc9cedff09a60a4446d381e373627d48c8233cc"
+      "image": "son1i/solid-dataspace-manager@sha256:7fa9438d726ff8ba47b4b237ee68843caec2cbce40aeb5b373f2c93c44c94240",
+      "imageId": "sha256:53aeda13714a8aec81eb38d84dd904401288495d9992d87c3f47c238cc096bb9"
     },
     "solid-dataspace-prod-solid-health-questionnaire-1": {
       "image": "local/consolidation/solid-health-questionnaire:fc91c50a1319",
@@ -187,12 +187,12 @@
       "imageId": "sha256:2b4383b080f3f2fd5ce1b12307621aec1f65c6218a295cecc0e1147a4613760a"
     },
     "solid-dataspace-prod-admin-api-1": {
-      "image": "son1i/solid-dataspace-admin-api@sha256:891995bcdf8187a61a2371bd9324ed5eb666009c474d61050dbf942e32743d88",
-      "imageId": "sha256:37b17044a3624c9ea25fc53fc218cc5b7e8ba1aac8ef45b43f5766a76488e7c2"
+      "image": "son1i/solid-dataspace-admin-api@sha256:afa46f67a098512962b2b7aa24941ed751157dd7badd16061b215f8f9d9fc337",
+      "imageId": "sha256:51a72d7120e15e9482312d6cd25590d2b6ffec4d0b5084999925a66395368eb1"
     },
     "solid-dataspace-prod-admin-controller-1": {
-      "image": "son1i/solid-dataspace-admin-controller@sha256:7153a7014e4ee498f5efee985c2eb8483ce533f95fb16f6dc7cb9b28b8faa6b5",
-      "imageId": "sha256:4ce1449333d419a9740d7fece625fc9a51a78b34ef4d54990b7cad31b94789ab"
+      "image": "son1i/solid-dataspace-admin-controller@sha256:e965accd289919b5b794b6e152a51bd587a513962029c51f384ffd1fc2e48ff5",
+      "imageId": "sha256:272f40e07b818adea5b40200a95358ffb4c8260ab384ae1a035b1759569008ce"
     },
     "solid-dataspace-prod-account-handoff-1": {
       "image": "local/solid-account-handoff:20261016",
