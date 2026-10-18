@@ -242,6 +242,12 @@ services:
     - type: volume
       source: solid-data-connection-sync-worker_solid_data_connection_sync_worker_data
       target: /data
+    - type: bind
+      source: ./secrets/worker-access.key
+      target: /run/secrets/worker-access-key
+      read_only: true
+    environment:
+      WORKER_ACCESS_KEY_FILE: /run/secrets/worker-access-key
   stadt-wuppertal-node-red:
     image: local/consolidation/node-red:d36f20ba9ce3
     pull_policy: never
@@ -748,9 +754,14 @@ services:
       ADMIN_IDENTITY_HOSTS: solid-community-server.tmdt.info,solidcommunity.net
       ADMIN_ISSUERS: https://solid-community-server.tmdt.info/,https://solidcommunity.net/
       ADMIN_ENVIRONMENT: prod
+      WORKER_ACCESS_KEY_FILE: /run/secrets/worker-access-key
     volumes:
     - /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/solid-dataspace/config:/config-source:ro
     - /srv/solid-config/admin-prod/ipc:/ipc
+    - type: bind
+      source: ./secrets/worker-access.key
+      target: /run/secrets/worker-access-key
+      read_only: true
     networks:
       edge:
         aliases:

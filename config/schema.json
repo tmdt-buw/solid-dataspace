@@ -42,7 +42,12 @@
         "statistics",
         "syncWorker",
         "plasmaUrl"
-      ]
+      ],
+      "properties": {
+        "accessGateway": {
+          "type": "boolean"
+        }
+      }
     },
     "administration": {
       "type": "object",

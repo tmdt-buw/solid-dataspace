@@ -132,4 +132,5 @@ public:
     enabled: false
     intervalMinutes: 10
     serviceWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
+  accessGateway: true
 schemaVersion: 1

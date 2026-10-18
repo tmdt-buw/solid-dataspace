@@ -141,6 +141,7 @@ public:
     activityResourcePath: statistics/activity/activity.ttl
   catalog:
     defaultRegistry: https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace
+  accessGateway: true
 administration:
   enabled: true
   adminWebIds: *id001
