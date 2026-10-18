@@ -1,8 +1,8 @@
 name: solid-dataspace-prod
 services:
   solid-dataspace-manager:
-    image: local/consolidation/manager:20261017-consolidation
-    pull_policy: never
+    image: son1i/solid-dataspace-manager@sha256:7207a7bdc6c8559662137e1d12877b69a6d41e13207aed1879ae555ef42e5f0c
+    pull_policy: if_not_present
     restart: unless-stopped
     env_file:
     - secrets/solid-dataspace-manager.env
@@ -100,8 +100,8 @@ services:
     - -g
     - daemon off;
   city-tours:
-    image: local/consolidation/city-tours:2b4383b080f3
-    pull_policy: never
+    image: son1i/city-tours@sha256:ffeeef29d139052b8f97a8ba29e70178741e6039b3ec85d8399a3a08d9aca628
+    pull_policy: if_not_present
     restart: unless-stopped
     env_file:
     - secrets/city-tours.env
@@ -119,8 +119,8 @@ services:
     - -g
     - daemon off;
   semantic-data-catalog-frontend:
-    image: local/consolidation/catalog:20261017-consolidation
-    pull_policy: never
+    image: son1i/semantic-data-catalog-frontend@sha256:8449577340b8a82c3a84f6413474fcbf376c042e0233e9d03b8de1eac3897604
+    pull_policy: if_not_present
     restart: unless-stopped
     env_file:
     - secrets/semantic-data-catalog-frontend.env
@@ -146,8 +146,8 @@ services:
       target: /runtime/catalog-serve.json
       read_only: true
   semantic-data-catalog-backend:
-    image: local/consolidation/backend:20261017-consolidation
-    pull_policy: never
+    image: son1i/semantic-data-catalog-backend@sha256:b9006fcd29941a673a4bdc978d0390f60909e9c610221433963653cc9f70c89c
+    pull_policy: if_not_present
     restart: unless-stopped
     env_file:
     - secrets/semantic-data-catalog-backend.env
@@ -172,8 +172,8 @@ services:
       semantic-data-catalog-fuseki:
         condition: service_healthy
   semantic-data-catalog-indexer:
-    image: local/consolidation/backend:20261017-consolidation
-    pull_policy: never
+    image: son1i/semantic-data-catalog-backend@sha256:b9006fcd29941a673a4bdc978d0390f60909e9c610221433963653cc9f70c89c
+    pull_policy: if_not_present
     restart: unless-stopped
     env_file:
     - secrets/semantic-data-catalog-indexer.env
@@ -218,8 +218,8 @@ services:
     environment:
       JAVA_TOOL_OPTIONS: -Xmx768m
   solid-data-connection-sync-worker:
-    image: local/consolidation/worker:20261017-consolidation
-    pull_policy: never
+    image: son1i/solid-data-connection-sync-worker@sha256:6ac101e0f2814143a4ec5d8f7472ff0985430084ffa19ffe692fd9ac288c3117
+    pull_policy: if_not_present
     restart: unless-stopped
     env_file:
     - secrets/solid-data-connection-sync-worker.env
@@ -735,7 +735,7 @@ services:
         max-file: '3'
     tmpfs:
     - /tmp:rw,noexec,nosuid,size=32m
-    image: son1i/solid-dataspace-admin-api:0.3.99
+    image: son1i/solid-dataspace-admin-api@sha256:891995bcdf8187a61a2371bd9324ed5eb666009c474d61050dbf942e32743d88
     working_dir: /app
     command:
     - node
@@ -786,7 +786,7 @@ services:
         max-file: '3'
     tmpfs:
     - /tmp:rw,noexec,nosuid,size=32m
-    image: son1i/solid-dataspace-admin-controller:0.3.99
+    image: son1i/solid-dataspace-admin-controller@sha256:7153a7014e4ee498f5efee985c2eb8483ce533f95fb16f6dc7cb9b28b8faa6b5
     network_mode: none
     group_add:
     - '988'

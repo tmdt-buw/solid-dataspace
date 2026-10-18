@@ -83,20 +83,20 @@
       "imageId": "sha256:d36f20ba9ce3bdb621dbd79864999567d12a5aeeb4521f12dcdb08f6a784ccda"
     },
     "solid-dataspace-prod-solid-data-connection-sync-worker-1": {
-      "image": "local/consolidation/worker:20261017-consolidation",
-      "imageId": "sha256:65da8a51918c62dbb975c3a06a96f6413c1f8fb37c808936a339890add8e810a"
+      "image": "son1i/solid-data-connection-sync-worker@sha256:6ac101e0f2814143a4ec5d8f7472ff0985430084ffa19ffe692fd9ac288c3117",
+      "imageId": "sha256:50a6bccc0965d23a065b3e32d18438fd956469f949a44b6aec236e5ac73982d3"
     },
     "solid-dataspace-prod-semantic-data-catalog-indexer-1": {
-      "image": "local/consolidation/backend:20261017-consolidation",
-      "imageId": "sha256:ba5c2d18534459287cc7272acd71e16df33a303ed2f0ea0383c46638cb4a5105"
+      "image": "son1i/semantic-data-catalog-backend@sha256:b9006fcd29941a673a4bdc978d0390f60909e9c610221433963653cc9f70c89c",
+      "imageId": "sha256:748164db30e27bf0336c9031a5d48270a110d0df9e2d2c2926c9350ed3d17091"
     },
     "solid-dataspace-prod-semantic-data-catalog-backend-1": {
-      "image": "local/consolidation/backend:20261017-consolidation",
-      "imageId": "sha256:ba5c2d18534459287cc7272acd71e16df33a303ed2f0ea0383c46638cb4a5105"
+      "image": "son1i/semantic-data-catalog-backend@sha256:b9006fcd29941a673a4bdc978d0390f60909e9c610221433963653cc9f70c89c",
+      "imageId": "sha256:748164db30e27bf0336c9031a5d48270a110d0df9e2d2c2926c9350ed3d17091"
     },
     "solid-dataspace-prod-solid-dataspace-manager-1": {
-      "image": "local/consolidation/manager:20261017-consolidation",
-      "imageId": "sha256:298d720b07606a49daa2744af04c16be8ed908fdd3540a7606c434b9caac9d99"
+      "image": "son1i/solid-dataspace-manager@sha256:7207a7bdc6c8559662137e1d12877b69a6d41e13207aed1879ae555ef42e5f0c",
+      "imageId": "sha256:e6bd80bbb17f25b0720025a64dc9cedff09a60a4446d381e373627d48c8233cc"
     },
     "solid-dataspace-prod-solid-health-questionnaire-1": {
       "image": "local/consolidation/solid-health-questionnaire:fc91c50a1319",
@@ -115,12 +115,12 @@
       "imageId": "sha256:3b8364b2f1bd5a582dfabd6714d0654d18eed11596dba006e140558c7c93694e"
     },
     "solid-dataspace-prod-semantic-data-catalog-frontend-1": {
-      "image": "local/consolidation/catalog:20261017-consolidation",
-      "imageId": "sha256:ae6ece05f0fc37a6cf082c41619a7fee26c140c653a876771aba7f7fdc1708b2"
+      "image": "son1i/semantic-data-catalog-frontend@sha256:8449577340b8a82c3a84f6413474fcbf376c042e0233e9d03b8de1eac3897604",
+      "imageId": "sha256:025d407541a7c735dcb533df8c703c3bc4afba9311ff8cb318e287278c1ed0bc"
     },
     "solid-dataspace-prod-city-tours-1": {
-      "image": "local/consolidation/city-tours:2b4383b080f3",
-      "imageId": "sha256:2b4383b080f3f2fd5ce1b12307621aec1f65c6218a295cecc0e1147a4613760a"
+      "image": "son1i/city-tours@sha256:ffeeef29d139052b8f97a8ba29e70178741e6039b3ec85d8399a3a08d9aca628",
+      "imageId": "sha256:d52bd9bd378279bd372f4e5defab177f1fa4ea67c12f4d3553bcdd2505173e69"
     },
     "solid-dataspace-prod-semantic-data-catalog-fuseki-1": {
       "image": "local/consolidation/semantic-data-catalog-fuseki:32101e2ec027",
@@ -185,6 +185,18 @@
     "solid-dataspace-live-test-city-tours-1": {
       "image": "local/consolidation/city-tours:2b4383b080f3",
       "imageId": "sha256:2b4383b080f3f2fd5ce1b12307621aec1f65c6218a295cecc0e1147a4613760a"
+    },
+    "solid-dataspace-prod-admin-api-1": {
+      "image": "son1i/solid-dataspace-admin-api@sha256:891995bcdf8187a61a2371bd9324ed5eb666009c474d61050dbf942e32743d88",
+      "imageId": "sha256:37b17044a3624c9ea25fc53fc218cc5b7e8ba1aac8ef45b43f5766a76488e7c2"
+    },
+    "solid-dataspace-prod-admin-controller-1": {
+      "image": "son1i/solid-dataspace-admin-controller@sha256:7153a7014e4ee498f5efee985c2eb8483ce533f95fb16f6dc7cb9b28b8faa6b5",
+      "imageId": "sha256:4ce1449333d419a9740d7fece625fc9a51a78b34ef4d54990b7cad31b94789ab"
+    },
+    "solid-dataspace-prod-account-handoff-1": {
+      "image": "local/solid-account-handoff:20261016",
+      "imageId": "sha256:41ded544c4f6154faddd1683a9149576b4d18457db0410f7f443ad27db845815"
     }
   }
 }
