@@ -129,7 +129,7 @@ public:
     workerWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
   syncWorker:
     apiUrl: /sync-worker
-    enabled: false
+    enabled: true
     intervalMinutes: 10
     serviceWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
   accessGateway: true

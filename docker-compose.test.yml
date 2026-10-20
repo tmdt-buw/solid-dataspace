@@ -237,7 +237,8 @@ services:
       target: /data
     environment:
       PUBLIC_CACHE_CATALOG_REFRESH_SECONDS: '300'
-      WORKER_READ_ONLY: 'true'
+      WORKER_READ_ONLY: 'false'
+      WORKER_CONNECTION_NAMESPACE: test
       STATISTICS_ENABLED: 'false'
       ENVIRONMENTAL_SCENARIO_ENABLED: 'false'
   node-red:

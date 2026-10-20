@@ -108,6 +108,24 @@ services:
     - -ec
     - node -e 'require("./scripts/local-package-sync").clearCraWebpackCache(process.cwd())';
       exec npm start
+  solid-data-connection-sync-worker:
+    command:
+    - node
+    - --watch
+    - src/index.js
+    cpus: 1
+    mem_limit: 1g
+    cpu_shares: 128
+    volumes:
+    - type: bind
+      source: /home/solid/repos/solid-dataspace/.worktrees/dataspace-consolidation/solid-data-connection-sync-worker/src
+      target: /app/src
+      read_only: true
+    environment:
+      WORKER_READ_ONLY: 'false'
+      WORKER_CONNECTION_NAMESPACE: test
+      STATISTICS_ENABLED: 'false'
+      ENVIRONMENTAL_SCENARIO_ENABLED: 'false'
 volumes:
   live_catalog_modules:
     name: solid-dataspace-live-test_live_catalog_modules
