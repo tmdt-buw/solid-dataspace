@@ -99,7 +99,7 @@ public:
     logoWidth: 95px
     projectName: Test Instance
   catalog:
-    defaultRegistry: https://solid-community-server.tmdt.info/semanticdatacatalog/public/test
+    defaultRegistry: https://solid-community-server.tmdt.info/semanticdatacatalog/public/stadt-wuppertal
   cityToursLegacyContinuousWebIds: []
   dataspaceId: test
   fundingGrantNumber: ''
