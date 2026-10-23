@@ -153,7 +153,7 @@ services:
     image: son1i/semantic-data-catalog-frontend:latest
     restart: unless-stopped
     environment:
-      REACT_APP_OIDC_ISSUER: https://solidcommunity.net
+      REACT_APP_OIDC_ISSUER: https://solid-community-server.tmdt.info
       STATISTICS_ENABLED: ${STATISTICS_ENABLED:-false}
       STATISTICS_POD_BASE_URL: ${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}
       STATISTICS_EVENTS_URL: ${STATISTICS_EVENTS_URL:-${STATISTICS_POD_BASE_URL:-https://solid-community-server.tmdt.info/solidtestpod/statistics/}events/catalog-instances/${DATASPACE_ID:-${STATISTICS_REGISTRY_CONTEXT:-${ENVIRONMENTAL_SCENARIO_DATASPACE_ID:-__unconfigured__}}}/downloads/}
