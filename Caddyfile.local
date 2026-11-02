@@ -1,0 +1,73 @@
+{
+	auto_https off
+	admin off
+}
+:80 {
+	@runtime path /config.js /solid-dataspace-manager/config.js
+	handle @runtime {
+		rewrite * /local/config.js
+		reverse_proxy access-gateway:3012
+	}
+	@catalogConfig path /env.js /semantic-data-catalog/env.js /catalog/env.js
+	handle @catalogConfig {
+		rewrite * /local/env.js
+		reverse_proxy access-gateway:3012
+	}
+	handle /access-api/* {
+		reverse_proxy access-gateway:3012
+	}
+	@participants path /sync-worker/participants /sync-worker/participants/*
+	handle @participants {
+		reverse_proxy access-gateway:3012
+	}
+	handle_path /sync-worker/* {
+		reverse_proxy solid-data-connection-sync-worker:8080
+	}
+	@catalog path /catalog /catalog/
+	handle @catalog {
+		rewrite * /semantic-data-catalog/
+		reverse_proxy semantic-data-catalog-frontend:5000
+	}
+	redir /semantic-data-catalog /semantic-data-catalog/ 308
+	handle /semantic-data-catalog/* {
+		reverse_proxy semantic-data-catalog-frontend:5000
+	}
+	redir /solid-data-manager /solid-data-manager/{?query} 308
+	handle /solid-data-manager/* {
+		reverse_proxy solid-data-manager:3002
+	}
+	redir /solid-health-app /solid-health-app/ 308
+	handle /solid-health-app/ws {
+		rewrite * /ws
+		reverse_proxy solid-health-app:3000
+	}
+	handle /solid-health-app/* {
+		reverse_proxy solid-health-app:3000
+	}
+	redir /solid-health-questionnaire /solid-health-questionnaire/ 308
+	handle /solid-health-questionnaire/* {
+		reverse_proxy solid-health-questionnaire:3007
+	}
+	redir /city-tours /city-tours/ 308
+	handle /city-tours/* {
+		reverse_proxy city-tours:3006
+	}
+	redir /environmental-monitoring /environmental-monitoring/ 308
+	handle /environmental-monitoring/* {
+		reverse_proxy environmental-monitoring:5173
+	}
+	handle /api/* {
+		reverse_proxy semantic-data-catalog-backend:8000
+	}
+	redir /plasma /plasma/ 308
+	handle /plasma/* {
+		reverse_proxy access-gateway:3012
+	}
+	redir /node-red /node-red/ 308
+	handle /node-red/* {
+		reverse_proxy access-gateway:3012
+	}
+	handle {
+		reverse_proxy solid-dataspace-manager:3001
+	}
+}

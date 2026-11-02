@@ -2,6 +2,22 @@
 
 Orchestration and local infrastructure for the Solid dataspace development environment.
 
+## Local development
+
+For local Health App and Sync-Worker changes, use the published application images
+with the selective development override. See [the local setup guide](LOCAL_DEVELOPMENT.md)
+and [`.env.local.example`](.env.local.example). No GitHub NPM token is required for
+this mode. Docker Compose 2.24.4 or newer is required.
+
+```sh
+cp .env.local.example .env.local
+docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml up -d
+```
+
+Open `http://localhost:8080`. PLASMA, semantic search and Node-RED are optional
+profiles. `docker-compose.dev.yml` is an override, not a standalone stack. The
+server Caddyfile and existing deployments are unaffected.
+
 ## Semantic Search
 
 Each instance can index its registry's public DCAT metadata and semantic models
@@ -99,27 +115,10 @@ already point to the same worker and need no change.
 
 ## Local PLASMA integration
 
-The development stack includes the sibling repository at `../plasma`. PLASMA is embedded through the existing
-**PLASMA** navigation entry and is also available directly at
-[http://localhost/plasma/modelings](http://localhost/plasma/modelings).
-
-Build the two Java service images once from this repository:
-
-```shell
-mvn -f ../plasma/pom.xml -U -pl components/semantic-modeling-service/service,components/data-processing-service/service -am package jib:dockerBuild -DskipTests
-```
-
-If the standalone PLASMA stack is running, stop it without deleting its volumes. The integrated stack reuses the same
-MariaDB and Fuseki volumes.
-
-```shell
-docker compose -f ../plasma/docker-compose.local.yml --profile staging down
-docker compose -f docker-compose.dev.yml up -d --build
-```
-
-Caddy remains the only public reverse proxy. PLASMA is mounted below `/plasma`; its frontend calls
-`/plasma/api/sms` and `/plasma/api/dps`, while Caddy removes the prefix before forwarding requests to the services.
-The optional PLASMA recommendation service is not required for manual semantic modeling and is not started.
+Use the optional `plasma` profile described in [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md).
+The local stack downloads the published `son1i/plasma-sms`, `son1i/plasma-dps` and
+`son1i/plasma-frontend` images. No Maven build is required. Local PLASMA data uses
+project-scoped volumes and does not reuse server or standalone deployment volumes.
 
 ### Server deployment files
 

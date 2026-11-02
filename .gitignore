@@ -6,3 +6,5 @@ server/
 **/build/
 **/.env
 config/.configuration.lock
+
+.env.local
