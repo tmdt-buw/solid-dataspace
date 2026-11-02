@@ -2,7 +2,7 @@
 # All other applications continue to use their published images.
 services:
   solid-health-app:
-    image: node:20-alpine
+    image: node:22-alpine
     working_dir: /app
     command: [sh, /local/health-start.sh]
     environment:
