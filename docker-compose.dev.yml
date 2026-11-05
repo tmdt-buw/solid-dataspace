@@ -27,6 +27,40 @@ services:
       start_period: 20m
       retries: 6
 
+  local-catalog-package:
+    image: ${LOCAL_MANAGER_IMAGE:-son1i/solid-dataspace-manager:latest}
+    restart: 'no'
+    command: [node, /local/export-catalog.cjs]
+    network_mode: none
+    volumes:
+      - ./local:/local:ro
+      - catalog_package:/packages
+
+  city-tours:
+    image: node:22-alpine
+    working_dir: /app
+    command: [sh, /local/tours-start.sh]
+    environment:
+      CHOKIDAR_USEPOLLING: 'true'
+      CHOKIDAR_INTERVAL: '1000'
+      LOCAL_NPM_PACKAGE_DIR: /packages
+    volumes:
+      - ${CITY_TOURS_SOURCE:-../solid-tours}:/app
+      - tours_dependencies:/app/node_modules
+      - tours_dist:/app/dist
+      - catalog_package:/packages:ro
+      - npm_cache:/root/.npm
+      - ./local:/local:ro
+    depends_on:
+      local-catalog-package:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [CMD, node, /local/tours-ready.cjs]
+      interval: 10s
+      timeout: 5s
+      start_period: 20m
+      retries: 6
+
   solid-dataspace-manager:
     command: [npm, run, start:local-packages]
     environment:
@@ -34,12 +68,15 @@ services:
       PORT: '3001'
       WDS_SOCKET_PORT: '0'
       BROWSER: none
-      LOCAL_PACKAGE_WATCH_DIRS: /solid-health-app/dist
+      LOCAL_PACKAGE_WATCH_DIRS: /solid-health-app/dist;/city-tours/dist
       WATCHPACK_POLLING: 'true'
     volumes:
       - health_dist:/solid-health-app/dist:ro
+      - tours_dist:/city-tours/dist:ro
     depends_on:
       solid-health-app:
+        condition: service_healthy
+      city-tours:
         condition: service_healthy
 
   solid-data-connection-sync-worker:
@@ -53,6 +90,9 @@ services:
       - npm_cache:/root/.npm
 
 volumes:
+  catalog_package:
+  tours_dependencies:
+  tours_dist:
   health_dependencies:
   health_dist:
   worker_dependencies:

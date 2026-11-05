@@ -27,7 +27,7 @@ for development in [False, True]:
     assert services['node-red']['profiles'] == ['node-red']
     assert all(not service.get('build') for service in services.values())
     assert all(not service.get('ports') for name, service in services.items() if name != 'caddy')
-    for name in ['semantic-data-catalog-frontend', 'city-tours', 'solid-data-manager', 'solid-health-questionnaire']:
+    for name in ['semantic-data-catalog-frontend', 'solid-data-manager', 'solid-health-questionnaire'] + ([] if development else ['city-tours']):
         assert services[name]['image'].startswith('son1i/')
         assert not services[name].get('command')
         assert not services[name].get('volumes')
@@ -36,8 +36,17 @@ for development in [False, True]:
         assert not volume.get('external')
     if development:
         manager = services['solid-dataspace-manager']
-        assert manager['environment']['LOCAL_PACKAGE_WATCH_DIRS'] == '/solid-health-app/dist'
+        assert manager['environment']['LOCAL_PACKAGE_WATCH_DIRS'] == '/solid-health-app/dist;/city-tours/dist'
         assert manager['depends_on']['solid-health-app']['condition'] == 'service_healthy'
+        assert manager['depends_on']['city-tours']['condition'] == 'service_healthy'
+        tours = services['city-tours']
+        assert tours['image'] == 'node:22-alpine'
+        assert tours['depends_on']['local-catalog-package']['condition'] == 'service_completed_successfully'
+        assert tours['environment']['LOCAL_NPM_PACKAGE_DIR'] == '/packages'
+        assert services['local-catalog-package']['network_mode'] == 'none'
+        assert 'NPM_TOKEN' not in tours['environment']
+        assert any(v['target'] == '/city-tours/dist' and v['read_only'] for v in manager['volumes'])
+        assert any(v['target'] == '/app' and v['source'].endswith('/solid-tours') for v in tours['volumes'])
         assert 'semantic-data-catalog-frontend' not in manager['depends_on']
         assert 'NPM_TOKEN' not in manager['environment']
         assert all(volume['type'] == 'volume' for volume in manager['volumes'])

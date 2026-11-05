@@ -4,7 +4,7 @@ Orchestration and local infrastructure for the Solid dataspace development envir
 
 ## Local development
 
-For local Health App and Sync-Worker changes, use the published application images
+For local Health App, City Tours and Sync-Worker changes, use the published application images
 with the selective development override. See [the local setup guide](LOCAL_DEVELOPMENT.md)
 and [`.env.local.example`](.env.local.example). No GitHub NPM token is required for
 this mode. Docker Compose 2.24.4 or newer is required.

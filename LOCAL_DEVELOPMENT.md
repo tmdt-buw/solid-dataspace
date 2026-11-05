@@ -1,8 +1,9 @@
-# Lokale Entwicklung: Health App und Sync-Worker
+# Lokale Entwicklung: Health App, City Tours und Sync-Worker
 
 Dieser Modus startet veröffentlichte Docker-Images und aktiviert lokale Entwicklung
-gezielt für die Health App und den Data-Connection-Sync-Worker. Die eingebettete
-Health App im Dataspace Manager übernimmt ebenfalls den lokalen Build. Andere Apps
+gezielt für die Health App, City Tours und den Data-Connection-Sync-Worker. Die
+eingebetteten Ansichten von Health App und City Tours im Dataspace Manager
+übernehmen ebenfalls die lokalen Builds. Andere Apps
 werden nicht lokal installiert oder gebaut. Ein GitHub-NPM-Token ist dafür nicht nötig.
 
 ## Voraussetzungen
@@ -14,13 +15,14 @@ werden nicht lokal installiert oder gebaut. Ein GitHub-NPM-Token ist dafür nich
 repos/
   solid-dataspace/
   solid-health-app/
+  solid-tours/
   solid-data-connection-sync-worker/
 ```
 
 Manager und Gateway verwenden veröffentlichte Images. Ein Manager-Checkout ist
 nicht nötig. Der lokale Login leitet direkt zum Solid-Anbieter weiter; der
 produktive Kontodialog mit Server-Handoff wird hier nicht verwendet.
-Abweichende Quellcode-Ordner lassen sich über `HEALTH_SOURCE` und `WORKER_SOURCE`
+Abweichende Quellcode-Ordner lassen sich über `HEALTH_SOURCE`, `CITY_TOURS_SOURCE` und `WORKER_SOURCE`
 einstellen. Pfade sind relativ zu `solid-dataspace` oder absolut.
 Unter Windows funktionieren Pfade mit `/`.
 
@@ -43,7 +45,7 @@ Unter Linux/macOS:
 cp .env.local.example .env.local
 ```
 
-Für die Oberfläche und Health-App-Entwicklung genügen die Standardwerte. Öffnen:
+Für die Oberfläche sowie Health-App- und City-Tours-Entwicklung genügen die Standardwerte. Öffnen:
 **http://localhost:8080**. Immer `localhost` verwenden, nicht die IP-Adresse.
 Der Port lässt sich mit `LOCAL_HTTP_PORT` ändern. Die Portfreigabe bindet nur an
 `127.0.0.1`, nicht an das lokale Netzwerk.
@@ -57,7 +59,7 @@ docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.loc
 docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml up -d
 ```
 
-Health App und Worker lokal entwickeln, andere Apps als fertige Images:
+Health App, City Tours und Worker lokal entwickeln, andere Apps als fertige Images:
 
 ```sh
 docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml up -d
@@ -67,22 +69,33 @@ docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.loc
 verwendet. Nicht mehr allein mit `-f docker-compose.dev.yml` starten.
 `--build` ist für diesen Modus nicht nötig.
 
-Die erste Installation der Health- und Worker-Abhängigkeiten braucht Zeit. Sie
+Die erste Installation der Health-, City-Tours- und Worker-Abhängigkeiten braucht Zeit. Sie
 bleiben in eigenen Volumes und werden erst bei geändertem `package.json`, Lockfile
 oder Node-Laufzeit neu installiert. Der Manager verwendet die schon im Image
 vorhandenen Abhängigkeiten. Er startet, sobald der erste lokale Health-Build bereit
-ist. Caddy und die übrigen Apps müssen darauf nicht warten.
+ist und City Tours seinen ersten Embed-Build bereitstellt. Caddy und die übrigen
+Apps müssen darauf nicht warten.
 
 - Health App integriert: `/web/solid-health-app`
 - Health App eigenständig: `/solid-health-app/`
+- City Tours integriert: `/web/city-tours`
+- City Tours eigenständig: `/city-tours/`
 - Data Connection: `/data-connection`
 - Katalog: `/catalog/`
 - Worker-Status: `/sync-worker/health`
 
-Änderungen am Health-Quellcode bauen das Embed-Paket neu. Der Manager übernimmt das
+Änderungen am Health- oder City-Tours-Quellcode bauen das jeweilige Embed-Paket neu. Der Manager übernimmt das
 Paket und startet seinen Entwicklungsserver neu; das kann einige Sekunden dauern.
-Die eigenständige Health App nutzt ihren eigenen Entwicklungsserver. Der Worker
+Die eigenständigen Ansichten nutzen ihre eigenen Entwicklungsserver. City Tours
+prüft Dateiänderungen auch auf Docker-Desktop-Laufwerken regelmäßig. Der Worker
 startet bei Änderungen seiner geladenen JavaScript-Dateien automatisch neu.
+Das Katalog-Paket für City Tours wird einmalig aus dem ausgewählten Manager-Image
+in ein eigenes lokales Volume übernommen. Es muss nicht aus GitHub Packages geladen
+oder aus dem Katalog-Quellcode gebaut werden. Die Paketversion muss zum Lockfile
+von City Tours passen. Bei einer Versionsabweichung zeigt der Start die erwartete
+und vorhandene Version; Checkouts und Manager-Image gemeinsam aktualisieren.
+Die Installation verändert weder `package.json` noch `package-lock.json` im Checkout.
+
 Nach Änderungen an Abhängigkeiten die betroffenen Container neu starten. Während
 Entwicklungsserver neu kompilieren, kann kurz eine Lade- oder Proxy-Meldung erscheinen.
 
@@ -167,13 +180,13 @@ Profil `search` einschalten. Es werden nur öffentliche Metadaten indexiert.
 ```sh
 docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml config --quiet
 docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml ps
-docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml logs --tail 100 solid-health-app solid-dataspace-manager solid-data-connection-sync-worker access-gateway
+docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml logs --tail 100 solid-health-app city-tours local-catalog-package solid-dataspace-manager solid-data-connection-sync-worker access-gateway
 ```
 
 `config --quiet` prüft ohne Ausgabe von Zugangsdaten. Für Angaben zur RAM-Auslastung
 `docker stats` verwenden. `unhealthy` nach einer langen Erstinstallation anhand der
 Logs prüfen; fehlgeschlagene npm-Downloads und Speichermangel sind unterschiedliche
-Ursachen. Der Health-App-Check gibt der ersten Installation bis zu 20 Minuten Zeit.
+Ursachen. Die Health-App- und City-Tours-Checks geben der ersten Installation bis zu 20 Minuten Zeit.
 
 Stoppen, ohne Daten oder Schlüssel zu löschen:
 
@@ -186,7 +199,25 @@ behalten werden sollen. Standard-Projektname ist `solid-dataspace-local`. Für e
 zweite lokale Umgebung einen anderen `-p`-Namen und HTTP-Port verwenden.
 
 Zum Aktualisieren der Konfiguration das Repository `solid-dataspace` aktualisieren.
-Manager und Gateway benötigen mindestens den hier veröffentlichten Stand 0.4.17. Images mit `pull` aktualisieren und danach
+Manager und Gateway benötigen mindestens den Stand 0.4.17; für City Tours muss
+der Manager zusätzlich die Katalog-Version des aktuellen City-Tours-Checkouts enthalten.
+Images mit `pull` aktualisieren und danach
 mit denselben Compose-Dateien wieder `up -d` ausführen. Für reproduzierbare Tests
 lassen sich Manager, Worker und Gateway über `LOCAL_MANAGER_IMAGE`,
 `LOCAL_WORKER_IMAGE` und `LOCAL_GATEWAY_IMAGE` auf einen bestimmten Digest festlegen.
+
+## Meldung „This login origin is not allowed“
+
+Diese Meldung kommt von der zusätzlichen Server-Anmeldeweiterleitung. Sie akzeptiert
+nur die freigegebenen Dataspace-Serveradressen. Lokal soll die normale OIDC-Anmeldung
+beim Solid-Anbieter verwendet werden; dazu wird keine Freigabe von `localhost` auf
+dem produktiven Pod-Server benötigt.
+
+Die Umgebung mit allen drei oben genannten Compose-Dateien öffnen, über
+`http://localhost:8080` beziehungsweise den eingestellten `LOCAL_HTTP_PORT`.
+Unter `/config.js` muss `loginMode: "oidc"` gesetzt sein. Fehlt dieser Eintrag,
+wird vermutlich eine andere Compose-Konfiguration oder der Manager direkt geöffnet.
+Ein aktuelles Manager-Image verwendet auf Loopback-Adressen zusätzlich unabhängig
+von dieser Einstellung den Provider-Login. Bereits lokal gespeicherte Images werden
+nicht allein durch `up -d` aktualisiert: vorher `pull` mit denselben Compose-Dateien
+aufrufen und anschließend den Browser neu laden.
