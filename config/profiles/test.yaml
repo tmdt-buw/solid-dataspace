@@ -10,6 +10,7 @@ domains:
 environment: test
 id: test
 public:
+  accessGateway: true
   apps:
   - enabled: true
     href: /
@@ -100,6 +101,366 @@ public:
     projectName: Test Instance
   catalog:
     defaultRegistry: https://solid-community-server.tmdt.info/semanticdatacatalog/public/stadt-wuppertal
+    metadataProfile: ''
+    metadataProfiles:
+    - enabled: true
+      fields:
+      - details: true
+        enabled: true
+        filter: true
+        form: true
+        help:
+          de: Auf welcher Ebene sind die Daten relevant?
+          en: At which level are the data relevant?
+        id: level
+        label:
+          de: Betrachtungsebene
+          en: CE level
+        multiple: true
+        required: false
+        scheme: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/level
+        values:
+        - enabled: true
+          exclusive: false
+          id: nano
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/level/nano
+          label:
+            de: Nano
+            en: Nano
+        - enabled: true
+          exclusive: false
+          id: micro
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/level/micro
+          label:
+            de: Mikro
+            en: Micro
+        - enabled: true
+          exclusive: false
+          id: meso
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/level/meso
+          label:
+            de: Meso
+            en: Meso
+        - enabled: true
+          exclusive: false
+          id: macro
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/level/macro
+          label:
+            de: Makro
+            en: Macro
+      - details: true
+        enabled: true
+        filter: true
+        form: true
+        help:
+          de: Für welche Gruppen sind die Daten relevant?
+          en: Which groups are the data relevant to?
+        id: stakeholders
+        label:
+          de: Beteiligte Gruppen
+          en: Stakeholder groups
+        multiple: true
+        required: false
+        scheme: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders
+        values:
+        - enabled: true
+          exclusive: false
+          id: government
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/government
+          label:
+            de: Bundesregierung
+            en: Federal government
+        - enabled: true
+          exclusive: false
+          id: local-government
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/local-government
+          label:
+            de: Land und Kommune
+            en: State / city government
+        - enabled: true
+          exclusive: false
+          id: community
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/community
+          label:
+            de: Gemeinschaft und Zivilgesellschaft
+            en: Communities / civil society / NGOs
+        - enabled: true
+          exclusive: false
+          id: media
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/media
+          label:
+            de: Medien
+            en: Media
+        - enabled: true
+          exclusive: false
+          id: companies
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/companies
+          label:
+            de: Unternehmen
+            en: Companies
+        - enabled: true
+          exclusive: false
+          id: consumers
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/consumers
+          label:
+            de: Verbraucher
+            en: Consumers
+        - enabled: true
+          exclusive: false
+          id: workers
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/workers
+          label:
+            de: Beschäftigte
+            en: Workers
+      - details: true
+        enabled: true
+        filter: true
+        form: true
+        help:
+          de: Welche Phasen der Wertschöpfung werden beschrieben?
+          en: Which value chain stages are described?
+        id: value-chain
+        label:
+          de: Wertschöpfungsphase
+          en: Value chain stage
+        multiple: true
+        required: false
+        scheme: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain
+        values:
+        - enabled: true
+          exclusive: false
+          id: design
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/design
+          label:
+            de: Gestaltung
+            en: Design
+        - enabled: true
+          exclusive: false
+          id: take
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/take
+          label:
+            de: Rohstoffgewinnung
+            en: Take
+        - enabled: true
+          exclusive: false
+          id: make
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/make
+          label:
+            de: Herstellung
+            en: Make
+        - enabled: true
+          exclusive: false
+          id: distribute
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/distribute
+          label:
+            de: Vertrieb
+            en: Distribute
+        - enabled: true
+          exclusive: false
+          id: use
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/use
+          label:
+            de: Nutzung
+            en: Use
+        - enabled: true
+          exclusive: false
+          id: end-of-life
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/end-of-life
+          label:
+            de: Lebensende
+            en: End of life
+        - enabled: true
+          exclusive: true
+          id: not-applicable
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/not-applicable
+          label:
+            de: Nicht zutreffend
+            en: Not applicable
+        - enabled: true
+          exclusive: true
+          id: all
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/all
+          label:
+            de: Alle Lebenszyklusphasen
+            en: All life cycle stages
+      - details: true
+        enabled: true
+        filter: true
+        form: true
+        help:
+          de: Welche Strategie unterstützt der Datensatz?
+          en: Which strategy does the dataset support?
+        id: strategy
+        label:
+          de: Kreislaufstrategie
+          en: CE strategy
+        multiple: true
+        required: false
+        scheme: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy
+        values:
+        - enabled: true
+          exclusive: false
+          id: intensification
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/intensification
+          label:
+            de: Vermeiden, reduzieren und wiederverwenden
+            en: Refuse, reduce and reuse
+        - enabled: true
+          exclusive: false
+          id: dematerialization
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/dematerialization
+          label:
+            de: Dematerialisierung und Umdenken
+            en: Dematerialization / rethink
+        - enabled: true
+          exclusive: false
+          id: extension
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/extension
+          label:
+            de: Reparieren, aufarbeiten und länger nutzen
+            en: Repair, refurbish and remanufacture
+        - enabled: true
+          exclusive: false
+          id: circulation
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/circulation
+          label:
+            de: Recycling und Rückgewinnung
+            en: Recycle and recover
+        - enabled: true
+          exclusive: true
+          id: none
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/none
+          label:
+            de: Keine spezifische Strategie
+            en: No specific CE strategy
+        - enabled: true
+          exclusive: true
+          id: all
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/all
+          label:
+            de: Alle Kreislaufstrategien
+            en: All CE strategies
+      - details: true
+        enabled: true
+        filter: true
+        form: true
+        help:
+          de: Handelt es sich um technische oder biologische Kreisläufe?
+          en: Are technical or biological cycles addressed?
+        id: cycle
+        label:
+          de: Kreislauf
+          en: Cycle
+        multiple: true
+        required: false
+        scheme: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/cycle
+        values:
+        - enabled: true
+          exclusive: false
+          id: technical
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/cycle/technical
+          label:
+            de: Technischer Kreislauf
+            en: Technical cycle
+        - enabled: true
+          exclusive: false
+          id: biological
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/cycle/biological
+          label:
+            de: Biologischer Kreislauf
+            en: Biological cycle
+      - details: true
+        enabled: true
+        filter: true
+        form: true
+        help:
+          de: Liegt der Schwerpunkt auf Technik oder gesellschaftlichen und institutionellen
+            Fragen?
+          en: Is the focus technological or socio-institutional?
+        id: focus
+        label:
+          de: Schwerpunkt
+          en: Focus
+        multiple: true
+        required: false
+        scheme: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/focus
+        values:
+        - enabled: true
+          exclusive: false
+          id: technical
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/focus/technical
+          label:
+            de: Technologisch
+            en: Technological
+        - enabled: true
+          exclusive: false
+          id: social
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/focus/social
+          label:
+            de: Gesellschaftlich und institutionell
+            en: Socio-institutional
+      - details: true
+        enabled: true
+        filter: true
+        form: true
+        help:
+          de: Welche Art von Informationen enthält der Datensatz?
+          en: What kind of information does the dataset contain?
+        id: data-kind
+        label:
+          de: Datenart
+          en: Data kind
+        multiple: true
+        required: false
+        scheme: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/data-kind
+        values:
+        - enabled: true
+          exclusive: false
+          id: quantitative
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/data-kind/quantitative
+          label:
+            de: Quantitativ
+            en: Quantitative
+        - enabled: true
+          exclusive: false
+          id: qualitative
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/data-kind/qualitative
+          label:
+            de: Qualitativ
+            en: Qualitative
+      - details: true
+        enabled: true
+        filter: true
+        form: true
+        help:
+          de: Beschreiben die Daten den Übergang oder dessen Auswirkungen?
+          en: Do the data describe the transition or its effects?
+        id: transition
+        label:
+          de: Veränderungsprozess oder Wirkung
+          en: Transition or effect
+        multiple: true
+        required: false
+        scheme: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/transition
+        values:
+        - enabled: true
+          exclusive: false
+          id: transition
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/transition/transition
+          label:
+            de: Veränderungsprozess
+            en: Transition
+        - enabled: true
+          exclusive: false
+          id: effect
+          iri: https://solid-dataspace-test.tmdt.info/catalog-vocabulary/dace-ce-v1/transition/effect
+          label:
+            de: Wirkung
+            en: Effect
+      id: dace-ce-v1
+      label:
+        de: Kreislaufwirtschaft
+        en: Circular economy
   cityToursLegacyContinuousWebIds: []
   dataspaceId: test
   fundingGrantNumber: ''
@@ -132,5 +493,4 @@ public:
     enabled: true
     intervalMinutes: 10
     serviceWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
-  accessGateway: true
 schemaVersion: 1
