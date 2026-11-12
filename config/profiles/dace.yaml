@@ -501,6 +501,7 @@ public:
           exclusive: false
           iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/transition/effect
         scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/transition
+      multipleThemes: true
   accessGateway: true
 administration:
   enabled: true
