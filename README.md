@@ -103,7 +103,47 @@ Coordinate application releases using the existing scripts:
 
 Review selected files before the real invocation; `-IncludeUntracked` includes intentional new files. The script updates embed-package pins, builds affected libraries and pushes coordinated changes, with the Manager last. Wait for the GitHub image/package workflows for those exact commits before running the server update scripts. Profile or routing changes also require the configuration activation path; changing an image alone does not regenerate Caddy routes.
 
-Use the existing GitLab and TMDT-BUW synchronization scripts for the configured mirrors after the release succeeds. A documentation-only update does not require restarting applications. Keep secrets and operational backups out of commits. Preserve persistent volumes and keep shared Test imports paused during normal updates.
+After the release succeeds, synchronize **all ten repositories** (including this
+orchestration repository and PLASMA) from the clean release checkouts:
+
+```powershell
+.\gitlab-update.ps1 -WhatIf    # Validate all ten and preview GitLab + TMDT-BUW
+.\gitlab-update.ps1            # Synchronize both mirrors
+.\tmdt-update.ps1              # Only TMDT-BUW, all ten repositories
+```
+
+`git-push-main.ps1` now pushes to `origin` **and then both mirrors**, for all ten
+repositories. `-Remote gitlab` selects GitLab + TMDT; `-Remote tmdt` selects only
+TMDT. All three scripts accept `-Branch` (default `main`), `-WhatIf` and
+`-WorkspaceRoot` (the `solid-dataspace` checkout containing `repos.yaml`). For
+example, when a release was prepared in isolated sibling checkouts, pass that
+release's `solid-dataspace` directory with `-WorkspaceRoot`.
+
+Requirements: PowerShell, Python 3.9+, Git and an authenticated GitHub CLI (`gh`).
+GitHub targets use HTTPS with your configured Git credential helper (`gh auth
+setup-git` can configure it); GitLab targets use SSH. The scripts check that
+GitHub Actions remain disabled on TMDT mirrors. They never change Actions
+settings, package scopes, Docker publishing, server configuration or imports.
+
+`repos.yaml` supplies the local paths; [push-targets.json](push-targets.json)
+lists the exact destinations. PLASMA uses our GitLab copy under
+`gesundes-tal/miscellaneous/plasma` and **`tmdt-buw/plasma-dataspace`**, never
+`tmdt-buw/plasma` or the original upstream project. Every repository and target
+is checked before the first push. Missing/wrong remotes, unpublished or stale
+source branches, uncommitted changes and divergent mirrors stop publication;
+no repository is silently skipped. A preview excludes uncommitted files and
+does not publish anything. A failed push exits with an error and can be retried.
+
+GitLab retains the original fast-forward history. TMDT receives the same current
+file tree in a commit whose **only parent is its existing mirror history**.
+This preserves previous credential removals without reconnecting the original
+history. Independent changes on a mirror require review. There are no force
+pushes, tag pushes, automatic source commits or working-branch resets. Identical
+TMDT trees do not create duplicate commits. These scripts publish code only;
+continue to use the versioning and server update scripts for an application
+release. A documentation-only update does not require restarting applications.
+Keep secrets and operational backups out of commits. Preserve persistent volumes
+and keep shared Test imports paused during normal updates.
 
 ## License, citation and attribution
 

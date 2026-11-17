@@ -1,0 +1,52 @@
+{
+  "solid-dataspace": {
+    "origin": "https://github.com/hoelk-f/solid-dataspace.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/solid-dataspace.git",
+    "tmdt": "https://github.com/tmdt-buw/solid-dataspace.git"
+  },
+  "solid-dataspace-manager": {
+    "origin": "https://github.com/hoelk-f/solid-dataspace-manager.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/solid-dataspace-manager.git",
+    "tmdt": "https://github.com/tmdt-buw/solid-dataspace-manager.git"
+  },
+  "semantic-data-catalog": {
+    "origin": "https://github.com/hoelk-f/semantic-data-catalog.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/semantic-data-catalog.git",
+    "tmdt": "https://github.com/tmdt-buw/semantic-data-catalog.git"
+  },
+  "solid-data-manager": {
+    "origin": "https://github.com/hoelk-f/solid-data-manager.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/solid-data-manager.git",
+    "tmdt": "https://github.com/tmdt-buw/solid-data-manager.git"
+  },
+  "solid-data-connection-sync-worker": {
+    "origin": "https://github.com/hoelk-f/solid-data-connection-sync-worker.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/miscellaneous/solid-data-connection-sync-worker.git",
+    "tmdt": "https://github.com/tmdt-buw/solid-data-connection-sync-worker.git"
+  },
+  "solid-health-app": {
+    "origin": "https://github.com/hoelk-f/solid-health-app.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/applications/solid-health-app.git",
+    "tmdt": "https://github.com/tmdt-buw/solid-health-app.git"
+  },
+  "solid-health-questionnaire": {
+    "origin": "https://github.com/hoelk-f/solid-health-questionnaire.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/applications/solid-health-questionnaire.git",
+    "tmdt": "https://github.com/tmdt-buw/solid-health-questionnaire.git"
+  },
+  "city-tours": {
+    "origin": "https://github.com/hoelk-f/solid-city-tours.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/applications/solid-tours.git",
+    "tmdt": "https://github.com/tmdt-buw/solid-city-tours.git"
+  },
+  "environmental-monitoring": {
+    "origin": "https://github.com/hoelk-f/urban-data-explorer.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/applications/urban-data-explorer.git",
+    "tmdt": "https://github.com/tmdt-buw/urban-data-explorer.git"
+  },
+  "plasma": {
+    "origin": "https://github.com/hoelk-f/plasma.git",
+    "gitlab": "git@git.uni-wuppertal.de:tmdt/projects/dataspaces/gesundes-tal/miscellaneous/plasma.git",
+    "tmdt": "https://github.com/tmdt-buw/plasma-dataspace.git"
+  }
+}
