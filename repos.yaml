@@ -9,7 +9,7 @@ repos:
 
   environmental-monitoring:
     path: ..\environmental-monitoring
-    repo: https://github.com/hoelk-f/environmental-monitoring
+    repo: https://github.com/hoelk-f/urban-data-explorer.git
     scope:
       - react
       - vite

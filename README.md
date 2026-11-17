@@ -1,171 +1,110 @@
-# solid-dataspace
+# Solid Dataspace
 
-Orchestration and local infrastructure for the Solid dataspace development environment.
+Solid Dataspace brings independent Solid applications together behind one web interface. Users keep files, catalog metadata and application data in their Solid Pods. The Dataspace Manager supplies navigation, authentication, profiles and administration; the Data Connection Sync Worker runs configured imports and maintains derived public caches.
 
-## Local development
+This repository contains orchestration, local development helpers, deployment profiles and coordinated release scripts. Start here to run the complete application environment. Individual application repositories document their standalone builds and APIs.
 
-For local Health App, City Tours and Sync-Worker changes, use the published application images
-with the selective development override. See [the local setup guide](LOCAL_DEVELOPMENT.md)
-and [`.env.local.example`](.env.local.example). No GitHub NPM token is required for
-this mode. Docker Compose 2.24.4 or newer is required.
+## Local quickstart
+
+Install Docker with Compose **2.24.4 or newer**. Clone this repository, then run these commands from its root:
 
 ```sh
 cp .env.local.example .env.local
+docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml pull
+docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml up -d
+```
+
+Open **http://localhost:8080**. On PowerShell, use `Copy-Item .env.local.example .env.local` for the first command. Use `localhost`, rather than a LAN address. `LOCAL_HTTP_PORT` changes the port.
+
+This starts published application images, the access gateway and a local Sync Worker. PLASMA, the semantic-search backend/indexer/Fuseki and Node-RED are optional profiles. No GitHub NPM token is needed for this mode. The local mode does not create a Pod server, a Solid account, populated catalogs or existing import definitions. The server deployment controller and Admin Area backend are not included.
+
+The [local development guide](LOCAL_DEVELOPMENT.md) covers all settings, optional services, verification, troubleshooting and stopping without deleting volumes. [`.env.local.example`](.env.local.example) is the appropriate starting point for a laptop; the root `.env.example` and server Compose files contain deployment-specific and legacy settings.
+
+## Develop selected applications
+
+Place checkouts of `solid-health-app`, `solid-city-tours` (directory name `solid-tours`) and `solid-data-connection-sync-worker` beside this repository, as described in the local guide. Override their paths with `HEALTH_SOURCE`, `CITY_TOURS_SOURCE` and `WORKER_SOURCE` when needed.
+
+```sh
 docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml -f docker-compose.dev.yml up -d
 ```
 
-Open `http://localhost:8080`. PLASMA, semantic search and Node-RED are optional
-profiles. `docker-compose.dev.yml` is an override, not a standalone stack. The
-server Caddyfile and existing deployments are unaffected.
+Only Health App, City Tours and Worker dependencies/builds run locally; the remaining applications use published images. The Manager also receives the locally built Health App and City Tours embeds. `docker-compose.dev.yml` is an override, not a complete standalone Compose file. Checkouts and the selected Manager image must contain compatible embed-package versions.
 
-## Semantic Search
+## Worker identity, registry and data
 
-Each instance can index its registry's public DCAT metadata and semantic models
-in a separate Fuseki store. See [deployment instructions](SEMANTIC_SEARCH_ROLLOUT.md)
-for the new services, registry configuration and rollout order.
+For actual synchronization, use a separate test service identity and set:
 
-## Usage statistics
-
-The statistics implementation remains database-free: human activity is stored in each user's
-private Pod area, anonymous catalog events and aggregated snapshots are stored below the configured
-`STATISTICS_POD_BASE_URL`, and the existing connection sync worker performs aggregation. Its SQLite
-database remains limited to connection synchronization.
-
-Use [`.env.example`](.env.example) as a reference and merge the missing settings into `.env`. Retain
-the existing worker WebID and set fresh client credentials for that account.
-`STATISTICS_HMAC_SECRET` is mandatory when statistics are enabled and must be an independent random
-secret of at least 32 bytes. Set `STATISTICS_ENABLED=true` only after that secret and the existing
-worker credentials are configured. Never commit `.env`.
-
-The initial statistics administrator is configured as:
-
-```text
-https://solid-community-server.tmdt.info/solidtestpod/profile/card#me
+```dotenv
+LOCAL_ISSUER=https://your-solid-provider.example
+SOLID_SYNC_WORKER_WEBID=https://your-solid-provider.example/test-worker/profile/card#me
+SOLID_SYNC_WORKER_CLIENT_ID=
+SOLID_SYNC_WORKER_CLIENT_SECRET=
 ```
 
-Additional administrators are supplied through `STATISTICS_ADMIN_WEBIDS_JSON`. The same value is
-passed to the Manager and worker. After signing in with an administrator WebID, open the statistics
-dashboard and initialize the Pod structure once. This owner-authorized step grants the
-existing worker identity access to the statistics subtree; no additional Solid account is created.
+Create the test account/Pod at your chosen provider, obtain client credentials for that same WebID through the provider's account interface, and grant only the intended Pod access through Data Connection. The [identity setup section](LOCAL_DEVELOPMENT.md#worker-mit-einem-test-pod-verwenden) explains the distinction between a browser login and worker credentials. Existing production credentials must not be copied into a developer environment. Some providers do not offer the server-to-server authentication flow used by the worker.
 
-The dashboard route and navigation item are available only to configured administrators. Pod ACLs,
-not the hidden navigation item, enforce access to snapshots. User WebIDs are HMAC-pseudonymized by
-the worker before a snapshot is written.
+Without these credentials the UI can open, but worker synchronization cannot access protected Pod resources. Local request/encryption keys are generated in a dedicated Docker volume. Preserve that volume alongside the worker database when retaining local connections.
 
-Catalog tracking is enabled both for the Manager embed and the standalone catalog. It records only
-successful dataset downloads and semantic-model downloads. Dataset access-link clicks, direct Pod
-requests, and automatic previews are intentionally not counted.
+For catalog data, configure `LOCAL_REGISTRY_URL`. Enable local caching with `LOCAL_PUBLIC_CACHE_ENABLED=true` and matching `LOCAL_REGISTRIES_JSON`. Registry membership controls catalog discovery; Pod permissions still control access. A visible catalog entry does not grant access to its data. Urban Data Explorer currently has its own curated Stadt-Wuppertal selection and is not switched to another registry by this setting.
 
-These download figures are operational usage indicators, not audit or billing records: anonymous
-events are accepted from any authenticated Solid agent and therefore cannot prove that an action
-originated from an unmodified catalog client.
+The local namespace is `test`, and the local worker starts with its own empty state. Newly created connections can write when explicitly enabled. This differs from the shared Test server, whose migrated automatic imports remain paused until deliberately activated for a controlled test.
 
-### Catalog event sources
+## Applications and services
 
-The central worker aggregates separate download-event containers for the five deployed catalog
-instances. With the default `STATISTICS_POD_BASE_URL`, the configured layout is:
+| Repository | Responsibility | Dataspace route |
+| --- | --- | --- |
+| [Solid Dataspace Manager](https://github.com/hoelk-f/solid-dataspace-manager) | Login, profiles, access requests/decisions, Data Connection, Admin Area | `/` |
+| [Solid Data Manager](https://github.com/hoelk-f/solid-data-manager) | Pod files, folders, previews and sharing | `/solid-data-manager/`, Manager home `/` |
+| [Semantic Data Catalog](https://github.com/hoelk-f/semantic-data-catalog) | Pod-based DCAT datasets, series, API descriptions and discovery | `/catalog/`, `/web/catalog` |
+| [Urban Data Explorer](https://github.com/hoelk-f/urban-data-explorer) | Curated Wuppertal map layers and Python transformations | `/urban-data-explorer/`, `/web/urban-data-explorer` |
+| [Health App](https://github.com/hoelk-f/solid-health-app) | Personal health metrics and Google Fit import interface | `/solid-health-app/`, `/web/solid-health-app` |
+| [Health Questionnaire](https://github.com/hoelk-f/solid-health-questionnaire) | Questionnaire and private Pod persistence | `/solid-health-questionnaire/`, `/web/solid-health-questionnaire` |
+| [City Tours](https://github.com/hoelk-f/solid-city-tours) | Activities, routes and controlled data donations | `/city-tours/`, `/web/city-tours` |
+| [Data Connection Sync Worker](https://github.com/hoelk-f/solid-data-connection-sync-worker) | HTTP/REST, streams, provider imports, caches and public data queries | `/sync-worker/` |
+| [PLASMA integration](https://github.com/hoelk-f/plasma) | Semantic modeling, with separate workspace storage | `/plasma/modelings` |
 
-| Catalog instance | Event container |
-| --- | --- |
-| Test | `events/catalog-instances/test/downloads/` |
-| Test 2 | `events/catalog-instances/test2/downloads/` |
-| DACE | `events/catalog-instances/dace/downloads/` |
-| Stadt Wuppertal | `events/catalog-instances/stadt-wuppertal/downloads/` |
-| TimberConnect | `events/catalog-instances/timberconnect/downloads/` |
+Routes depend on the selected deployment configuration and image versions. Legacy `environmental-monitoring` routes and service/configuration identifiers remain for compatibility. [repos.yaml](repos.yaml) is the repository mapping used by the release tools.
 
-`STATISTICS_EVENT_SOURCES_JSON` supplies the worker with an `id`, display `label`, and absolute leaf
-LDP-container `url` for each source. Leave it blank in the root `.env` to let Compose derive all five
-URLs from `STATISTICS_POD_BASE_URL`; keep that base URL's trailing slash when overriding it. If the
-JSON is set explicitly, update its absolute URLs whenever the Pod base URL changes.
+Pod documents are authoritative. Public metadata/data caches and Fuseki are derived views. The worker uses SQLite for operational state, schedules and histories of runs; the catalog is not stored in SQL. PLASMA separately uses MariaDB and Fuseki for its own modeling workspace.
 
-Each catalog deployment writes both its embedded and standalone catalog events to the matching
-container. Compose derives `APP_STATISTICS_EVENTS_URL` and the catalog's `STATISTICS_EVENTS_URL`
-from `STATISTICS_POD_BASE_URL` plus the resolved instance ID. An explicitly configured
-`STATISTICS_EVENTS_URL` overrides that derived URL for both clients. The central worker is
-the only worker required and needs read/write access to all five containers.
-`STATISTICS_INCLUDE_LEGACY_EVENT_SOURCE=true` additionally reads the former `events/downloads/`
-container during migration; set it to `false` after every catalog writes to its dedicated container
-and all legacy events have passed the desired reporting window.
+## Optional services
 
-### Shared Environmental Monitoring and instance-scoped statistics
+Add `--profile plasma`, `--profile search` or `--profile node-red` to the same Compose command before `up -d`. Enable the PLASMA/Node-RED navigation entries with `LOCAL_PLASMA_ENABLED=true` or `LOCAL_NODERED_ENABLED=true`. The local guide lists image requirements and configuration; the three `son1i/plasma-*` images use the tag specified by `LOCAL_PLASMA_TAG`, not a presumed `latest` tag.
 
-Set `DATASPACE_ID` to the catalog registry ID represented by each deployed stack, for example
-`stadt-wuppertal`, `dace`, `timberconnect`, `test`, or `test2`. Compose passes the same resolved
-value to the Manager as `APP_DATASPACE_ID` and to the catalog as `STATISTICS_REGISTRY_CONTEXT`.
-Catalog registrations and statistics remain instance-scoped. Environmental Monitoring
-loads the common `/sync-worker/environmental/scenario/shared` feed from the one central
-worker. Its new public-display requests qualify approved donations for this shared view;
-old approvals stay scoped and require resetting/re-sharing the donation and approving
-the new request. Update the Manager before approving new worker requests.
+Semantic search indexes public DCAT metadata and linked semantic models in Fuseki. See the catalog's [semantic-search documentation](https://github.com/hoelk-f/semantic-data-catalog/blob/main/SEMANTIC_SEARCH.md). Public Pod data queries are a separate worker API, documented in [PUBLIC_DATA_API.md](https://github.com/hoelk-f/solid-data-connection-sync-worker/blob/main/PUBLIC_DATA_API.md). Neither service proxies private files to anonymous callers.
 
-The shared worker's `WORKER_ALLOWED_ORIGINS` must contain the public origin of every instance.
-For the root Compose stack, configure the equivalent `SOLID_SYNC_WORKER_ALLOWED_ORIGINS` value.
-In particular, include `https://solid-dataspace-test2.tmdt.info`; otherwise browser requests from
-Test 2 are rejected before they can register data for aggregation.
+## Server topology and profiles
 
-For compatibility, existing deployments may still supply `STATISTICS_REGISTRY_CONTEXT` or the
-deprecated `ENVIRONMENTAL_SCENARIO_DATASPACE_ID`; the precedence is `DATASPACE_ID`, then
-`STATISTICS_REGISTRY_CONTEXT`, then `ENVIRONMENTAL_SCENARIO_DATASPACE_ID`. This same value also
-selects the event container. If none is configured, the derived event URL uses the isolated
-`__unconfigured__` partition. This does not block the new shared tour feed, which has
-no `dataspaceId` filter and never exposes old scoped approvals. Local Environmental
-Monitoring defaults to the shared worker behind `solid-dataspace-test.tmdt.info`;
-`VITE_TOUR_SCENARIO_URL` can override that target. The five existing Caddy proxy routes
-already point to the same worker and need no change.
+The managed deployment uses **one production stack** and **one live Test stack**. Stadt Wuppertal, DACE and TimberConnect are host-selected production profiles, not three separate copies of every app. Test 2 is retired; `test2` in old data or compatibility defaults is not an instruction to start another stack.
 
-## Local PLASMA integration
+- [config/profiles](https://github.com/hoelk-f/solid-dataspace/tree/main/config/profiles) defines branding, domains, registry selection, visible/enabled applications and administrators.
+- [config/apps.yaml](https://github.com/hoelk-f/solid-dataspace/blob/main/config/apps.yaml) defines the application catalog.
+- The Manager's Admin Area edits supported profile settings through authenticated API/controller services. Its [administration guide](https://github.com/hoelk-f/solid-dataspace-manager/blob/main/admin-service/README.md) explains roles, activation and rollback.
+- Each environment has its own worker/state. Production profile domains route to their production stack; Test routes to its own stack. Node-RED and PLASMA workspaces remain separate where configured.
+- Server `docker-compose.prod.yml` and `docker-compose.test.yml` use operator-provisioned files, networks and secrets. They are not portable laptop quickstarts. The `server/` directory is excluded from releases.
 
-Use the optional `plasma` profile described in [LOCAL_DEVELOPMENT.md](LOCAL_DEVELOPMENT.md).
-The local stack downloads the published `son1i/plasma-sms`, `son1i/plasma-dps` and
-`son1i/plasma-frontend` images. No Maven build is required. Local PLASMA data uses
-project-scoped volumes and does not reuse server or standalone deployment volumes.
+Statistics are an optional part of the Admin Area. Configure event sources and registries for the active profiles, service-account permissions and an independent `STATISTICS_HMAC_SECRET` before enabling collection. Old event containers may be retained for history without running their former instances. Detailed statistics and donation contracts are in the worker README.
 
-### Server deployment files
+## Verification and releases
 
-Instance-specific Compose and Caddy copies are operational server material and are intentionally excluded through
-`server/` in `.gitignore`. They must not be added by the coordinated release script. Keep credentials only in the
-server-side `.env` files and validate each deployment with `docker compose config --quiet` before restarting it.
+Validate local configuration without printing secrets or starting containers:
 
-Use `DATASPACE_ID` to distinguish `test`, `test2`, `dace`, `stadt-wuppertal`, and `timberconnect`; no source-code fork
-is required per instance. The existing central Caddy configuration already routes all five instances and the shared
-worker. PLASMA remains mounted below `/plasma` in those server deployments.
+```sh
+docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml config --quiet
+docker compose --env-file .env.local -f docker-compose.yml -f docker-compose.local.yml ps
+```
 
-The manager image must include runtime support for `APP_PLASMA_URL`; setting a `REACT_APP_*` variable on an already
-built React image does not change its bundle. Do not expose MariaDB, Fuseki, SMS, or DPS through host ports, and never
-use `docker compose down -v` for an instance containing persistent PLASMA data.
-
-## Coordinated releases
-
-Preview every version change, build, selected file, and publish target without modifying any repository:
+Coordinate application releases using the existing scripts:
 
 ```powershell
 .\versioning-update.ps1 -WhatIf
-```
-
-The release stops when untracked files exist. After reviewing the preview, explicitly include intentional new files
-with `-IncludeUntracked`; this is currently required for newly added source files. The real invocation updates exact
-embed-package pins, builds the affected libraries, commits the selected paths, and pushes the Manager last:
-
-```powershell
 .\versioning-update.ps1 -IncludeUntracked
 ```
 
-Mirror the resulting `main` branches to GitLab only after the GitHub release push succeeds. Its dry run validates all
-configured checkouts and the explicit Questionnaire and PLASMA GitLab remotes:
+Review selected files before the real invocation; `-IncludeUntracked` includes intentional new files. The script updates embed-package pins, builds affected libraries and pushes coordinated changes, with the Manager last. Wait for the GitHub image/package workflows for those exact commits before running the server update scripts. Profile or routing changes also require the configuration activation path; changing an image alone does not regenerate Caddy routes.
 
-```powershell
-.\gitlab-update.ps1 -WhatIf
-.\gitlab-update.ps1
-```
+Use the existing GitLab and TMDT-BUW synchronization scripts for the configured mirrors after the release succeeds. A documentation-only update does not require restarting applications. Keep secrets and operational backups out of commits. Preserve persistent volumes and keep shared Test imports paused during normal updates.
 
-## License
+## License, citation and attribution
 
-This repository is licensed under the Apache License 2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
-
-## Citation
-
-If you use this repository, please cite it using the metadata in [CITATION.cff](CITATION.cff).
-
-## Attribution
-
-Developed by the Institute for Technologies and Management of Digital Transformation (TMDT), University of Wuppertal.
+Licensed under Apache-2.0. See [LICENSE](LICENSE), [NOTICE](NOTICE) and [CITATION.cff](CITATION.cff). Individual applications and PLASMA retain their own licenses. Developed at the Institute for Technologies and Management of Digital Transformation (TMDT), University of Wuppertal.

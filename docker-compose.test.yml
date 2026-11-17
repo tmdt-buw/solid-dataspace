@@ -57,10 +57,8 @@ services:
       options:
         max-size: 10m
         max-file: '3'
-    command:
-    - nginx
-    - -g
-    - daemon off;
+    # Use the image default command for both Nginx and Python releases.
+    command: null
   solid-health-app:
     image: local/consolidation/solid-health-app:7b56742afdea
     pull_policy: never

@@ -58,13 +58,13 @@ public:
     title: Data Connection
     visible: true
   - enabled: true
-    href: /web/environmental-monitoring
-    iconKey: temperature
+    href: /web/urban-data-explorer
+    iconKey: map
     id: environmental-monitoring
     linkType: internal
     order: 15
     section: applications
-    title: Environmental Monitoring
+    title: Urban Data Explorer
     visible: true
   - enabled: true
     href: /web/solid-health-app

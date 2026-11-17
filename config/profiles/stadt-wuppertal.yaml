@@ -55,10 +55,10 @@ public:
     order: 40
     linkType: internal
   - id: environmental-monitoring
-    title: Environmental Monitoring
+    title: Urban Data Explorer
     href: /web/environmental-monitoring
     section: applications
-    iconKey: temperature
+    iconKey: map
     visible: true
     order: 15
     linkType: internal

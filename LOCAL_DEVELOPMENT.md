@@ -110,6 +110,14 @@ SOLID_SYNC_WORKER_CLIENT_ID=YOUR-CLIENT-ID
 SOLID_SYNC_WORKER_CLIENT_SECRET=YOUR-CLIENT-SECRET
 ```
 
+Die Testidentität wird beim Solid-Anbieter angelegt, nicht in Docker Compose:
+
+1. Beim gewünschten Anbieter ein eigenes Testkonto mit Pod erstellen und dessen WebID aus dem Profil übernehmen. Die WebID ist nicht zwingend aus der Storage-Adresse ableitbar.
+2. In der Kontoverwaltung des Anbieters Client-Zugangsdaten für genau diese WebID erstellen. Bei Community Solid Server erfolgt dies über dessen Kontoverwaltung; Bezeichnung und Verfügbarkeit hängen von der Serverversion ab. Anbieter ohne den unterstützten Dienstzugang können nicht allein durch Eintragen eines Browser-Passworts verwendet werden.
+3. Client-ID und Client-Secret ausschließlich in der lokalen, nicht versionierten `.env.local` speichern. Ein Browser-Passwort, Google-OAuth-Zugang oder NPM-Token ersetzt diese Werte nicht.
+4. Im lokal gestarteten Dataspace mit dem Eigentümer des Test-Pods anmelden und Data Connection einrichten. Nur die benötigten Verbindungs- und Zielordner für die konfigurierte Worker-WebID freigeben. Bei Importvorlagen deren gesonderte Pod-Zugangsdaten und den erfolgreichen Vorschautest beachten.
+5. Zuerst eine einzelne Verbindung mit synthetischen Daten und eigenem Testziel prüfen. Erst danach deren automatische Ausführung einschalten. Gemeinsame Server-Testimporte bleiben dadurch unverändert.
+
 Issuer, WebID und Client-Zugangsdaten müssen zur eigenen Solid-Testidentität passen.
 Die Anwendung lokal zu starten erzeugt keinen lokalen Pod. Die Browser-Anmeldung
 und der Worker greifen auf den gewählten externen Test-Pod zu. Die notwendigen

@@ -1,508 +1,509 @@
-schemaVersion: 1
-id: dace
-environment: prod
+administration:
+  adminWebIds:
+  - https://solid-community-server.tmdt.info/solidtestpod/profile/card#me
+  enabled: true
 domains:
 - solid-dataspace-dace.tmdt.info
 - www.solid-dataspace-dace.tmdt.info
+environment: prod
+id: dace
 public:
-  cityToursLegacyContinuousWebIds: []
-  dataspaceId: dace
-  plasmaUrl: /plasma/modelings
+  accessGateway: true
   apps:
-  - id: solid-data-manager
-    title: Solid Data Manager
+  - enabled: true
     href: /
-    section: general
     iconKey: solid-data-manager
-    visible: true
-    enabled: true
+    id: solid-data-manager
+    linkType: internal
     order: 0
-    linkType: internal
-  - id: catalog
-    title: Semantic Data Catalog
+    section: general
+    title: Solid Data Manager
+    visible: true
+  - enabled: true
     href: /web/catalog
-    section: consume
     iconKey: catalog
-    visible: true
-    enabled: true
+    id: catalog
+    linkType: internal
     order: 10
-    linkType: internal
-  - id: plasma
-    title: PLASMA
+    section: consume
+    title: Semantic Data Catalog
+    visible: true
+  - enabled: true
     href: /web/plasma
-    section: consume
     iconKey: plasma
-    visible: true
-    enabled: true
-    order: 20
+    id: plasma
     linkType: internal
-  - id: node-red
-    title: Node-RED
+    order: 20
+    section: consume
+    title: PLASMA
+    visible: true
+  - enabled: true
     href: /web/node-red
-    section: consume
     iconKey: node-red
-    visible: true
-    enabled: true
+    id: node-red
+    linkType: internal
     order: 30
-    linkType: internal
-  - id: data-connection
-    title: Data Connection
-    href: /data-connection
     section: consume
-    iconKey: data-connection
+    title: Node-RED
     visible: true
-    enabled: true
+  - enabled: true
+    href: /data-connection
+    iconKey: data-connection
+    id: data-connection
+    linkType: internal
     order: 40
-    linkType: internal
-  - id: environmental-monitoring
-    title: Environmental Monitoring
+    section: consume
+    title: Data Connection
+    visible: true
+  - enabled: true
     href: /web/environmental-monitoring
-    section: applications
-    iconKey: temperature
-    visible: false
+    iconKey: map
+    id: environmental-monitoring
+    linkType: internal
     order: 15
-    linkType: internal
-    enabled: true
-  - id: solid-health-app
-    title: Health App
+    section: applications
+    title: Urban Data Explorer
+    visible: false
+  - enabled: true
     href: /web/solid-health-app
-    section: applications
     iconKey: health
-    visible: false
+    id: solid-health-app
+    linkType: internal
     order: 20
-    linkType: internal
-    enabled: true
-  - id: city-tours
-    title: City Tours
+    section: applications
+    title: Health App
+    visible: false
+  - enabled: true
     href: /web/city-tours
-    section: applications
     iconKey: tour
-    visible: false
+    id: city-tours
+    linkType: internal
     order: 22
-    linkType: internal
-    enabled: true
-  - id: solid-health-questionnaire
-    title: Health Questionnaire
-    href: /web/solid-health-questionnaire
     section: applications
-    iconKey: questionnaire
+    title: City Tours
     visible: false
-    order: 24
+  - enabled: true
+    href: /web/solid-health-questionnaire
+    iconKey: questionnaire
+    id: solid-health-questionnaire
     linkType: internal
-    enabled: true
-  providers:
-  - id: tmdt-solid
-    label: TMDT Solid
-    issuer: https://solid-community-server.tmdt.info
-    note: Recommended
-    enabled: true
-    recommended: true
-  - id: solid-community
-    label: Solid Community
-    issuer: https://solidcommunity.net
-    note: Public community server
-    enabled: true
-    recommended: false
+    order: 24
+    section: applications
+    title: Health Questionnaire
+    visible: false
   branding:
-    projectName: DACE
-    logoUrl: /project-logos/DACE_Logo_grün.png
     logoAlt: DACE Logo
+    logoHeight: auto
+    logoUrl: /project-logos/DACE_Logo_grün.png
     logoWidth: 120px
-    logoHeight: auto
-  fundingLogos:
-  - id: bmftr
-    src: /foerder-logos/BMFTR_de_Web_RGB_gef_durch.png
-    alt: Federal Ministry of Research, Technology and Space
-    order: 1
-    logoWidth: 200px
-    logoHeight: auto
-    logoMaxHeight: 70px
-  - id: EU
-    src: /foerder-logos/csm_Förderhinweis_EU_vertikal_bb912c393b.jpg
-    alt: EU
-    order: 2
-    logoWidth: 200px
-    logoHeight: auto
-    logoMaxHeight: 70px
-  fundingGrantNumber: 16DKZ2056C
-  syncWorker:
-    enabled: true
-    apiUrl: /sync-worker
-    serviceWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
-    intervalMinutes: 10
-  statistics:
-    enabled: true
-    adminWebIds: &id001
-    - https://solid-community-server.tmdt.info/solidtestpod/profile/card#me
-    workerWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
-    podBaseUrl: https://solid-community-server.tmdt.info/solidtestpod/statistics/
-    eventsUrl: https://solid-community-server.tmdt.info/solidtestpod/statistics/events/catalog-instances/dace/downloads/
-    timezone: Europe/Berlin
-    activityResourcePath: statistics/activity/activity.ttl
+    projectName: DACE
   catalog:
     defaultRegistry: https://solid-community-server.tmdt.info/semanticdatacatalog/public/dace
     metadataProfile: dace-ce-v1
     metadataProfiles:
-    - id: dace-ce-v1
-      label:
-        de: Kreislaufwirtschaft
-        en: Circular economy
-      enabled: true
+    - enabled: true
       fields:
-      - id: level
-        label:
-          de: Betrachtungsebene
-          en: CE level
+      - details: true
+        enabled: true
+        filter: true
+        form: true
         help:
           de: Auf welcher Ebene sind die Daten relevant?
           en: At which level are the data relevant?
-        enabled: true
+        id: level
+        label:
+          de: Betrachtungsebene
+          en: CE level
         multiple: true
         required: false
-        form: true
-        details: true
-        filter: true
+        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level
         values:
-        - id: nano
+        - enabled: true
+          exclusive: false
+          id: nano
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level/nano
           label:
             de: Nano
             en: Nano
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level/nano
-        - id: micro
+          id: micro
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level/micro
           label:
             de: Mikro
             en: Micro
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level/micro
-        - id: meso
+          id: meso
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level/meso
           label:
             de: Meso
             en: Meso
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level/meso
-        - id: macro
+          id: macro
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level/macro
           label:
             de: Makro
             en: Macro
-          enabled: true
-          exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level/macro
-        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/level
-      - id: stakeholders
-        label:
-          de: Beteiligte Gruppen
-          en: Stakeholder groups
+      - details: true
+        enabled: true
+        filter: true
+        form: true
         help:
           de: Für welche Gruppen sind die Daten relevant?
           en: Which groups are the data relevant to?
-        enabled: true
+        id: stakeholders
+        label:
+          de: Beteiligte Gruppen
+          en: Stakeholder groups
         multiple: true
         required: false
-        form: true
-        details: true
-        filter: true
+        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders
         values:
-        - id: government
+        - enabled: true
+          exclusive: false
+          id: government
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/government
           label:
             de: Bundesregierung
             en: Federal government
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/government
-        - id: local-government
+          id: local-government
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/local-government
           label:
             de: Land und Kommune
             en: State / city government
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/local-government
-        - id: community
+          id: community
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/community
           label:
             de: Gemeinschaft und Zivilgesellschaft
             en: Communities / civil society / NGOs
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/community
-        - id: media
+          id: media
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/media
           label:
             de: Medien
             en: Media
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/media
-        - id: companies
+          id: companies
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/companies
           label:
             de: Unternehmen
             en: Companies
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/companies
-        - id: consumers
+          id: consumers
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/consumers
           label:
             de: Verbraucher
             en: Consumers
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/consumers
-        - id: workers
+          id: workers
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/workers
           label:
             de: Beschäftigte
             en: Workers
-          enabled: true
-          exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders/workers
-        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/stakeholders
-      - id: value-chain
-        label:
-          de: Wertschöpfungsphase
-          en: Value chain stage
+      - details: true
+        enabled: true
+        filter: true
+        form: true
         help:
           de: Welche Phasen der Wertschöpfung werden beschrieben?
           en: Which value chain stages are described?
-        enabled: true
+        id: value-chain
+        label:
+          de: Wertschöpfungsphase
+          en: Value chain stage
         multiple: true
         required: false
-        form: true
-        details: true
-        filter: true
+        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain
         values:
-        - id: design
+        - enabled: true
+          exclusive: false
+          id: design
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/design
           label:
             de: Gestaltung
             en: Design
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/design
-        - id: take
+          id: take
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/take
           label:
             de: Rohstoffgewinnung
             en: Take
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/take
-        - id: make
+          id: make
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/make
           label:
             de: Herstellung
             en: Make
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/make
-        - id: distribute
+          id: distribute
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/distribute
           label:
             de: Vertrieb
             en: Distribute
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/distribute
-        - id: use
+          id: use
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/use
           label:
             de: Nutzung
             en: Use
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/use
-        - id: end-of-life
+          id: end-of-life
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/end-of-life
           label:
             de: Lebensende
             en: End of life
-          enabled: true
-          exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/end-of-life
-        - id: not-applicable
+        - enabled: true
+          exclusive: true
+          id: not-applicable
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/not-applicable
           label:
             de: Nicht zutreffend
             en: Not applicable
-          enabled: true
+        - enabled: true
           exclusive: true
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/not-applicable
-        - id: all
+          id: all
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/all
           label:
             de: Alle Lebenszyklusphasen
             en: All life cycle stages
-          enabled: true
-          exclusive: true
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain/all
-        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/value-chain
-      - id: strategy
-        label:
-          de: Kreislaufstrategie
-          en: CE strategy
+      - details: true
+        enabled: true
+        filter: true
+        form: true
         help:
           de: Welche Strategie unterstützt der Datensatz?
           en: Which strategy does the dataset support?
-        enabled: true
+        id: strategy
+        label:
+          de: Kreislaufstrategie
+          en: CE strategy
         multiple: true
         required: false
-        form: true
-        details: true
-        filter: true
+        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy
         values:
-        - id: intensification
+        - enabled: true
+          exclusive: false
+          id: intensification
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/intensification
           label:
             de: Vermeiden, reduzieren und wiederverwenden
             en: Refuse, reduce and reuse
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/intensification
-        - id: dematerialization
+          id: dematerialization
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/dematerialization
           label:
             de: Dematerialisierung und Umdenken
             en: Dematerialization / rethink
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/dematerialization
-        - id: extension
+          id: extension
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/extension
           label:
             de: Reparieren, aufarbeiten und länger nutzen
             en: Repair, refurbish and remanufacture
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/extension
-        - id: circulation
+          id: circulation
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/circulation
           label:
             de: Recycling und Rückgewinnung
             en: Recycle and recover
-          enabled: true
-          exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/circulation
-        - id: none
+        - enabled: true
+          exclusive: true
+          id: none
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/none
           label:
             de: Keine spezifische Strategie
             en: No specific CE strategy
-          enabled: true
+        - enabled: true
           exclusive: true
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/none
-        - id: all
+          id: all
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/all
           label:
             de: Alle Kreislaufstrategien
             en: All CE strategies
-          enabled: true
-          exclusive: true
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy/all
-        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/strategy
-      - id: cycle
-        label:
-          de: Kreislauf
-          en: Cycle
+      - details: true
+        enabled: true
+        filter: true
+        form: true
         help:
           de: Handelt es sich um technische oder biologische Kreisläufe?
           en: Are technical or biological cycles addressed?
-        enabled: true
+        id: cycle
+        label:
+          de: Kreislauf
+          en: Cycle
         multiple: true
         required: false
-        form: true
-        details: true
-        filter: true
+        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/cycle
         values:
-        - id: technical
+        - enabled: true
+          exclusive: false
+          id: technical
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/cycle/technical
           label:
             de: Technischer Kreislauf
             en: Technical cycle
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/cycle/technical
-        - id: biological
+          id: biological
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/cycle/biological
           label:
             de: Biologischer Kreislauf
             en: Biological cycle
-          enabled: true
-          exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/cycle/biological
-        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/cycle
-      - id: focus
-        label:
-          de: Schwerpunkt
-          en: Focus
+      - details: true
+        enabled: true
+        filter: true
+        form: true
         help:
           de: Liegt der Schwerpunkt auf Technik oder gesellschaftlichen und institutionellen
             Fragen?
           en: Is the focus technological or socio-institutional?
-        enabled: true
+        id: focus
+        label:
+          de: Schwerpunkt
+          en: Focus
         multiple: true
         required: false
-        form: true
-        details: true
-        filter: true
+        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/focus
         values:
-        - id: technical
+        - enabled: true
+          exclusive: false
+          id: technical
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/focus/technical
           label:
             de: Technologisch
             en: Technological
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/focus/technical
-        - id: social
+          id: social
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/focus/social
           label:
             de: Gesellschaftlich und institutionell
             en: Socio-institutional
-          enabled: true
-          exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/focus/social
-        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/focus
-      - id: data-kind
-        label:
-          de: Datenart
-          en: Data kind
+      - details: true
+        enabled: true
+        filter: true
+        form: true
         help:
           de: Welche Art von Informationen enthält der Datensatz?
           en: What kind of information does the dataset contain?
-        enabled: true
+        id: data-kind
+        label:
+          de: Datenart
+          en: Data kind
         multiple: true
         required: false
-        form: true
-        details: true
-        filter: true
+        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/data-kind
         values:
-        - id: quantitative
+        - enabled: true
+          exclusive: false
+          id: quantitative
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/data-kind/quantitative
           label:
             de: Quantitativ
             en: Quantitative
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/data-kind/quantitative
-        - id: qualitative
+          id: qualitative
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/data-kind/qualitative
           label:
             de: Qualitativ
             en: Qualitative
-          enabled: true
-          exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/data-kind/qualitative
-        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/data-kind
-      - id: transition
-        label:
-          de: Veränderungsprozess oder Wirkung
-          en: Transition or effect
+      - details: true
+        enabled: true
+        filter: true
+        form: true
         help:
           de: Beschreiben die Daten den Übergang oder dessen Auswirkungen?
           en: Do the data describe the transition or its effects?
-        enabled: true
+        id: transition
+        label:
+          de: Veränderungsprozess oder Wirkung
+          en: Transition or effect
         multiple: true
         required: false
-        form: true
-        details: true
-        filter: true
+        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/transition
         values:
-        - id: transition
+        - enabled: true
+          exclusive: false
+          id: transition
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/transition/transition
           label:
             de: Veränderungsprozess
             en: Transition
-          enabled: true
+        - enabled: true
           exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/transition/transition
-        - id: effect
+          id: effect
+          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/transition/effect
           label:
             de: Wirkung
             en: Effect
-          enabled: true
-          exclusive: false
-          iri: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/transition/effect
-        scheme: https://solid-dataspace-dace.tmdt.info/catalog-vocabulary/dace-ce-v1/transition
+      id: dace-ce-v1
+      label:
+        de: Kreislaufwirtschaft
+        en: Circular economy
       multipleThemes: true
-  accessGateway: true
-administration:
-  enabled: true
-  adminWebIds: *id001
+  cityToursLegacyContinuousWebIds: []
+  dataspaceId: dace
+  fundingGrantNumber: 16DKZ2056C
+  fundingLogos:
+  - alt: Federal Ministry of Research, Technology and Space
+    id: bmftr
+    logoHeight: auto
+    logoMaxHeight: 70px
+    logoWidth: 200px
+    order: 1
+    src: /foerder-logos/BMFTR_de_Web_RGB_gef_durch.png
+  - alt: EU
+    id: EU
+    logoHeight: auto
+    logoMaxHeight: 70px
+    logoWidth: 200px
+    order: 2
+    src: /foerder-logos/csm_Förderhinweis_EU_vertikal_bb912c393b.jpg
+  plasmaUrl: /plasma/modelings
+  providers:
+  - enabled: true
+    id: tmdt-solid
+    issuer: https://solid-community-server.tmdt.info
+    label: TMDT Solid
+    note: Recommended
+    recommended: true
+  - enabled: true
+    id: solid-community
+    issuer: https://solidcommunity.net
+    label: Solid Community
+    note: Public community server
+    recommended: false
+  statistics:
+    activityResourcePath: statistics/activity/activity.ttl
+    adminWebIds:
+    - https://solid-community-server.tmdt.info/solidtestpod/profile/card#me
+    enabled: true
+    eventsUrl: https://solid-community-server.tmdt.info/solidtestpod/statistics/events/catalog-instances/dace/downloads/
+    podBaseUrl: https://solid-community-server.tmdt.info/solidtestpod/statistics/
+    timezone: Europe/Berlin
+    workerWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
+  syncWorker:
+    apiUrl: /sync-worker
+    enabled: true
+    intervalMinutes: 10
+    serviceWebId: https://solid-community-server.tmdt.info/solidserviceworker/profile/card#me
+schemaVersion: 1

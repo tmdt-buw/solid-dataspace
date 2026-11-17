@@ -16,8 +16,8 @@ apps:
   title: Data Connection
   href: /data-connection
 - id: environmental-monitoring
-  title: Environmental Monitoring
-  href: /web/environmental-monitoring
+  title: Urban Data Explorer
+  href: /web/urban-data-explorer
 - id: solid-health-app
   title: Health App
   href: /web/solid-health-app

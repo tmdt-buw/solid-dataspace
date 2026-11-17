@@ -52,7 +52,13 @@
 	handle /city-tours/* {
 		reverse_proxy city-tours:3006
 	}
-	redir /environmental-monitoring /environmental-monitoring/ 308
+	redir /urban-data-explorer /urban-data-explorer/{?query} 308
+	handle /urban-data-explorer/* {
+		reverse_proxy environmental-monitoring:5173
+	}
+	@legacyUrbanEmbed path /web/environmental-monitoring /web/environmental-monitoring/
+	redir @legacyUrbanEmbed /web/urban-data-explorer{?query} 308
+	redir /environmental-monitoring /environmental-monitoring/{?query} 308
 	handle /environmental-monitoring/* {
 		reverse_proxy environmental-monitoring:5173
 	}
