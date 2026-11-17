@@ -271,6 +271,16 @@ class ReleasePlannerTests(unittest.TestCase):
         self.commit_plan(preview)
         self.assertEqual(self.plan()["versions"], [])
 
+    def test_renamed_urban_explorer_updates_manager_link_version(self):
+        links = self.sandbox / "solid-dataspace-manager/src/externalLinks.js"
+        links.write_text(links.read_text().replace("environmental-monitoring", "urban-data-explorer"))
+        self.add_source_commit("environmental-monitoring")
+        preview = self.plan()
+        self.assertEqual(preview, self.plan(apply=True))
+        self.assertIn('slug: "urban-data-explorer", version: "1.0.1"', links.read_text())
+        self.commit_plan(preview)
+        self.assertEqual(self.plan()["versions"], [])
+
     def test_all_clean_ui_commits_receive_one_coordinated_release(self):
         changed = ["solid-dataspace-manager", "environmental-monitoring", *self.embedded]
         for name in changed:

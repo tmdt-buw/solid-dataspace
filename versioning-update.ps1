@@ -1244,7 +1244,7 @@ for repo_path, pkg_path, _ in targets:
         content = external_links.read_text(encoding="utf-8")
         content = replace_exactly_once(
             content,
-            r'(slug:\s*"environmental-monitoring",[\s\S]*?version:\s*")[^"]+(")',
+            r'(slug:\s*"(?:environmental-monitoring|urban-data-explorer)",[\s\S]*?version:\s*")[^"]+(")',
             rf'\g<1>{new_version}\2',
             "Environmental Monitoring external-link version",
         )
